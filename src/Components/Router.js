@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
+import Header from "Components/Header";
 import Home from "Routes/Home";
 import TV from "Routes/TV";
 import Search from "Routes/Search";
@@ -12,11 +13,14 @@ import Search from "Routes/Search";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
   <Router>
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/tv" exact component={TV} />
-      <Route path="/search" component={Search} />
-      <Redirect from="*" to="/" />
-    </Switch>
+    <>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/tv" exact component={TV} />
+        <Route path="/search" component={Search} />
+        <Redirect from="*" to="/" />
+      </Switch>
+    </>
   </Router>
 );
