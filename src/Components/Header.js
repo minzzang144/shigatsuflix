@@ -32,6 +32,11 @@ const Item = styled.li`
 `;
 
 const SLink = styled(Link)`
+  &.AppName {
+    width: 100px;
+    color: #e74c3c;
+    font-size: 1.2rem;
+  }
   height: 50px;
   display: flex;
   justify-content: center;
@@ -41,6 +46,9 @@ const SLink = styled(Link)`
 export default withRouter(({ location: { pathname } }) => (
   <Header>
     <List>
+      <SLink to="/" className="AppName">
+        ShigatsuFlix
+      </SLink>
       <Item current={pathname === "/"}>
         <SLink to="/">Movies</SLink>
       </Item>
