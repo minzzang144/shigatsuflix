@@ -1,23 +1,23 @@
 import React from "react";
-import HomePresenter from "./HomePresenter";
+import TVPresenter from "./TVPresenter";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
   state = {
-    nowPlaying: null,
-    upComing: null,
+    topRated: null,
     popular: null,
+    airingToday: null,
     loading: true,
     error: null,
   };
 
   render() {
-    const { nowPlaying, upComing, popular, error, loading } = this.state;
+    const { topRated, popular, airingToday, loading, error } = this.state;
     return (
-      <HomePresenter
-        nowPlaying={nowPlaying}
-        upComing={upComing}
+      <TVPresenter
+        topRated={topRated}
         popular={popular}
+        airingToday={airingToday}
         loading={loading}
         error={error}
       />
