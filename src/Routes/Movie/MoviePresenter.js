@@ -7,12 +7,14 @@ import Loader from "Components/Loader";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 70px 20px 0px;
+`;
 
-const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
+const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
   <>
     <Helmet>
-      <title>Home | ShigatsuFlix</title>
+      <title>Movie | ShigatsuFlix</title>
     </Helmet>
     {loading ? (
       <Loader />
@@ -33,16 +35,32 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
             ))}
           </Section>
         )}
-        {topRated && topRated.length > 0 && (
+        {popular && popular.length > 0 && (
           <Section title="Popular">
-            {topRated.map((show) => (
+            {popular.map((movie) => (
               <Poster
-                key={show.id}
-                id={show.id}
-                title={show.original_name}
-                imageUrl={show.poster_path}
-                rating={show.vote_average}
-                year={show.first_air_date.substring(0, 4)}
+                key={movie.id}
+                id={movie.id}
+                title={movie.original_title}
+                imageUrl={movie.poster_path}
+                rating={movie.vote_average}
+                year={movie.release_date.substring(0, 4)}
+                isMovie={true}
+              />
+            ))}
+          </Section>
+        )}
+        {upComing && upComing.length > 0 && (
+          <Section title="Up Coming">
+            {upComing.map((movie) => (
+              <Poster
+                key={movie.id}
+                id={movie.id}
+                title={movie.original_title}
+                imageUrl={movie.poster_path}
+                rating={movie.vote_average}
+                year={movie.release_date.substring(0, 4)}
+                isMovie={true}
               />
             ))}
           </Section>
@@ -53,11 +71,12 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
   </>
 );
 
-HomePresenter.propTypes = {
+MoviePresenter.propTypes = {
   nowPlaying: PropTypes.array,
-  topRated: PropTypes.array,
+  upComing: PropTypes.array,
+  popular: PropTypes.array,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };
 
-export default HomePresenter;
+export default MoviePresenter;

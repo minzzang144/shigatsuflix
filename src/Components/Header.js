@@ -49,11 +49,11 @@ export default withRouter(({ location: { pathname } }) => (
       <SLink to="/" className="AppName">
         ShigatsuFlix
       </SLink>
-      <Item current={pathname === "/"}>
-        <SLink to="/">Movies</SLink>
+      <Item current={pathname === "/movie"}>
+        <SLink to="/movie">Movies</SLink>
       </Item>
-      <Item current={pathname === "/tv"}>
-        <SLink to="/tv">TV</SLink>
+      <Item current={pathname === "/show"}>
+        <SLink to="/show">TV</SLink>
       </Item>
       <Item current={pathname === "/search"}>
         <SLink to="/search">Search</SLink>

@@ -1,12 +1,13 @@
 import React from "react";
-import HomePresenter from "./HomePresenter";
-import { moviesApi, tvApi } from "api";
+import MoviePresenter from "./MoviePresenter";
+import { moviesApi } from "api";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
   state = {
     nowPlaying: null,
-    topRated: null,
+    upComing: null,
+    popular: null,
     loading: true,
     error: null,
   };
@@ -17,11 +18,15 @@ export default class extends React.Component {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
       const {
-        data: { results: topRated },
-      } = await tvApi.topRated();
+        data: { results: upComing },
+      } = await moviesApi.upComing();
+      const {
+        data: { results: popular },
+      } = await moviesApi.popular();
       this.setState({
         nowPlaying,
-        topRated,
+        upComing,
+        popular,
       });
     } catch {
       this.setState({
@@ -35,12 +40,13 @@ export default class extends React.Component {
   }
 
   render() {
-    const { nowPlaying, topRated, error, loading } = this.state;
+    const { nowPlaying, upComing, popular, error, loading } = this.state;
     console.log(this.state);
     return (
-      <HomePresenter
+      <MoviePresenter
         nowPlaying={nowPlaying}
-        topRated={topRated}
+        upComing={upComing}
+        popular={popular}
         loading={loading}
         error={error}
       />
