@@ -6,6 +6,7 @@ import Section from "Components/Section";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
+import Card from "Components/Card";
 
 const Container = styled.div``;
 
@@ -19,19 +20,7 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
     ) : (
       <Container>
         {nowPlaying && nowPlaying.length > 0 && (
-          <Section title="Now Playing">
-            {nowPlaying.map((movie) => (
-              <Poster
-                key={movie.id}
-                id={movie.id}
-                title={movie.original_title}
-                imageUrl={movie.poster_path}
-                rating={movie.vote_average}
-                year={movie.release_date.substring(0, 4)}
-                isMovie={true}
-              />
-            ))}
-          </Section>
+          <Card nowPlaying={nowPlaying} />
         )}
         {topRated && topRated.length > 0 && (
           <Section title="Popular">
