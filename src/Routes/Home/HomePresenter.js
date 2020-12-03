@@ -35,20 +35,20 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
               />
             ))}
         </Slide>
-        {topRated && topRated.length > 0 && (
-          <Section title="Popular">
-            {topRated.map((show) => (
-              <Poster
+        <Slide>
+          {topRated &&
+            topRated.length > 0 &&
+            topRated.map((show, index) => (
+              <Card
                 key={show.id}
                 id={show.id}
+                index={index}
+                bgImage={show.backdrop_path}
                 title={show.original_name}
-                imageUrl={show.poster_path}
-                rating={show.vote_average}
-                year={show.first_air_date.substring(0, 4)}
+                overview={show.overview}
               />
             ))}
-          </Section>
-        )}
+        </Slide>
         {error && <Message text={error} color="#e74c3c" />}
       </Container>
     )}
