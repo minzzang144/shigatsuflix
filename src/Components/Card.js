@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 const Title = styled.h3`
   font-size: 1.8rem;
   font-weight: 600;
+  text-shadow: 1px 1px 2px blue, 0 0 1em red, 0 0 0.2em red;
 `;
 
 const Overview = styled.p`
   margin-bottom: 20px;
   opacity: 0.8;
   line-height: 1.5;
+  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
 `;
 
 const LinkArrow = styled.div`
@@ -75,7 +77,9 @@ const Card = ({ id, index, bgImage, title, overview, isMovie = false }) => {
       bgImage={`https://image.tmdb.org/t/p/original/${bgImage}`}
     >
       <Title>{title}</Title>
-      <Overview>{overview}</Overview>
+      <Overview>
+        {overview.length > 300 ? `${overview.substring(0, 400)}...` : overview}
+      </Overview>
       <CardLink to={isMovie ? `/movie/${id}` : `/show/${id}`}>
         Detail<LinkArrow></LinkArrow>
       </CardLink>

@@ -21,10 +21,10 @@ const ItemList = styled.div`
       margin-left: -17%;
     }
     5% {
-      margin-left: -90%;
+      margin-left: -83%;
     }
     8% {
-      margin-left: -90%;
+      margin-left: -83%;
     }
     10% {
       margin-left: -217%;
@@ -33,10 +33,10 @@ const ItemList = styled.div`
       margin-left: -217%;
     }
     15% {
-      margin-left: -290%;
+      margin-left: -283%;
     }
     18% {
-      margin-left: -290%;
+      margin-left: -283%;
     }
     20% {
       margin-left: -417%;
@@ -45,10 +45,10 @@ const ItemList = styled.div`
       margin-left: -417%;
     }
     25% {
-      margin-left: -490%;
+      margin-left: -483%;
     }
     28% {
-      margin-left: -490%;
+      margin-left: -483%;
     }
     30% {
       margin-left: -617%;
@@ -57,10 +57,10 @@ const ItemList = styled.div`
       margin-left: -617%;
     }
     35% {
-      margin-left: -690%;
+      margin-left: -683%;
     }
     38% {
-      margin-left: -690%;
+      margin-left: -683%;
     }
     40% {
       margin-left: -817%;
@@ -69,10 +69,10 @@ const ItemList = styled.div`
       margin-left: -817%;
     }
     45% {
-      margin-left: -890%;
+      margin-left: -883%;
     }
     48% {
-      margin-left: -890%;
+      margin-left: -883%;
     }
     50% {
       margin-left: -1017%;
@@ -81,10 +81,10 @@ const ItemList = styled.div`
       margin-left: -1017%;
     }
     55% {
-      margin-left: -1090%;
+      margin-left: -1083%;
     }
     58% {
-      margin-left: -1090%;
+      margin-left: -1083%;
     }
     60% {
       margin-left: -1217%;
@@ -93,10 +93,10 @@ const ItemList = styled.div`
       margin-left: -1217%;
     }
     65% {
-      margin-left: -1290%;
+      margin-left: -1283%;
     }
     68% {
-      margin-left: -1290%;
+      margin-left: -1283%;
     }
     70% {
       margin-left: -1417%;
@@ -105,10 +105,10 @@ const ItemList = styled.div`
       margin-left: -1417%;
     }
     75% {
-      margin-left: -1490%;
+      margin-left: -1483%;
     }
     78% {
-      margin-left: -1490%;
+      margin-left: -1483%;
     }
     80% {
       margin-left: -1617%;
@@ -117,10 +117,10 @@ const ItemList = styled.div`
       margin-left: -1617%;
     }
     85% {
-      margin-left: -1690%;
+      margin-left: -1683%;
     }
     88% {
-      margin-left: -1690%;
+      margin-left: -1683%;
     }
     90% {
       margin-left: -1817%;
@@ -129,10 +129,10 @@ const ItemList = styled.div`
       margin-left: -1817%;
     }
     95% {
-      margin-left: -1890%;
+      margin-left: -1883%;
     }
     98% {
-      margin-left: -1890%;
+      margin-left: -1883%;
     }
     100% {
       margin-left: 0%;
@@ -142,10 +142,10 @@ const ItemList = styled.div`
     animation: leftSlideIn 120s ease-in-out infinite;
     @keyframes leftSlideIn {
       0% {
-        margin-left: -1890%;
+        margin-left: -1883%;
       }
       3% {
-        margin-left: -1890%;
+        margin-left: -1883%;
       }
       5% {
         margin-left: -1817%;
@@ -154,10 +154,10 @@ const ItemList = styled.div`
         margin-left: -1817%;
       }
       10% {
-        margin-left: -1690%;
+        margin-left: -1683%;
       }
       13% {
-        margin-left: -1690%;
+        margin-left: -1683%;
       }
       15% {
         margin-left: -1617%;
@@ -166,10 +166,10 @@ const ItemList = styled.div`
         margin-left: -1617%;
       }
       20% {
-        margin-left: -1490%;
+        margin-left: -1483%;
       }
       23% {
-        margin-left: -1490%;
+        margin-left: -1483%;
       }
       25% {
         margin-left: -1417%;
@@ -178,10 +178,10 @@ const ItemList = styled.div`
         margin-left: -1417%;
       }
       30% {
-        margin-left: -1290%;
+        margin-left: -1283%;
       }
       33% {
-        margin-left: -1290%;
+        margin-left: -1283%;
       }
       35% {
         margin-left: -1217%;
@@ -190,10 +190,10 @@ const ItemList = styled.div`
         margin-left: -1217%;
       }
       40% {
-        margin-left: -1090%;
+        margin-left: -1083%;
       }
       43% {
-        margin-left: -1090%;
+        margin-left: -1083%;
       }
       45% {
         margin-left: -1017%;
@@ -202,10 +202,10 @@ const ItemList = styled.div`
         margin-left: -1017%;
       }
       50% {
-        margin-left: -890%;
+        margin-left: -883%;
       }
       53% {
-        margin-left: -890%;
+        margin-left: -883%;
       }
       55% {
         margin-left: -817%;
@@ -214,10 +214,10 @@ const ItemList = styled.div`
         margin-left: -817%;
       }
       60% {
-        margin-left: -690%;
+        margin-left: -683%;
       }
       63% {
-        margin-left: -690%;
+        margin-left: -683%;
       }
       65% {
         margin-left: -617%;
@@ -226,10 +226,10 @@ const ItemList = styled.div`
         margin-left: -617%;
       }
       70% {
-        margin-left: -490%;
+        margin-left: -483%;
       }
       73% {
-        margin-left: -490%;
+        margin-left: -483%;
       }
       75% {
         margin-left: -417%;
@@ -238,10 +238,10 @@ const ItemList = styled.div`
         margin-left: -417%;
       }
       80% {
-        margin-left: -290%;
+        margin-left: -283%;
       }
       83% {
-        margin-left: -290%;
+        margin-left: -283%;
       }
       85% {
         margin-left: -217%;
@@ -250,10 +250,10 @@ const ItemList = styled.div`
         margin-left: -217%;
       }
       90% {
-        margin-left: -90%;
+        margin-left: -83%;
       }
       93% {
-        margin-left: -90%;
+        margin-left: -83%;
       }
       95% {
         margin-left: -17%;
@@ -262,7 +262,7 @@ const ItemList = styled.div`
         margin-left: -17%;
       }
       100% {
-        margin-left: -1890%;
+        margin-left: -1883%;
       }
     }
   }
