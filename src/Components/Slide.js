@@ -4,8 +4,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   height: 100vh;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
   perspective: 55vw;
 `;
 

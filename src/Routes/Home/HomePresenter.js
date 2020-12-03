@@ -31,6 +31,7 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
                 bgImage={movie.backdrop_path}
                 title={movie.original_title}
                 overview={movie.overview}
+                isMovie={true}
               />
             ))}
         </Slide>

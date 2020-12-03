@@ -9,8 +9,35 @@ const Title = styled.h3`
 `;
 
 const Overview = styled.p`
+  margin-bottom: 20px;
   opacity: 0.8;
   line-height: 1.5;
+`;
+
+const LinkArrow = styled.div`
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  background-color: #e74c3c;
+  transform: translate(-50%, -50%) rotate(45deg);
+`;
+
+const CardLink = styled(Link)`
+  border-radius: 15px;
+  padding: 7px 13px;
+  position: relative;
+  font-size: 1.3rem;
+  color: rgba(20, 20, 20, 0.8);
+  background-color: #e74c3c;
+  &:hover {
+    color: white;
+    background-color: rgba(20, 20, 20, 1);
+    ${LinkArrow} {
+      background-color: rgba(20, 20, 20, 1);
+    }
+  }
 `;
 
 const Item = styled.div`
@@ -40,7 +67,7 @@ const Item = styled.div`
   }
 `;
 
-const Card = ({ id, index, bgImage, title, overview }) => {
+const Card = ({ id, index, bgImage, title, overview, isMovie = false }) => {
   const item = useRef([]);
   return (
     <Item
@@ -49,6 +76,9 @@ const Card = ({ id, index, bgImage, title, overview }) => {
     >
       <Title>{title}</Title>
       <Overview>{overview}</Overview>
+      <CardLink to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+        Detail<LinkArrow></LinkArrow>
+      </CardLink>
     </Item>
   );
 };
@@ -59,6 +89,7 @@ Card.propTypes = {
   bgImage: PropTypes.string,
   title: PropTypes.string,
   overview: PropTypes.string,
+  isMovie: PropTypes.bool.isRequired,
 };
 
 export default Card;
