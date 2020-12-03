@@ -40,23 +40,25 @@ const Item = styled.div`
   }
 `;
 
-const Card = ({ key, id, index, bgImage, title, overview }) => {
+const Card = ({ id, index, bgImage, title, overview }) => {
   const item = useRef([]);
   return (
     <Item
       ref={(el) => (item.current[index] = el)}
-      key={key}
       bgImage={`https://image.tmdb.org/t/p/original/${bgImage}`}
     >
       <Title>{title}</Title>
       <Overview>{overview}</Overview>
-      <Link></Link>
     </Item>
   );
 };
 
 Card.propTypes = {
-  nowPlaying: PropTypes.array.isRequired,
+  id: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+  bgImage: PropTypes.string,
+  title: PropTypes.string,
+  overview: PropTypes.string,
 };
 
 export default Card;
