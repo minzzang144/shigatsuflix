@@ -89,7 +89,7 @@ Card.propTypes = {
   bgImage: PropTypes.string,
   title: PropTypes.string,
   overview: PropTypes.string,
-  isMovie: PropTypes.bool.isRequired,
+  isMovie: PropTypes.bool,
 };
 
 export default Card;
