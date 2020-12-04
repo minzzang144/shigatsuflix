@@ -270,7 +270,9 @@ const ItemList = styled.div`
 
 const Slide = ({ children, bottom }) => (
   <Container>
-    <ItemList className={bottom ? "bottom__slider" : "top__slider"}>
+    <ItemList
+      className={bottom ? "bottom__slider slider" : "top__slider slider"}
+    >
       {children}
     </ItemList>
   </Container>

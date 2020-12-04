@@ -69,6 +69,20 @@ const Item = styled.div`
   }
 `;
 
+const pauseAnimation = () => {
+  const sliders = document.querySelectorAll(".slider");
+  sliders.forEach((slider) => {
+    slider.style.cssText = "animation-play-state: paused;";
+  });
+};
+
+const playAnimation = () => {
+  const sliders = document.querySelectorAll(".slider");
+  sliders.forEach((slider) => {
+    slider.style.cssText = "animation-play-state: play;";
+  });
+};
+
 const Card = ({ id, index, bgImage, title, overview, isMovie = false }) => {
   const item = useRef([]);
   return (
@@ -80,7 +94,11 @@ const Card = ({ id, index, bgImage, title, overview, isMovie = false }) => {
       <Overview>
         {overview.length > 300 ? `${overview.substring(0, 400)}...` : overview}
       </Overview>
-      <CardLink to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+      <CardLink
+        to={isMovie ? `/movie/${id}` : `/show/${id}`}
+        onMouseEnter={pauseAnimation}
+        onMouseLeave={playAnimation}
+      >
         Detail<LinkArrow></LinkArrow>
       </CardLink>
     </Item>
