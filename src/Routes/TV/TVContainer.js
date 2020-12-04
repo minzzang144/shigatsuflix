@@ -1,6 +1,7 @@
 import React from "react";
 import { tvApi } from "api";
 import TVPresenter from "./TVPresenter";
+import checkSlide from "utils/CheckSlide";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
@@ -37,6 +38,12 @@ export default class extends React.Component {
         loading: false,
       });
     }
+    checkSlide();
+    window.addEventListener("scroll", checkSlide);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", checkSlide);
   }
 
   render() {

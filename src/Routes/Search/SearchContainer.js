@@ -1,6 +1,7 @@
 import React from "react";
 import { moviesApi, tvApi } from "api";
 import SearchPresenter from "./SearchPresenter";
+import checkSlide from "utils/CheckSlide";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
@@ -51,8 +52,17 @@ export default class extends React.Component {
       this.setState({
         loading: false,
       });
+      checkSlide();
     }
   };
+
+  componentDidMount() {
+    window.addEventListener("scroll", checkSlide);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", checkSlide);
+  }
 
   render() {
     const { movieResults, tvResults, searchTerm, loading, error } = this.state;
