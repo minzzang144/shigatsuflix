@@ -8,9 +8,20 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.span`
+const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
+  &.slide-in {
+    opacity: 0;
+    transition: all 0.5s;
+  }
+  &.left-position {
+    transform: translateX(-30%);
+  }
+  &.active {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 `;
 
 const Grid = styled.div`
@@ -21,7 +32,7 @@ const Grid = styled.div`
 
 const Section = ({ title, children }) => (
   <Container>
-    <Title>{title}</Title>
+    <Title className="left-position slide-in">{title}</Title>
     <Grid>{children}</Grid>
   </Container>
 );

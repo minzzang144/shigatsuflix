@@ -12,6 +12,25 @@ export default class extends React.Component {
     error: null,
   };
 
+  checkSlide() {
+    const slideObj = document.querySelectorAll(".slide-in");
+    console.log("fiuck");
+    slideObj.forEach((obj) => {
+      const slideInAt =
+        window.scrollY + window.innerHeight - obj.clientHeight / 2;
+      const objBottom = obj.offsetTop + obj.clientHeight;
+
+      const isHalfShown = slideInAt > obj.offsetTop;
+      const isNotScrolledPast = window.scrollY < objBottom;
+      console.log(slideInAt, obj.offsetTop, window.scrollY, objBottom);
+      if (isHalfShown && isNotScrolledPast) {
+        obj.classList.add("active");
+      } else {
+        obj.classList.remove("active");
+      }
+    });
+  }
+
   async componentDidMount() {
     try {
       const {
@@ -37,6 +56,8 @@ export default class extends React.Component {
         loading: false,
       });
     }
+    this.checkSlide();
+    window.addEventListener("scroll", this.checkSlide);
   }
 
   render() {

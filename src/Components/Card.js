@@ -27,8 +27,8 @@ const LinkArrow = styled.div`
 `;
 
 const CardLink = styled(Link)`
-  border-radius: 15px;
-  padding: 7px 13px;
+  border-radius: 5px;
+  padding: 2px 13px;
   position: relative;
   font-size: 1.3rem;
   color: rgba(20, 20, 20, 0.8);
