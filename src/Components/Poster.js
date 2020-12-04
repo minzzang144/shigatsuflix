@@ -3,6 +3,25 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+const PLink = styled(Link)`
+  &.slide-in {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  &.top-position {
+    transform: translateY(-30%);
+  }
+  &.bottom-position {
+    transform: translateY(30%);
+  }
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0%);
+  }
+`;
+
 const Container = styled.div`
   padding: 5px;
   font-size: 12px;
@@ -68,7 +87,7 @@ const Year = styled.span`
 `;
 
 const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
-  <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+  <PLink to={isMovie ? `/movie/${id}` : `/show/${id}`} className="slide-in">
     <Container>
       <ImageContainer>
         <Image
@@ -90,7 +109,7 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
       </Title>
       <Year>{year}</Year>
     </Container>
-  </Link>
+  </PLink>
 );
 
 Poster.propTypes = {
