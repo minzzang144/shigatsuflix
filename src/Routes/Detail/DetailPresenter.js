@@ -41,7 +41,7 @@ const Cover = styled.div`
 `;
 
 const Data = styled.div`
-  width: 70%;
+  width: 50%;
   margin-left: 10px;
 `;
 
@@ -52,19 +52,34 @@ const Title = styled.h3`
 
 const ItemContainer = styled.div`
   margin: 20px 0px;
+  display: flex;
+  align-items: center;
 `;
 
-const Item = styled.span``;
+const Item = styled.span`
+  line-height: 1.3;
+`;
+
+const IMDB = styled.a`
+  margin-left: 10px;
+  width: 40px;
+  height: 20px;
+`;
+
+const IMDBImg = styled.img`
+  width: 40px;
+  height: 20px;
+`;
 
 const Divider = styled.span`
   margin: 0px 10px;
 `;
 
 const Overview = styled.p`
+  width: 70%;
   font-size: 12px;
   opacity: 0.7;
   line-height: 1.5;
-  width: 50%;
 `;
 
 const DetailPresenter = ({ result, loading, error }) =>
@@ -119,6 +134,14 @@ const DetailPresenter = ({ result, loading, error }) =>
                     : `${genre.name} / `
                 )}
             </Item>
+            {result.imdb_id ? (
+              <IMDB
+                href={`https://www.imdb.com/title/${result.imdb_id}`}
+                target="_blank"
+              >
+                <IMDBImg src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"></IMDBImg>
+              </IMDB>
+            ) : null}
           </ItemContainer>
           <Overview>{result.overview}</Overview>
         </Data>
