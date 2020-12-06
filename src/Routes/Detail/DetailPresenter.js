@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import Tab from "Components/Tab";
 
 const Container = styled.div`
   position: relative;
@@ -101,6 +102,7 @@ const DetailPresenter = ({ result, loading, error }) =>
       <BackDrop
         bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
       />
+      <Tab />
       <Content>
         <Cover
           bgImage={
