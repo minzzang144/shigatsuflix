@@ -48,12 +48,6 @@ const Ul = styled.ul`
   justify-content: center;
 `;
 
-const Li = styled.li`
-  position: relative;
-  display: flex;
-  justify-content: center;
-`;
-
 const Button = styled.button`
   color: #e74c3c;
   font-size: 20px;
@@ -76,12 +70,6 @@ const Content = styled.div`
   transition: all 0.5s;
   transform: translateY(100px);
   will-change: opacity;
-  &.trigger-enter {
-    display: flex;
-  }
-  &.trigger-enter-active {
-    opacity: 1;
-  }
 `;
 
 const Close = styled.i`
@@ -95,6 +83,22 @@ const Close = styled.i`
 const Trailer = styled.iframe`
   min-width: 854px;
   min-height: 480px;
+`;
+
+const Li = styled.li`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  &.trigger-enter {
+    ${Content} {
+      display: flex;
+    }
+  }
+  &.trigger-enter-active {
+    ${Content} {
+      opacity: 1;
+    }
+  }
 `;
 
 const Tab = ({ result }) => {

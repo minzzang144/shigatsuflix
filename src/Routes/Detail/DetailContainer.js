@@ -1,6 +1,7 @@
 import React from "react";
 import { moviesApi, tvApi } from "api";
 import DetailPresenter from "./DetailPresenter";
+import { handelEnter, handleLeave } from "Utils/DropDown";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
@@ -46,9 +47,10 @@ export default class extends React.Component {
     const triggers = document.querySelectorAll(".triggers > li");
     const background = document.querySelector(".dropdown__background");
     const nav = document.querySelector(".nav");
-    triggers.forEach((trigger) =>
-      trigger.addEventListener("mouseenter", () => console.log("fuck"))
-    );
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("mouseenter", handelEnter);
+      trigger.addEventListener("mouseleave", handleLeave);
+    });
   }
 
   render() {
