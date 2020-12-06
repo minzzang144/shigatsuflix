@@ -27,6 +27,7 @@ const BackDrop = styled.div`
 
 const Content = styled.div`
   position: relative;
+  margin-top: 10px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -102,7 +103,7 @@ const DetailPresenter = ({ result, loading, error }) =>
       <BackDrop
         bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
       />
-      <Tab />
+      <Tab result={result} />
       <Content>
         <Cover
           bgImage={

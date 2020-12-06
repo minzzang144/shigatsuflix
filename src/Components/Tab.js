@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.div`
+  z-index: 1;
   position: absolute;
   top: 55px;
   left: 50%;
@@ -65,20 +66,38 @@ const Button = styled.button`
 const Content = styled.div`
   position: absolute;
   display: none;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 100px);
+  height: calc(100vh - 150px);
+  top: -45px;
+  background-color: rgba(20, 20, 20, 0.7);
   opacity: 0;
-  overflow: hidden;
   transition: all 0.5s;
   transform: translateY(100px);
   will-change: opacity;
   &.trigger-enter {
-    display: block;
+    display: flex;
   }
   &.trigger-enter-active {
     opacity: 1;
   }
 `;
 
-const Tab = () => {
+const Close = styled.i`
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.7);
+`;
+
+const Trailer = styled.iframe`
+  min-width: 854px;
+  min-height: 480px;
+`;
+
+const Tab = ({ result }) => {
   return (
     <Container>
       <Nav>
@@ -88,12 +107,23 @@ const Tab = () => {
         <Ul>
           <Li>
             <Button>Trailer</Button>
-            <Content></Content>
+            <Content>
+              <Close className="fas fa-times" />
+              {result.videos.results && (
+                <Trailer
+                  src={`https://youtube.com/embed/${result.videos.results[0].key}`}
+                />
+              )}
+            </Content>
           </Li>
         </Ul>
       </Nav>
     </Container>
   );
+};
+
+Tab.propTypes = {
+  result: PropTypes.object,
 };
 
 export default Tab;
