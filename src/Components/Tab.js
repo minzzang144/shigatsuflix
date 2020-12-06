@@ -100,11 +100,11 @@ const Trailer = styled.iframe`
 const Tab = ({ result }) => {
   return (
     <Container>
-      <Nav>
-        <DropDown>
+      <Nav className="nav">
+        <DropDown className="dropdown__background">
           <Arrow></Arrow>
         </DropDown>
-        <Ul>
+        <Ul className="triggers">
           <Li>
             <Button>Trailer</Button>
             <Content>

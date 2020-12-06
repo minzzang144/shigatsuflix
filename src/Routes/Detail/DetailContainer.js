@@ -26,10 +26,11 @@ export default class extends React.Component {
     } = this.props;
     const parsedId = parseInt(id);
     const { isMovie } = this.state;
+
+    let result = null;
     if (isNaN(parsedId)) {
       return push("/");
     }
-    let result = null;
     try {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
@@ -42,6 +43,12 @@ export default class extends React.Component {
     } finally {
       this.setState({ loading: false, result });
     }
+    const triggers = document.querySelectorAll(".triggers > li");
+    const background = document.querySelector(".dropdown__background");
+    const nav = document.querySelector(".nav");
+    triggers.forEach((trigger) =>
+      trigger.addEventListener("mouseenter", () => console.log("fuck"))
+    );
   }
 
   render() {
