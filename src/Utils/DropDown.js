@@ -9,11 +9,5 @@ export function handelEnter() {
 }
 
 export function handleLeave() {
-  this.classList.remove("trigger-enter-active");
-  setTimeout(
-    () =>
-      this.classList.contains("trigger-enter-active") &&
-      this.classList.remove("trigger-enter"),
-    150
-  );
+  this.classList.remove("trigger-enter", "trigger-enter-active");
 }

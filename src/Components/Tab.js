@@ -10,9 +10,7 @@ const Container = styled.div`
   transform: translate(-50%);
 `;
 
-const Nav = styled.nav`
-  position: relative;
-`;
+const Nav = styled.nav``;
 
 const DropDown = styled.div`
   width: 100px;
@@ -52,6 +50,7 @@ const Button = styled.button`
   color: #e74c3c;
   font-size: 20px;
   background: rgba(20, 20, 20, 0.7);
+  margin: 0px 20px 20px 20px;
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
@@ -59,17 +58,21 @@ const Button = styled.button`
 
 const Content = styled.div`
   position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  width: calc(100vw - 100px);
-  height: calc(100vh - 150px);
   top: -45px;
-  background-color: rgba(20, 20, 20, 0.7);
+  display: none;
   opacity: 0;
   transition: all 0.5s;
   transform: translateY(100px);
   will-change: opacity;
+  overflow-y: auto;
+  &.trailer {
+    transform: translate(60px, 100px);
+    justify-content: center;
+    align-items: center;
+    width: calc(100vw - 100px);
+    height: calc(100vh - 150px);
+    background-color: rgba(20, 20, 20, 0.7);
+  }
 `;
 
 const Close = styled.i`
@@ -86,7 +89,6 @@ const Trailer = styled.iframe`
 `;
 
 const Li = styled.li`
-  position: relative;
   display: flex;
   justify-content: center;
   &.trigger-enter {
@@ -111,7 +113,7 @@ const Tab = ({ result }) => {
         <Ul className="triggers">
           <Li>
             <Button>Trailer</Button>
-            <Content>
+            <Content className="trailer">
               <Close className="fas fa-times" />
               {result.videos.results && (
                 <Trailer
@@ -119,6 +121,10 @@ const Tab = ({ result }) => {
                 />
               )}
             </Content>
+          </Li>
+          <Li>
+            <Button>Film</Button>
+            <Content></Content>
           </Li>
         </Ul>
       </Nav>
