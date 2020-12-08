@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+// Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
   z-index: 1;
   position: absolute;
@@ -12,19 +13,22 @@ const Container = styled.div`
 
 const Nav = styled.nav``;
 
+// DropDown Box(Content 크기에 맞게 Background가 설정될 예정) + Tab 컴포넌트의 Container를 기준으로 absolute위치를 가진다.
 const DropDown = styled.div`
+  position: absolute;
+  top: -100px;
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
   width: 100px;
   height: 100px;
-  position: absolute;
   background: rgba(20, 20, 20, 0.2);
-  border-radius: 4px;
   box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
     0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s, opacity 0.1s, transform 0.2s;
   transform-origin: 50% 0;
-  display: flex;
-  justify-content: center;
   opacity: 0;
+  // Nav Button에 mouseenter이벤트 발생 시 생길 transition이다.
   &.open {
     opacity: 1;
   }
@@ -56,6 +60,7 @@ const Button = styled.button`
   border: none;
 `;
 
+// absolute위치는 Dropdown Box를 기준으로 한다.(Dropdown + Ul > Li > Content)
 const Content = styled.div`
   position: absolute;
   top: -45px;
@@ -65,7 +70,8 @@ const Content = styled.div`
   transform: translateY(100px);
   will-change: opacity;
   overflow-y: auto;
-  &.trailer {
+  // Trailer Content만 Modal 효과를 주었다.
+  &.trailer__content {
     transform: translate(60px, 100px);
     justify-content: center;
     align-items: center;
@@ -75,12 +81,17 @@ const Content = styled.div`
   }
 `;
 
+// absolute기준은 Content이다.(Content > Close)
 const Close = styled.i`
   cursor: pointer;
   position: absolute;
   top: 15px;
   right: 20px;
+  font-size: 1.3rem;
   color: rgba(255, 255, 255, 0.7);
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+  }
 `;
 
 const Trailer = styled.iframe`
@@ -111,14 +122,16 @@ const Tab = ({ result }) => {
           <Arrow></Arrow>
         </DropDown>
         <Ul className="triggers">
-          <Li>
+          <Li className="trailer__list">
             <Button>Trailer</Button>
-            <Content className="trailer">
+            <Content className="trailer__content">
               <Close className="fas fa-times" />
-              {result.videos.results && (
+              {result.videos.results[0] ? (
                 <Trailer
                   src={`https://youtube.com/embed/${result.videos.results[0].key}`}
                 />
+              ) : (
+                "There are no trailers found."
               )}
             </Content>
           </Li>
