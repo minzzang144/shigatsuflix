@@ -94,10 +94,7 @@ const Close = styled.i`
   }
 `;
 
-const Trailer = styled.iframe`
-  min-width: 854px;
-  min-height: 480px;
-`;
+const Trailer = styled.div``;
 
 const Li = styled.li`
   display: flex;
@@ -127,9 +124,9 @@ const Tab = ({ result }) => {
             <Content className="trailer__content">
               <Close className="fas fa-times" />
               {result.videos.results[0] ? (
-                <Trailer
-                  src={`https://youtube.com/embed/${result.videos.results[0].key}`}
-                />
+                <>
+                  <Trailer id="player" />
+                </>
               ) : (
                 "There are no trailers found."
               )}

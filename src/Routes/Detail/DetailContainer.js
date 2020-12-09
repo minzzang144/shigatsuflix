@@ -1,7 +1,7 @@
 import React from "react";
 import { moviesApi, tvApi } from "api";
 import DetailPresenter from "./DetailPresenter";
-import { handelEnter, handleLeave } from "Utils/DropDown";
+import { handelEnter, handleLeave } from "Utils/HoverTab";
 import closeTrailer from "Utils/CloseTrailer";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -54,6 +54,21 @@ export default class extends React.Component {
       trigger.addEventListener("mouseleave", handleLeave);
     });
     closeButton.addEventListener("click", closeTrailer);
+
+    if (!window.YT) {
+      // If not, load the script asynchronously
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+
+      // onYouTubeIframeAPIReady will load the video after the script is loaded
+      window.onYouTubeIframeAPIReady = this.loadVideo;
+
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    } else {
+      // If script is already there, load the video directly
+      this.loadVideo();
+    }
   }
 
   componentWillUnmount() {
@@ -64,6 +79,23 @@ export default class extends React.Component {
       trigger.removeEventListener("mouseleave", handleLeave);
     });
     closeButton.removeEventListener("click", closeTrailer);
+    this.player = null;
+  }
+
+  loadVideo = () => {
+    // the Player object is created uniquely based on the "player" id
+    const { result } = this.state;
+    this.player = new window.YT.Player("player", {
+      videoId: `${result.videos.results[0].key}`,
+      events: {
+        onReady: this.onPlayerReady,
+      },
+    });
+  };
+
+  // The API will call this function when the video player is ready.
+  onPlayerReady(event) {
+    event.target.playVideo();
   }
 
   render() {
