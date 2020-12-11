@@ -99,6 +99,7 @@ const Trailer = styled.div``;
 const Li = styled.li`
   display: flex;
   justify-content: center;
+  transition: opacity 0.5s ease-in-out;
   &.trigger-enter {
     ${Content} {
       display: flex;

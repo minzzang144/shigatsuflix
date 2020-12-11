@@ -8,8 +8,6 @@ const api = axios.create({
   },
 });
 
-api.get("tv/popular");
-
 export const moviesApi = {
   nowPlaying: () => api.get("movie/now_playing"),
   upComing: () => api.get("movie/upcoming"),
