@@ -13,6 +13,7 @@ export default class extends React.Component {
     } = props;
     this.state = {
       result: null,
+      cast: null,
       trailer: null,
       isMovie: pathname.includes("/movie/"),
       loading: true,
@@ -31,20 +32,22 @@ export default class extends React.Component {
     const { isMovie } = this.state;
 
     let result = null;
+    let cast = null;
     if (isNaN(parsedId)) {
       return push("/");
     }
     try {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
+        ({ data: cast } = await moviesApi.castDetail(parsedId));
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
       }
-      console.log(result);
+      console.log(result, cast);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ result });
+      this.setState({ result, cast });
       if (!window.YT) {
         // If not, load the script asynchronously
         const tag = document.createElement("script");
@@ -113,7 +116,7 @@ export default class extends React.Component {
       this.setState({
         trailer: await new window.YT.Player("player", {
           videoId: `${result.videos.results[0].key}`,
-          playerVars: { origin: "https://localhost:3000/" },
+          playerVars: { origin: "http://localhost:3000" },
           events: {
             onReady: () => tab.classList.add("tab__container"),
           },
@@ -125,8 +128,15 @@ export default class extends React.Component {
   };
 
   render() {
-    const { result, loading, error } = this.state;
+    const { result, cast, loading, error } = this.state;
     console.log(this.props);
-    return <DetailPresenter result={result} loading={loading} error={error} />;
+    return (
+      <DetailPresenter
+        result={result}
+        cast={cast}
+        loading={loading}
+        error={error}
+      />
+    );
   }
 }

@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Container = styled.div`
   z-index: 1;
   position: absolute;
-  top: 55px;
+  top: 60px;
   left: 50%;
   visibility: hidden;
   opacity: 0;
@@ -23,13 +23,12 @@ const Nav = styled.nav``;
 // DropDown Box(Content 크기에 맞게 Background가 설정될 예정) + Tab 컴포넌트의 Container를 기준으로 absolute위치를 가진다.
 const DropDown = styled.div`
   position: absolute;
-  top: -100px;
   display: flex;
   justify-content: center;
   border-radius: 4px;
   width: 100px;
   height: 100px;
-  background: rgba(20, 20, 20, 0.2);
+  background: rgba(255, 255, 255);
   box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
     0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s, opacity 0.1s, transform 0.2s;
@@ -46,7 +45,7 @@ const Arrow = styled.span`
   width: 20px;
   height: 20px;
   display: block;
-  background: rgba(20, 20, 20, 0.2);
+  background: rgba(255, 255, 255);
   transform: translateY(-50%) rotate(45deg);
 `;
 
@@ -70,13 +69,12 @@ const Button = styled.button`
 // absolute위치는 Dropdown Box를 기준으로 한다.(Dropdown + Ul > Li > Content)
 const Content = styled.div`
   position: absolute;
-  top: -45px;
+  top: -50px;
   display: none;
   opacity: 0;
   transition: all 0.5s;
   transform: translateY(100px);
   will-change: opacity;
-  overflow-y: auto;
   // Trailer Content만 Modal 효과를 주었다.
   &.trailer__content {
     transform: translate(60px, 100px);
@@ -103,6 +101,12 @@ const Close = styled.i`
 
 const Trailer = styled.div``;
 
+const Title = styled.h3``;
+
+const Box = styled.ul``;
+
+const BoxList = styled.li``;
+
 const Li = styled.li`
   display: flex;
   justify-content: center;
@@ -120,12 +124,12 @@ const Li = styled.li`
   &:hover {
     ${Button} {
       color: rgba(20, 20, 20);
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255);
     }
   }
 `;
 
-const Tab = ({ result }) => {
+const Tab = ({ result, cast }) => {
   return (
     <Container id="tabContainer">
       <Nav className="nav">
@@ -148,7 +152,10 @@ const Tab = ({ result }) => {
           </Li>
           <Li>
             <Button>Film</Button>
-            <Content></Content>
+            <Content className="film__list dropdown">
+              <Title>Actor</Title>
+              <Box></Box>
+            </Content>
           </Li>
         </Ul>
       </Nav>
@@ -158,6 +165,7 @@ const Tab = ({ result }) => {
 
 Tab.propTypes = {
   result: PropTypes.object,
+  cast: PropTypes.object,
 };
 
 export default Tab;
