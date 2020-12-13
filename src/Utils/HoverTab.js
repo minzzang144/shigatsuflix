@@ -10,7 +10,6 @@ export function handleEnter(trailer) {
       this.classList.add("trigger-enter-active"),
     150
   );
-  background.classList.add("open");
 
   const dropDownCoords = dropDown.getBoundingClientRect();
   const navCoords = nav.getBoundingClientRect();
@@ -27,6 +26,8 @@ export function handleEnter(trailer) {
   // Trailer Button에 마우스가 들어가는 순간에만 유튜브 동영상 재생
   if (this.classList.contains("trailer__list")) {
     trailer.playVideo();
+  } else {
+    background.classList.add("open");
   }
 }
 

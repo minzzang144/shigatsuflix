@@ -84,7 +84,7 @@ const Overview = styled.p`
   line-height: 1.5;
 `;
 
-const DetailPresenter = ({ result, loading, error }) =>
+const DetailPresenter = ({ result, credit, loading, error }) =>
   loading ? (
     <>
       <Helmet>
@@ -103,7 +103,7 @@ const DetailPresenter = ({ result, loading, error }) =>
       <BackDrop
         bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
       />
-      <Tab result={result} />
+      <Tab result={result} credit={credit} />
       <Content>
         <Cover
           bgImage={
@@ -154,6 +154,7 @@ const DetailPresenter = ({ result, loading, error }) =>
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
+  credit: PropTypes.object,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };

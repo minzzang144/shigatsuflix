@@ -13,7 +13,7 @@ export default class extends React.Component {
     } = props;
     this.state = {
       result: null,
-      cast: null,
+      credit: null,
       trailer: null,
       isMovie: pathname.includes("/movie/"),
       loading: true,
@@ -32,22 +32,23 @@ export default class extends React.Component {
     const { isMovie } = this.state;
 
     let result = null;
-    let cast = null;
+    let credit = null;
     if (isNaN(parsedId)) {
       return push("/");
     }
     try {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
-        ({ data: cast } = await moviesApi.castDetail(parsedId));
+        ({ data: credit } = await moviesApi.creditDetail(parsedId));
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
+        ({ data: credit } = await tvApi.creditDetail(parsedId));
       }
-      console.log(result, cast);
+      console.log(result, credit);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ result, cast });
+      this.setState({ result, credit });
       if (!window.YT) {
         // If not, load the script asynchronously
         const tag = document.createElement("script");
@@ -128,12 +129,12 @@ export default class extends React.Component {
   };
 
   render() {
-    const { result, cast, loading, error } = this.state;
+    const { result, credit, loading, error } = this.state;
     console.log(this.props);
     return (
       <DetailPresenter
         result={result}
-        cast={cast}
+        credit={credit}
         loading={loading}
         error={error}
       />

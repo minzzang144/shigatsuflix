@@ -84,6 +84,41 @@ const Content = styled.div`
     height: calc(100vh - 150px);
     background-color: rgba(20, 20, 20, 0.7);
   }
+  &.film__list {
+    padding: 25px 20px 10px 20px;
+    color: black;
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+    scrollbar-color: #8ec5fc #f5f5f5;
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      /* background-color: #f5f5f5; */
+      background: transparent;
+    }
+    &::-webkit-scrollbar-track-piece:start {
+      background: transparent;
+      margin-top: 10px;
+    }
+    &::-webkit-scrollbar {
+      width: 12px;
+      border-radius: 10px;
+      background: transparent;
+      /* background-color: #f5f5f5; */
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      background-image: -webkit-linear-gradient(
+        330deg,
+        #e0c3fc 0%,
+        #8ec5fc 100%
+      );
+      background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+    }
+  }
 `;
 
 // absolute기준은 Content이다.(Content > Close)
@@ -101,11 +136,23 @@ const Close = styled.i`
 
 const Trailer = styled.div``;
 
-const Title = styled.h3``;
+const Title = styled.h3`
+  font-weight: 600;
+  font-size: 1.2rem;
+`;
 
 const Box = styled.ul``;
 
 const BoxList = styled.li``;
+
+const Photo = styled.div`
+  width: 100px;
+  height: 200px;
+  border-radius: 3px;
+  background-image: url(${(props) => props.bgImage});
+  background-position: center center;
+  background-size: cover;
+`;
 
 const Li = styled.li`
   display: flex;
@@ -114,6 +161,7 @@ const Li = styled.li`
   &.trigger-enter {
     ${Content} {
       display: flex;
+      flex-direction: column;
     }
   }
   &.trigger-enter-active {
@@ -129,7 +177,7 @@ const Li = styled.li`
   }
 `;
 
-const Tab = ({ result, cast }) => {
+const Tab = ({ result, credit }) => {
   return (
     <Container id="tabContainer">
       <Nav className="nav">
@@ -154,7 +202,20 @@ const Tab = ({ result, cast }) => {
             <Button>Film</Button>
             <Content className="film__list dropdown">
               <Title>Actor</Title>
-              <Box></Box>
+              <Box>
+                {credit.cast &&
+                  credit.cast.map((actor) => (
+                    <BoxList>
+                      <Photo
+                        bgImage={
+                          actor.profile_path
+                            ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                            : "/noPosterSmall.png"
+                        }
+                      ></Photo>
+                    </BoxList>
+                  ))}
+              </Box>
             </Content>
           </Li>
         </Ul>
