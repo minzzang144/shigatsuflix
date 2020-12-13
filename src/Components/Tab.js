@@ -8,7 +8,14 @@ const Container = styled.div`
   position: absolute;
   top: 55px;
   left: 50%;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
   transform: translate(-50%);
+  &.tab__container {
+    visibility: visible;
+    opacity: 1;
+  }
 `;
 
 const Nav = styled.nav``;
@@ -110,11 +117,17 @@ const Li = styled.li`
       opacity: 1;
     }
   }
+  &:hover {
+    ${Button} {
+      color: rgba(20, 20, 20);
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
 `;
 
 const Tab = ({ result }) => {
   return (
-    <Container>
+    <Container id="tabContainer">
       <Nav className="nav">
         <DropDown className="dropdown__background">
           <Arrow></Arrow>

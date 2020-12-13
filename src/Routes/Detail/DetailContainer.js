@@ -13,10 +13,10 @@ export default class extends React.Component {
     } = props;
     this.state = {
       result: null,
+      trailer: null,
+      isMovie: pathname.includes("/movie/"),
       loading: true,
       error: null,
-      isMovie: pathname.includes("/movie/"),
-      trailer: null,
     };
   }
 
@@ -61,11 +61,13 @@ export default class extends React.Component {
       }
       this.setState({ loading: false });
     }
+
     const triggers = document.querySelectorAll(".triggers > li");
     const background = document.querySelector(".dropdown__background");
     const nav = document.querySelector(".nav");
     const closeButton = document.querySelector(".fa-times");
 
+    // triggers 이벤트 핸들링 추가
     triggers.forEach((trigger) => {
       const mouseEnter = handleEnter.bind(trigger);
       const mouseLeave = handleLeave.bind(trigger);
@@ -76,14 +78,20 @@ export default class extends React.Component {
         mouseLeave(this.state.trailer)
       );
     });
-
     closeButton.addEventListener("click", closeTrailer);
   }
 
   componentWillUnmount() {
     const triggers = document.querySelectorAll(".triggers > li");
     const closeButton = document.querySelector(".fa-times");
+    const iframeScriptJS = document.getElementsByTagName("script")[0];
+    const iframeScriptAPI = document.getElementsByTagName("script")[1];
 
+    // 컴포넌트가 Unmount될 시 자동적으로 스크립트를 삭제하고 YT 전역변수도 null값으로 설정한다.
+    iframeScriptJS.remove();
+    iframeScriptAPI.remove();
+    window.YT = null;
+    // triggers의 이벤트 제거
     triggers.forEach((trigger) => {
       const mouseEnter = handleEnter.bind(trigger);
       const mouseLeave = handleLeave.bind(trigger);
@@ -98,15 +106,16 @@ export default class extends React.Component {
   }
 
   loadVideo = async () => {
-    // the Player object is created uniquely based on the "player" id
     const { result } = this.state;
+    const tab = document.querySelector("#tabContainer");
     try {
+      // the Player object is created uniquely based on the "player" id
       this.setState({
         trailer: await new window.YT.Player("player", {
           videoId: `${result.videos.results[0].key}`,
           playerVars: { origin: "https://localhost:3000/" },
           events: {
-            //
+            onReady: () => tab.classList.add("tab__container"),
           },
         }),
       });
