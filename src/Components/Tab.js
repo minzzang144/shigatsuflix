@@ -21,7 +21,7 @@ const Container = styled.div`
 const Nav = styled.nav``;
 
 // DropDown Box(Content 크기에 맞게 Background가 설정될 예정) + Tab 컴포넌트의 Container를 기준으로 absolute위치를 가진다.
-const DropDown = styled.div`
+const DropDownBox = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -65,11 +65,14 @@ const Button = styled.button`
   border-radius: 5px;
   border: none;
 `;
-
-// absolute위치는 Dropdown Box를 기준으로 한다.(Dropdown + Ul > Li > Content)
-const Content = styled.div`
+const DropDown = styled.div`
   position: absolute;
   top: -50px;
+  padding: 25px 20px 10px 20px;
+`;
+
+// absolute위치는 Dropdown Box를 기준으로 한다.(Dropdown + Ul > Li > Content)
+const Wrapper = styled.div`
   display: none;
   opacity: 0;
   transition: all 0.5s;
@@ -77,6 +80,8 @@ const Content = styled.div`
   will-change: opacity;
   // Trailer Content만 Modal 효과를 주었다.
   &.trailer__content {
+    position: absolute;
+    top: -50px;
     transform: translate(60px, 100px);
     justify-content: center;
     align-items: center;
@@ -84,8 +89,7 @@ const Content = styled.div`
     height: calc(100vh - 150px);
     background-color: rgba(20, 20, 20, 0.7);
   }
-  &.film__list {
-    padding: 25px 20px 10px 20px;
+  &.film__content {
     color: black;
     overflow-y: auto;
     max-height: calc(100vh - 150px);
@@ -94,18 +98,17 @@ const Content = styled.div`
       border-radius: 10px;
       box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-      /* background-color: #f5f5f5; */
+      background-color: #f5f5f5;
       background: transparent;
     }
     &::-webkit-scrollbar-track-piece:start {
       background: transparent;
-      margin-top: 10px;
     }
     &::-webkit-scrollbar {
       width: 12px;
       border-radius: 10px;
       background: transparent;
-      /* background-color: #f5f5f5; */
+      background-color: #f5f5f5;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 10px;
@@ -159,13 +162,13 @@ const Li = styled.li`
   justify-content: center;
   transition: opacity 0.5s ease-in-out;
   &.trigger-enter {
-    ${Content} {
+    ${Wrapper} {
       display: flex;
       flex-direction: column;
     }
   }
   &.trigger-enter-active {
-    ${Content} {
+    ${Wrapper} {
       opacity: 1;
     }
   }
@@ -181,13 +184,13 @@ const Tab = ({ result, credit }) => {
   return (
     <Container id="tabContainer">
       <Nav className="nav">
-        <DropDown className="dropdown__background">
+        <DropDownBox className="dropdown__background">
           <Arrow></Arrow>
-        </DropDown>
+        </DropDownBox>
         <Ul className="triggers">
           <Li className="trailer__list">
             <Button>Trailer</Button>
-            <Content className="trailer__content">
+            <Wrapper className="trailer__content">
               <Close className="fas fa-times" />
               {result.videos.results[0] ? (
                 <>
@@ -196,27 +199,29 @@ const Tab = ({ result, credit }) => {
               ) : (
                 "There are no trailers found."
               )}
-            </Content>
+            </Wrapper>
           </Li>
           <Li>
             <Button>Film</Button>
-            <Content className="film__list dropdown">
-              <Title>Actor</Title>
-              <Box>
-                {credit.cast &&
-                  credit.cast.map((actor) => (
-                    <BoxList>
-                      <Photo
-                        bgImage={
-                          actor.profile_path
-                            ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                            : "/noPosterSmall.png"
-                        }
-                      ></Photo>
-                    </BoxList>
-                  ))}
-              </Box>
-            </Content>
+            <DropDown className="dropdown">
+              <Wrapper className="film__content">
+                <Title>Actor</Title>
+                <Box>
+                  {credit.cast &&
+                    credit.cast.map((actor) => (
+                      <BoxList>
+                        <Photo
+                          bgImage={
+                            actor.profile_path
+                              ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                              : "/noPosterSmall.png"
+                          }
+                        ></Photo>
+                      </BoxList>
+                    ))}
+                </Box>
+              </Wrapper>
+            </DropDown>
           </Li>
         </Ul>
       </Nav>

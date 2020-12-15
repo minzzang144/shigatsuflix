@@ -17,7 +17,7 @@ export function handleEnter(trailer) {
   const coords = {
     width: dropDownCoords.width,
     height: dropDownCoords.height,
-    top: dropDownCoords.top - navCoords.top + 10,
+    top: dropDownCoords.top + 50,
     left: dropDownCoords.left - navCoords.left,
   };
 
