@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Poster from "Components/Poster";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
@@ -92,6 +94,7 @@ const Wrapper = styled.div`
   }
   &.film__content {
     color: black;
+    overflow-x: hidden;
     overflow-y: auto;
     max-width: calc(100vw - 140px);
     max-height: calc(100vh - 185px);
@@ -213,7 +216,7 @@ const Li = styled.li`
   }
 `;
 
-const Tab = ({ result, credit }) => {
+const Tab = ({ result, credit, recommandation }) => {
   return (
     <Container className="tabContainer">
       <Nav className="nav">
@@ -278,6 +281,23 @@ const Tab = ({ result, credit }) => {
                       ))
                     : "Not found information"}
                 </Box>
+                <Title>Recommand Movie</Title>
+                <Box>
+                  {recommandation && recommandation.length > 0
+                    ? recommandation.map((movie) => (
+                        <Poster
+                          key={movie.id}
+                          id={movie.id}
+                          title={movie.original_title}
+                          imageUrl={movie.poster_path}
+                          rating={movie.vote_average}
+                          year={movie.release_date.substring(0, 4)}
+                          isMovie={true}
+                          isFilm={true}
+                        />
+                      ))
+                    : "Not found information"}
+                </Box>
               </Wrapper>
             </DropDown>
           </Li>
@@ -290,6 +310,7 @@ const Tab = ({ result, credit }) => {
 Tab.propTypes = {
   result: PropTypes.object,
   cast: PropTypes.object,
+  recommandation: PropTypes.array,
 };
 
 export default Tab;

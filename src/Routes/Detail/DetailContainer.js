@@ -14,6 +14,7 @@ export default class extends React.Component {
     this.state = {
       result: null,
       credit: null,
+      recommandation: null,
       trailer: null,
       isMovie: pathname.includes("/movie/"),
       loading: true,
@@ -33,6 +34,7 @@ export default class extends React.Component {
 
     let result = null;
     let credit = null;
+    let recommandation = null;
     if (isNaN(parsedId)) {
       return push("/");
     }
@@ -40,15 +42,21 @@ export default class extends React.Component {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
         ({ data: credit } = await moviesApi.creditDetail(parsedId));
+        ({
+          data: { results: recommandation },
+        } = await moviesApi.recommandation(parsedId));
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         ({ data: credit } = await tvApi.creditDetail(parsedId));
+        ({
+          data: { results: recommandation },
+        } = await tvApi.recommandation(parsedId));
       }
-      console.log(result, credit);
+      console.log(result, credit, recommandation);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ result, credit });
+      this.setState({ result, credit, recommandation });
       if (!window.YT) {
         // If not, load the script asynchronously
         const tag = document.createElement("script");
@@ -129,12 +137,13 @@ export default class extends React.Component {
   };
 
   render() {
-    const { result, credit, loading, error } = this.state;
+    const { result, credit, recommandation, loading, error } = this.state;
     console.log(this.props);
     return (
       <DetailPresenter
         result={result}
         credit={credit}
+        recommandation={recommandation}
         loading={loading}
         error={error}
       />

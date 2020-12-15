@@ -20,6 +20,9 @@ const PLink = styled(Link)`
     pointer-events: auto;
     transform: translateX(0%);
   }
+  &.recommandation__poster {
+    width: calc((100vw - 140px) / 8);
+  }
 `;
 
 const Container = styled.div`
@@ -86,8 +89,19 @@ const Year = styled.span`
   color: rgba(255, 255, 255, 0.7);
 `;
 
-const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
-  <PLink to={isMovie ? `/movie/${id}` : `/show/${id}`} className="slide-in">
+const Poster = ({
+  id,
+  imageUrl,
+  title,
+  rating,
+  year,
+  isMovie = false,
+  isFilm = false,
+}) => (
+  <PLink
+    to={isMovie ? `/movie/${id}` : `/show/${id}`}
+    className={isFilm ? "recommandation__poster" : "slide-in"}
+  >
     <Container>
       <ImageContainer>
         <Image
