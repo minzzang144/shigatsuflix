@@ -146,7 +146,10 @@ const Trailer = styled.div``;
 const Title = styled.h3`
   margin-bottom: 10px;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
 `;
 
 const Box = styled.ul`
@@ -237,22 +240,43 @@ const Tab = ({ result, credit }) => {
               <Wrapper className="film__content">
                 <Title>Actor</Title>
                 <Box>
-                  {credit.cast &&
-                    credit.cast.map((actor) => (
-                      <BoxList key={actor.cast_id}>
-                        <Photo
-                          bgImage={
-                            actor.profile_path
-                              ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                              : "/noPosterSmall.png"
-                          }
-                        ></Photo>
-                        <Info className="actor__name">{`${actor.original_name}`}</Info>
-                        <Info>
-                          Star as <HighLight>{actor.character}</HighLight>
-                        </Info>
-                      </BoxList>
-                    ))}
+                  {credit.cast && credit.cast.length > 0
+                    ? credit.cast.map((actor) => (
+                        <BoxList key={actor.cast_id}>
+                          <Photo
+                            bgImage={
+                              actor.profile_path
+                                ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                                : "/noPosterSmall.png"
+                            }
+                          ></Photo>
+                          <Info className="actor__name">{`${actor.original_name}`}</Info>
+                          <Info>
+                            Star as <HighLight>{actor.character}</HighLight>
+                          </Info>
+                        </BoxList>
+                      ))
+                    : "Not found information"}
+                </Box>
+                <Title>Crew</Title>
+                <Box>
+                  {credit.crew && credit.crew.length > 0
+                    ? credit.crew.map((crew) => (
+                        <BoxList key={crew.credit_id}>
+                          <Photo
+                            bgImage={
+                              crew.profile_path
+                                ? `https://image.tmdb.org/t/p/original${crew.profile_path}`
+                                : "/noPosterSmall.png"
+                            }
+                          ></Photo>
+                          <Info className="actor__name">{`${crew.original_name}`}</Info>
+                          <Info>
+                            Role as <HighLight>{crew.job}</HighLight>
+                          </Info>
+                        </BoxList>
+                      ))
+                    : "Not found information"}
                 </Box>
               </Wrapper>
             </DropDown>
