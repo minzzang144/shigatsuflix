@@ -46,7 +46,7 @@ const Arrow = styled.span`
   height: 20px;
   display: block;
   background: rgba(255, 255, 255);
-  transform: translate(350%, -50%) rotate(45deg);
+  transform: translate(380%, -50%) rotate(45deg);
 `;
 
 const Ul = styled.ul`
@@ -67,8 +67,8 @@ const Button = styled.button`
 `;
 const DropDown = styled.div`
   position: absolute;
-  transform: translate(-70px, 50px);
-  padding: 25px 20px 10px 20px;
+  transform: translate(-75px, 50px);
+  padding: 25px 10px 10px 20px;
   max-width: calc(100vw - 100px);
   max-height: calc(100vh - 150px);
 `;
@@ -101,27 +101,29 @@ const Wrapper = styled.div`
       box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       background-color: #f5f5f5;
-      background: transparent;
-    }
-    &::-webkit-scrollbar-track-piece:start {
-      background: transparent;
     }
     &::-webkit-scrollbar {
       width: 12px;
       border-radius: 10px;
-      background: transparent;
       background-color: #f5f5f5;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 10px;
       box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-      background-image: -webkit-linear-gradient(
-        330deg,
-        #e0c3fc 0%,
-        #8ec5fc 100%
+      background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        from(#30cfd0),
+        to(#330867)
       );
-      background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+      background-image: -webkit-linear-gradient(
+        bottom,
+        #30cfd0 0%,
+        #330867 100%
+      );
+      background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
     }
   }
 `;
@@ -142,8 +144,9 @@ const Close = styled.i`
 const Trailer = styled.div``;
 
 const Title = styled.h3`
+  margin-bottom: 10px;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 `;
 
 const Box = styled.ul`
@@ -152,15 +155,36 @@ const Box = styled.ul`
   width: calc(100vw - 140px);
 `;
 
-const BoxList = styled.li``;
+const BoxList = styled.li`
+  padding: 5px;
+  &:nth-child(8n + 1) {
+    padding: 5px 5px 5px 0;
+  }
+  &:nth-child(8n) {
+    padding: 5px 0 5px 5px;
+  }
+`;
 
 const Photo = styled.div`
-  width: 100px;
-  height: 200px;
+  width: calc((100vw - 220px) / 8);
+  height: 250px;
   border-radius: 3px;
   background-image: url(${(props) => props.bgImage});
   background-position: center center;
   background-size: cover;
+`;
+
+const Info = styled.span`
+  display: block;
+  width: calc((100vw - 220px) / 8);
+  line-height: 1.3rem;
+  &.actor__name {
+    margin-top: 5px;
+  }
+`;
+
+const HighLight = styled.span`
+  font-weight: 600;
 `;
 
 const Li = styled.li`
@@ -215,7 +239,7 @@ const Tab = ({ result, credit }) => {
                 <Box>
                   {credit.cast &&
                     credit.cast.map((actor) => (
-                      <BoxList>
+                      <BoxList key={actor.cast_id}>
                         <Photo
                           bgImage={
                             actor.profile_path
@@ -223,6 +247,10 @@ const Tab = ({ result, credit }) => {
                               : "/noPosterSmall.png"
                           }
                         ></Photo>
+                        <Info className="actor__name">{`${actor.original_name}`}</Info>
+                        <Info>
+                          Star as <HighLight>{actor.character}</HighLight>
+                        </Info>
                       </BoxList>
                     ))}
                 </Box>
