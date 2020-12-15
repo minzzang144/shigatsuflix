@@ -67,7 +67,7 @@ export default class extends React.Component {
     }
 
     const triggers = document.querySelectorAll(".triggers > li");
-    const background = document.querySelector(".dropdown__background");
+    const background = document.querySelector(".dropDownBg");
     const nav = document.querySelector(".nav");
     const closeButton = document.querySelector(".fa-times");
 
@@ -111,7 +111,7 @@ export default class extends React.Component {
 
   loadVideo = async () => {
     const { result } = this.state;
-    const tab = document.querySelector("#tabContainer");
+    const tab = document.querySelector(".tabContainer");
     try {
       // the Player object is created uniquely based on the "player" id
       this.setState({

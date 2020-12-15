@@ -46,7 +46,7 @@ const Arrow = styled.span`
   height: 20px;
   display: block;
   background: rgba(255, 255, 255);
-  transform: translateY(-50%) rotate(45deg);
+  transform: translate(350%, -50%) rotate(45deg);
 `;
 
 const Ul = styled.ul`
@@ -67,8 +67,10 @@ const Button = styled.button`
 `;
 const DropDown = styled.div`
   position: absolute;
-  top: -50px;
+  transform: translate(-70px, 50px);
   padding: 25px 20px 10px 20px;
+  max-width: calc(100vw - 100px);
+  max-height: calc(100vh - 150px);
 `;
 
 // absolute위치는 Dropdown Box를 기준으로 한다.(Dropdown + Ul > Li > Content)
@@ -76,7 +78,6 @@ const Wrapper = styled.div`
   display: none;
   opacity: 0;
   transition: all 0.5s;
-  transform: translateY(100px);
   will-change: opacity;
   // Trailer Content만 Modal 효과를 주었다.
   &.trailer__content {
@@ -92,7 +93,8 @@ const Wrapper = styled.div`
   &.film__content {
     color: black;
     overflow-y: auto;
-    max-height: calc(100vh - 150px);
+    max-width: calc(100vw - 140px);
+    max-height: calc(100vh - 185px);
     scrollbar-color: #8ec5fc #f5f5f5;
     &::-webkit-scrollbar-track {
       border-radius: 10px;
@@ -144,7 +146,11 @@ const Title = styled.h3`
   font-size: 1.2rem;
 `;
 
-const Box = styled.ul``;
+const Box = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100vw - 140px);
+`;
 
 const BoxList = styled.li``;
 
@@ -182,13 +188,13 @@ const Li = styled.li`
 
 const Tab = ({ result, credit }) => {
   return (
-    <Container id="tabContainer">
+    <Container className="tabContainer">
       <Nav className="nav">
-        <DropDownBox className="dropdown__background">
+        <DropDownBox className="dropDownBg">
           <Arrow></Arrow>
         </DropDownBox>
         <Ul className="triggers">
-          <Li className="trailer__list">
+          <Li className="trailerList">
             <Button>Trailer</Button>
             <Wrapper className="trailer__content">
               <Close className="fas fa-times" />
@@ -201,7 +207,7 @@ const Tab = ({ result, credit }) => {
               )}
             </Wrapper>
           </Li>
-          <Li>
+          <Li className="filmList">
             <Button>Film</Button>
             <DropDown className="dropdown">
               <Wrapper className="film__content">
