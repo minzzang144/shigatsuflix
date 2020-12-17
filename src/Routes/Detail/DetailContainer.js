@@ -75,8 +75,6 @@ export default class extends React.Component {
     }
 
     const triggers = document.querySelectorAll(".triggers > li");
-    const background = document.querySelector(".dropDownBg");
-    const nav = document.querySelector(".nav");
     const closeButton = document.querySelector(".fa-times");
 
     // triggers 이벤트 핸들링 추가
@@ -91,6 +89,93 @@ export default class extends React.Component {
       );
     });
     closeButton.addEventListener("click", closeTrailer);
+  }
+
+  async componentDidUpdate(prevProps) {
+    // Detail page url 부분 중 id가 업데이트 되어 달라지게 되는 경우 새로 Detail Page를 re-rendering 한다.
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      // console.log(prevProps.match.params.id, this.props.match.params.id);
+      const {
+        match: {
+          params: { id },
+        },
+        history: { push },
+        location: { pathname },
+      } = this.props;
+      const parsedId = parseInt(id);
+      const { isMovie } = this.state;
+      const iframeScriptJS = document.getElementsByTagName("script")[0];
+      const iframeScriptAPI = document.getElementsByTagName("script")[1];
+
+      let result = null;
+      let credit = null;
+      let recommandation = null;
+      if (isNaN(parsedId)) {
+        return push("/");
+      }
+      this.setState({
+        result: null,
+        credit: null,
+        recommandation: null,
+        trailer: null,
+        isMovie: pathname.includes("/movie/"),
+        loading: true,
+        error: null,
+      });
+      iframeScriptJS.remove();
+      iframeScriptAPI.remove();
+      window.YT = null;
+      try {
+        if (isMovie) {
+          ({ data: result } = await moviesApi.movieDetail(parsedId));
+          ({ data: credit } = await moviesApi.creditDetail(parsedId));
+          ({
+            data: { results: recommandation },
+          } = await moviesApi.recommandation(parsedId));
+        } else {
+          ({ data: result } = await tvApi.showDetail(parsedId));
+          ({ data: credit } = await tvApi.creditDetail(parsedId));
+          ({
+            data: { results: recommandation },
+          } = await tvApi.recommandation(parsedId));
+        }
+        console.log(result, credit, recommandation);
+      } catch {
+        this.setState({ error: "Can't find anything." });
+      } finally {
+        this.setState({ result, credit, recommandation });
+        if (!window.YT) {
+          // If not, load the script asynchronously
+          const tag = document.createElement("script");
+          tag.src = "https://www.youtube.com/iframe_api";
+
+          // onYouTubeIframeAPIReady will load the video after the script is loaded
+          window.onYouTubeIframeAPIReady = this.loadVideo;
+
+          const firstScriptTag = document.getElementsByTagName("script")[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        } else {
+          // If script is already there, load the video directly
+          await this.loadVideo();
+        }
+        this.setState({ loading: false });
+      }
+      const triggers = document.querySelectorAll(".triggers > li");
+      const closeButton = document.querySelector(".fa-times");
+
+      // triggers 이벤트 핸들링 추가
+      triggers.forEach((trigger) => {
+        const mouseEnter = handleEnter.bind(trigger);
+        const mouseLeave = handleLeave.bind(trigger);
+        trigger.addEventListener("mouseenter", () =>
+          mouseEnter(this.state.trailer)
+        );
+        trigger.addEventListener("mouseleave", () =>
+          mouseLeave(this.state.trailer)
+        );
+      });
+      closeButton.addEventListener("click", closeTrailer);
+    }
   }
 
   componentWillUnmount() {
