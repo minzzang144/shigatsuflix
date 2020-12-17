@@ -170,6 +170,16 @@ const BoxList = styled.li`
   }
 `;
 
+const LastList = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc((100vw - 220px) / 8);
+  height: 250px;
+`;
+
+const LastListTitle = styled.div``;
+
 const Photo = styled.div`
   width: calc((100vw - 220px) / 8);
   height: 250px;
@@ -243,42 +253,60 @@ const Tab = ({ result, credit, recommandation, isMovie }) => {
                 <Title>Actor</Title>
                 <Box>
                   {credit.cast && credit.cast.length > 0
-                    ? credit.cast.map((actor) => (
-                        <BoxList key={actor.cast_id}>
-                          <Photo
-                            bgImage={
-                              actor.profile_path
-                                ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                                : "/noPosterSmall.png"
-                            }
-                          ></Photo>
-                          <Info className="actor__name">{`${actor.original_name}`}</Info>
-                          <Info>
-                            Star as <HighLight>{actor.character}</HighLight>
-                          </Info>
-                        </BoxList>
-                      ))
+                    ? credit.cast.map((actor, index) =>
+                        index < 15 ? (
+                          <BoxList key={actor.cast_id}>
+                            <Photo
+                              bgImage={
+                                actor.profile_path
+                                  ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                                  : "/noPosterSmall.png"
+                              }
+                            ></Photo>
+                            <Info className="actor__name">{`${actor.original_name}`}</Info>
+                            <Info>
+                              Star as <HighLight>{actor.character}</HighLight>
+                            </Info>
+                          </BoxList>
+                        ) : null
+                      )
                     : "Not found information"}
+                  {credit.cast.length > 15 ? (
+                    <LastList>
+                      <LastListTitle>
+                        + {credit.cast.length - 15} Actors
+                      </LastListTitle>
+                    </LastList>
+                  ) : null}
                 </Box>
                 <Title>Crew</Title>
                 <Box>
                   {credit.crew && credit.crew.length > 0
-                    ? credit.crew.map((crew) => (
-                        <BoxList key={crew.credit_id}>
-                          <Photo
-                            bgImage={
-                              crew.profile_path
-                                ? `https://image.tmdb.org/t/p/original${crew.profile_path}`
-                                : "/noPosterSmall.png"
-                            }
-                          ></Photo>
-                          <Info className="actor__name">{`${crew.original_name}`}</Info>
-                          <Info>
-                            Role as <HighLight>{crew.job}</HighLight>
-                          </Info>
-                        </BoxList>
-                      ))
+                    ? credit.crew.map((crew, index) =>
+                        index < 15 ? (
+                          <BoxList key={crew.credit_id}>
+                            <Photo
+                              bgImage={
+                                crew.profile_path
+                                  ? `https://image.tmdb.org/t/p/original${crew.profile_path}`
+                                  : "/noPosterSmall.png"
+                              }
+                            ></Photo>
+                            <Info className="actor__name">{`${crew.original_name}`}</Info>
+                            <Info>
+                              Role as <HighLight>{crew.job}</HighLight>
+                            </Info>
+                          </BoxList>
+                        ) : null
+                      )
                     : "Not found information"}
+                  {credit.crew.length > 15 ? (
+                    <LastList>
+                      <LastListTitle>
+                        + {credit.crew.length - 15} Crew
+                      </LastListTitle>
+                    </LastList>
+                  ) : null}
                 </Box>
                 <Title>
                   {isMovie ? "Recommand Movies" : "Recommand TV shows"}

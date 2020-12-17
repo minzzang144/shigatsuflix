@@ -44,6 +44,9 @@ const Rating = styled.span`
   right: 5px;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
+  &.recommandation__rating {
+    color: white;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -114,7 +117,7 @@ const Poster = ({
               : "/noPosterSmall.png"
           }
         />
-        <Rating>
+        <Rating className={isFilm ? "recommandation__rating" : null}>
           <span role="img" aria-label="rating">
             ⭐
           </span>
