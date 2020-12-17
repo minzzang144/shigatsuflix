@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Poster from "Components/Poster";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
@@ -216,7 +215,7 @@ const Li = styled.li`
   }
 `;
 
-const Tab = ({ result, credit, recommandation }) => {
+const Tab = ({ result, credit, recommandation, isMovie }) => {
   return (
     <Container className="tabContainer">
       <Nav className="nav">
@@ -281,18 +280,36 @@ const Tab = ({ result, credit, recommandation }) => {
                       ))
                     : "Not found information"}
                 </Box>
-                <Title>Recommand Movie</Title>
+                <Title>
+                  {isMovie ? "Recommand Movies" : "Recommand TV shows"}
+                </Title>
                 <Box>
-                  {recommandation && recommandation.length > 0
-                    ? recommandation.map((movie) => (
+                  {isMovie
+                    ? recommandation && recommandation.length > 0
+                      ? // Movie Detail에서만 보이는 Poster Component
+                        recommandation.map((movie) => (
+                          <Poster
+                            key={movie.id}
+                            id={movie.id}
+                            title={movie.original_title}
+                            imageUrl={movie.poster_path}
+                            rating={movie.vote_average}
+                            year={movie.release_date.substring(0, 4)}
+                            isMovie={true}
+                            isFilm={true}
+                          />
+                        ))
+                      : "Not found information"
+                    : recommandation && recommandation.length > 0
+                    ? // show Detail에서만 보이는 Poster Component
+                      recommandation.map((show) => (
                         <Poster
-                          key={movie.id}
-                          id={movie.id}
-                          title={movie.original_title}
-                          imageUrl={movie.poster_path}
-                          rating={movie.vote_average}
-                          year={movie.release_date.substring(0, 4)}
-                          isMovie={true}
+                          key={show.id}
+                          id={show.id}
+                          title={show.original_name}
+                          imageUrl={show.poster_path}
+                          rating={show.vote_average}
+                          year={show.first_air_date.substring(0, 4)}
                           isFilm={true}
                         />
                       ))
@@ -311,6 +328,7 @@ Tab.propTypes = {
   result: PropTypes.object,
   cast: PropTypes.object,
   recommandation: PropTypes.array,
+  isMovie: PropTypes.bool.isRequired,
 };
 
 export default Tab;

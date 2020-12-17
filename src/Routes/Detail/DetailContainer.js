@@ -137,13 +137,21 @@ export default class extends React.Component {
   };
 
   render() {
-    const { result, credit, recommandation, loading, error } = this.state;
+    const {
+      result,
+      credit,
+      recommandation,
+      isMovie,
+      loading,
+      error,
+    } = this.state;
     console.log(this.props);
     return (
       <DetailPresenter
         result={result}
         credit={credit}
         recommandation={recommandation}
+        isMovie={isMovie}
         loading={loading}
         error={error}
       />

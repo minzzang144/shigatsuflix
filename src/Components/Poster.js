@@ -87,6 +87,9 @@ const Title = styled.span`
 const Year = styled.span`
   font-size: 10px;
   color: rgba(255, 255, 255, 0.7);
+  &.recommandation__year {
+    color: black;
+  }
 `;
 
 const Poster = ({
@@ -121,7 +124,7 @@ const Poster = ({
       <Title>
         {title.length > 20 ? `${title.substring(0, 20)}...` : title}
       </Title>
-      <Year>{year}</Year>
+      <Year className={isFilm ? "recommandation__year" : null}>{year}</Year>
     </Container>
   </PLink>
 );
@@ -129,7 +132,7 @@ const Poster = ({
 Poster.propTypes = {
   id: PropTypes.number.isRequired,
   imageUrl: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   rating: PropTypes.number,
   year: PropTypes.string,
   isMovie: PropTypes.bool,
