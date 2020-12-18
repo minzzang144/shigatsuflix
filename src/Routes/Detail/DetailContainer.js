@@ -74,6 +74,7 @@ export default class extends React.Component {
       this.setState({ loading: false });
     }
 
+    const tab = document.querySelector(".tabContainer");
     const triggers = document.querySelectorAll(".triggers > li");
     const closeButton = document.querySelector(".fa-times");
 
@@ -89,6 +90,12 @@ export default class extends React.Component {
       );
     });
     closeButton.addEventListener("click", closeTrailer);
+
+    setTimeout(() => {
+      if (!tab.classList.contains("tab__container")) {
+        tab.classList.add("tab__container");
+      }
+    }, 2000);
   }
 
   async componentDidUpdate(prevProps) {
@@ -160,6 +167,7 @@ export default class extends React.Component {
         }
         this.setState({ loading: false });
       }
+      const tab = document.querySelector(".tabContainer");
       const triggers = document.querySelectorAll(".triggers > li");
       const closeButton = document.querySelector(".fa-times");
 
@@ -175,6 +183,12 @@ export default class extends React.Component {
         );
       });
       closeButton.addEventListener("click", closeTrailer);
+
+      setTimeout(() => {
+        if (!tab.classList.contains("tab__container")) {
+          tab.classList.add("tab__container");
+        }
+      }, 2000);
     }
   }
 
