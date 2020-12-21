@@ -3,38 +3,16 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const PLink = styled(Link)`
-  &.slide-in {
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.5s;
-  }
-  &.top-position {
-    transform: translateY(-30%);
-  }
-  &.bottom-position {
-    transform: translateY(30%);
-  }
-  &.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0%);
-  }
-  &.recommandation__poster {
-    width: calc((100vw - 140px) / 8);
-    opacity: 1;
-    pointer-events: none;
-  }
-`;
-
 const Container = styled.div`
   padding: 5px;
   font-size: 12px;
-  &:nth-child(8n + 1) {
-    padding: 5px 5px 5px 0;
-  }
-  &:nth-child(8n) {
-    padding: 5px 0 5px 5px;
+  &.film__container {
+    &:nth-child(8n + 1) {
+      padding: 5px 5px 5px 0;
+    }
+    &:nth-child(8n) {
+      padding: 5px 0 5px 5px;
+    }
   }
 `;
 
@@ -52,8 +30,52 @@ const Rating = styled.span`
   right: 5px;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-  &.recommandation__rating {
+  &.film__rating {
     color: white;
+  }
+`;
+
+const Info = styled.span`
+  display: block;
+  margin-bottom: 3px;
+`;
+
+const SubInfo = styled.span`
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  &.film__year {
+    color: black;
+    font-weight: 600;
+  }
+`;
+
+const PLink = styled(Link)`
+  &.slide-in {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  &.top-position {
+    transform: translateY(-30%);
+  }
+  &.bottom-position {
+    transform: translateY(30%);
+  }
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0%);
+  }
+  &.film__poster {
+    width: calc((100vw - 160px) / 8);
+    opacity: 1;
+    pointer-events: none;
+  }
+  &.clickable__poster {
+    pointer-events: auto;
+    ${SubInfo} {
+      font-weight: unset;
+    }
   }
 `;
 
@@ -90,25 +112,12 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Title = styled.span`
-  display: block;
-  margin-bottom: 3px;
-`;
-
-const Year = styled.span`
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
-  &.recommandation__year {
-    color: black;
-  }
-`;
-
 const Poster = ({
   id,
   imageUrl,
-  title,
+  info,
   rating,
-  year,
+  subInfo,
   isMovie = false,
   isFilm = false,
   isClick = false,
@@ -116,9 +125,12 @@ const Poster = ({
 }) => (
   <PLink
     to={isClick ? (isMovie ? `/movie/${id}` : `/show/${id}`) : ""}
-    className={isFilm ? "recommandation__poster" : "slide-in"}
+    className={
+      (isFilm ? "film__poster" : "slide-in") +
+      (isClick ? " clickable__poster" : "")
+    }
   >
-    <Container>
+    <Container className={isFilm ? "film__container" : ""}>
       <ImageContainer>
         <Image
           bgUrl={
@@ -128,7 +140,7 @@ const Poster = ({
           }
         />
         {isClick ? (
-          <Rating className={isFilm ? "recommandation__rating" : null}>
+          <Rating className={isFilm ? "film__rating" : null}>
             <span role="img" aria-label="rating">
               ⭐
             </span>
@@ -136,11 +148,9 @@ const Poster = ({
           </Rating>
         ) : null}
       </ImageContainer>
-      <Title>
-        {title.length > 20 ? `${title.substring(0, 20)}...` : title}
-      </Title>
+      <Info>{info.length > 20 ? `${info.substring(0, 20)}...` : info}</Info>
       {isSubInfo ? (
-        <Year className={isFilm ? "recommandation__year" : null}>{year}</Year>
+        <SubInfo className={isFilm ? "film__year" : null}>{subInfo}</SubInfo>
       ) : null}
     </Container>
   </PLink>
@@ -149,9 +159,9 @@ const Poster = ({
 Poster.propTypes = {
   id: PropTypes.number,
   imageUrl: PropTypes.string,
-  title: PropTypes.string,
+  info: PropTypes.string,
   rating: PropTypes.number,
-  year: PropTypes.string,
+  subInfo: PropTypes.string,
   isMovie: PropTypes.bool,
   isFilm: PropTypes.bool,
 };

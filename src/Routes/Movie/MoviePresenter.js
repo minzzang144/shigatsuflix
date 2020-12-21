@@ -26,10 +26,10 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
               <Poster
                 key={movie.id}
                 id={movie.id}
-                title={movie.original_title}
+                info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                year={movie.release_date.substring(0, 4)}
+                subInfo={movie.release_date.substring(0, 4)}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}
@@ -43,10 +43,10 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
               <Poster
                 key={movie.id}
                 id={movie.id}
-                title={movie.original_title}
+                info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                year={movie.release_date.substring(0, 4)}
+                subInfo={movie.release_date.substring(0, 4)}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}
@@ -60,10 +60,10 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
               <Poster
                 key={movie.id}
                 id={movie.id}
-                title={movie.original_title}
+                info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                year={movie.release_date.substring(0, 4)}
+                subInfo={movie.release_date.substring(0, 4)}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}

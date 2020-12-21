@@ -54,10 +54,10 @@ const SearchPresenter = ({
                   <Poster
                     key={movie.id}
                     id={movie.id}
-                    title={movie.original_title}
+                    info={movie.original_title}
                     imageUrl={movie.poster_path}
                     rating={movie.vote_average}
-                    year={
+                    subInfo={
                       movie.release_date && movie.release_date.substring(0, 4)
                     }
                     isMovie={true}
@@ -73,10 +73,10 @@ const SearchPresenter = ({
                   <Poster
                     key={show.id}
                     id={show.id}
-                    title={show.original_name}
+                    info={show.original_name}
                     imageUrl={show.poster_path}
                     rating={show.vote_average}
-                    year={
+                    subInfo={
                       show.first_air_date && show.first_air_date.substring(0, 4)
                     }
                     isClick={true}

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Poster from "Components/Poster";
-import Season from "Components/Season";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
@@ -156,17 +155,7 @@ const Title = styled.h3`
 const Box = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: calc(100vw - 140px);
-`;
-
-const BoxList = styled.li`
-  /* padding: 5px;
-  &:nth-child(8n + 1) {
-    padding: 5px 5px 5px 0;
-  }
-  &:nth-child(8n) {
-    padding: 5px 0 5px 5px;
-  } */
+  width: calc(100vw - 160px);
 `;
 
 const LastList = styled.div`
@@ -178,28 +167,6 @@ const LastList = styled.div`
 `;
 
 const LastListTitle = styled.div``;
-
-const Photo = styled.div`
-  width: calc((100vw - 220px) / 8);
-  height: 250px;
-  border-radius: 3px;
-  background-image: url(${(props) => props.bgImage});
-  background-position: center center;
-  background-size: cover;
-`;
-
-const Info = styled.span`
-  display: block;
-  width: calc((100vw - 220px) / 8);
-  line-height: 1.3rem;
-  &.actor__name {
-    margin-top: 5px;
-  }
-`;
-
-const HighLight = styled.span`
-  font-weight: 600;
-`;
 
 const Li = styled.li`
   display: flex;
@@ -261,7 +228,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                                 key={season.id || index}
                                 id={season.id || index}
                                 imageUrl={season.poster_path}
-                                title={season.name}
+                                info={season.name}
                                 isFilm={true}
                               />
                             ) : null
@@ -287,8 +254,8 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                             key={actor.credit_id || index}
                             id={actor.id || index}
                             imageUrl={actor.profile_path}
-                            title={actor.original_name}
-                            year={`Star as ${actor.character}`}
+                            info={actor.original_name}
+                            subInfo={`Star as ${actor.character}`}
                             isFilm={true}
                             isSubInfo={true}
                           />
@@ -313,8 +280,8 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                             key={crew.credit_id || index}
                             id={crew.id || index}
                             imageUrl={crew.profile_path}
-                            title={crew.original_name}
-                            year={`Role as ${crew.job}`}
+                            info={crew.original_name}
+                            subInfo={`Role as ${crew.job}`}
                             isFilm={true}
                             isSubInfo={true}
                           />
@@ -341,10 +308,10 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                           <Poster
                             key={movie.id}
                             id={movie.id}
-                            title={movie.original_title}
+                            info={movie.original_title}
                             imageUrl={movie.poster_path}
                             rating={movie.vote_average}
-                            year={movie.release_date.substring(0, 4)}
+                            subInfo={movie.release_date.substring(0, 4)}
                             isMovie={true}
                             isFilm={true}
                             isClick={true}
@@ -358,10 +325,10 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                         <Poster
                           key={show.id}
                           id={show.id}
-                          title={show.original_name}
+                          info={show.original_name}
                           imageUrl={show.poster_path}
                           rating={show.vote_average}
-                          year={show.first_air_date.substring(0, 4)}
+                          subInfo={show.first_air_date.substring(0, 4)}
                           isFilm={true}
                           isClick={true}
                           isSubInfo={true}
@@ -379,10 +346,10 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                           <Poster
                             key={movie.id}
                             id={movie.id}
-                            title={movie.original_title}
+                            info={movie.original_title}
                             imageUrl={movie.poster_path}
                             rating={movie.vote_average}
-                            year={movie.release_date.substring(0, 4)}
+                            subInfo={movie.release_date.substring(0, 4)}
                             isMovie={true}
                             isFilm={true}
                             isClick={true}
@@ -396,10 +363,10 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                         <Poster
                           key={show.id}
                           id={show.id}
-                          title={show.original_name}
+                          info={show.original_name}
                           imageUrl={show.poster_path}
                           rating={show.vote_average}
-                          year={show.first_air_date.substring(0, 4)}
+                          subInfo={show.first_air_date.substring(0, 4)}
                           isFilm={true}
                           isClick={true}
                           isSubInfo={true}
