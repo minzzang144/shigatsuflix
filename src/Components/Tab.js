@@ -223,7 +223,7 @@ const Li = styled.li`
   }
 `;
 
-const Tab = ({ result, credit, recommandation, isMovie }) => {
+const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
   return (
     <Container className="tabContainer">
       <Nav className="nav">
@@ -312,7 +312,7 @@ const Tab = ({ result, credit, recommandation, isMovie }) => {
                 <Box>
                   {isMovie
                     ? recommandation && recommandation.length > 0
-                      ? // Movie Detail에서만 보이는 Poster Component
+                      ? // Movie Detail Tab에서만 보이는 Poster Component
                         recommandation.map((movie) => (
                           <Poster
                             key={movie.id}
@@ -327,7 +327,7 @@ const Tab = ({ result, credit, recommandation, isMovie }) => {
                         ))
                       : "Not found information"
                     : recommandation && recommandation.length > 0
-                    ? // show Detail에서만 보이는 Poster Component
+                    ? // show Detail Tab에서만 보이는 Poster Component
                       recommandation.map((show) => (
                         <Poster
                           key={show.id}
@@ -336,6 +336,24 @@ const Tab = ({ result, credit, recommandation, isMovie }) => {
                           imageUrl={show.poster_path}
                           rating={show.vote_average}
                           year={show.first_air_date.substring(0, 4)}
+                          isFilm={true}
+                        />
+                      ))
+                    : "Not found information"}
+                </Box>
+                <Title>{isMovie ? "Similar Movies" : "Similar TV shows"}</Title>
+                <Box>
+                  {similarity && similarity.length > 0
+                    ? // Movie Detail Tab에서만 보이는 Poster Component
+                      similarity.map((movie) => (
+                        <Poster
+                          key={movie.id}
+                          id={movie.id}
+                          title={movie.original_title}
+                          imageUrl={movie.poster_path}
+                          rating={movie.vote_average}
+                          year={movie.release_date.substring(0, 4)}
+                          isMovie={true}
                           isFilm={true}
                         />
                       ))
@@ -354,6 +372,7 @@ Tab.propTypes = {
   result: PropTypes.object,
   cast: PropTypes.object,
   recommandation: PropTypes.array,
+  similarity: PropTypes.array,
   isMovie: PropTypes.bool.isRequired,
 };
 

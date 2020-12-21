@@ -15,6 +15,7 @@ export default class extends React.Component {
       result: null,
       credit: null,
       recommandation: null,
+      similarity: null,
       trailer: null,
       isMovie: pathname.includes("/movie/"),
       loading: true,
@@ -35,6 +36,7 @@ export default class extends React.Component {
     let result = null;
     let credit = null;
     let recommandation = null;
+    let similarity = null;
     if (isNaN(parsedId)) {
       return push("/");
     }
@@ -45,6 +47,9 @@ export default class extends React.Component {
         ({
           data: { results: recommandation },
         } = await moviesApi.recommandation(parsedId));
+        ({
+          data: { results: similarity },
+        } = await moviesApi.similarMovies(parsedId));
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         ({ data: credit } = await tvApi.creditDetail(parsedId));
@@ -52,11 +57,11 @@ export default class extends React.Component {
           data: { results: recommandation },
         } = await tvApi.recommandation(parsedId));
       }
-      console.log(result, credit, recommandation);
+      console.log(result, credit, recommandation, similarity);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ result, credit, recommandation });
+      this.setState({ result, credit, recommandation, similarity });
       if (!window.YT) {
         // If not, load the script asynchronously
         const tag = document.createElement("script");
@@ -117,6 +122,7 @@ export default class extends React.Component {
       let result = null;
       let credit = null;
       let recommandation = null;
+      let similarity = null;
       if (isNaN(parsedId)) {
         return push("/");
       }
@@ -124,6 +130,7 @@ export default class extends React.Component {
         result: null,
         credit: null,
         recommandation: null,
+        similarity: null,
         trailer: null,
         isMovie: pathname.includes("/movie/"),
         loading: true,
@@ -139,6 +146,9 @@ export default class extends React.Component {
           ({
             data: { results: recommandation },
           } = await moviesApi.recommandation(parsedId));
+          ({
+            data: { results: similarity },
+          } = await moviesApi.similarMovies(parsedId));
         } else {
           ({ data: result } = await tvApi.showDetail(parsedId));
           ({ data: credit } = await tvApi.creditDetail(parsedId));
@@ -146,11 +156,11 @@ export default class extends React.Component {
             data: { results: recommandation },
           } = await tvApi.recommandation(parsedId));
         }
-        console.log(result, credit, recommandation);
+        console.log(result, credit, recommandation, similarity);
       } catch {
         this.setState({ error: "Can't find anything." });
       } finally {
-        this.setState({ result, credit, recommandation });
+        this.setState({ result, credit, recommandation, similarity });
         if (!window.YT) {
           // If not, load the script asynchronously
           const tag = document.createElement("script");
@@ -240,6 +250,7 @@ export default class extends React.Component {
       result,
       credit,
       recommandation,
+      similarity,
       isMovie,
       loading,
       error,
@@ -250,6 +261,7 @@ export default class extends React.Component {
         result={result}
         credit={credit}
         recommandation={recommandation}
+        similarity={similarity}
         isMovie={isMovie}
         loading={loading}
         error={error}

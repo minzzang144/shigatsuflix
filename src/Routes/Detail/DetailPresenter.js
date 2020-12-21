@@ -88,6 +88,7 @@ const DetailPresenter = ({
   result,
   credit,
   recommandation,
+  similarity,
   isMovie,
   loading,
   error,
@@ -114,6 +115,7 @@ const DetailPresenter = ({
         result={result}
         credit={credit}
         recommandation={recommandation}
+        similarity={similarity}
         isMovie={isMovie}
       />
       <Content>
@@ -168,6 +170,7 @@ DetailPresenter.propTypes = {
   result: PropTypes.object,
   credit: PropTypes.object,
   recommandation: PropTypes.array,
+  similarity: PropTypes.array,
   isMovie: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
