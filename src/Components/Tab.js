@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Poster from "Components/Poster";
+import Season from "Components/Season";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
@@ -248,6 +249,30 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
             <Button>Film</Button>
             <DropDown className="dropdown">
               <Wrapper className="film__content">
+                {isMovie ? null : <Title>Seasons</Title>}
+                {!isMovie ? (
+                  <Box>
+                    {result && result.seasons.length > 0
+                      ? // show Detail Tab에서만 보이는 Poster Component
+                        result.seasons.map((season, index) =>
+                          index < 7 ? (
+                            <Season
+                              key={season.id || index}
+                              imageUrl={season.poster_path}
+                              title={season.name}
+                            />
+                          ) : null
+                        )
+                      : "No more Seasons"}
+                    {result.seasons.length > 7 ? (
+                      <LastList>
+                        <LastListTitle>
+                          + {result.seasons.length - 7} Seasons
+                        </LastListTitle>
+                      </LastList>
+                    ) : null}
+                  </Box>
+                ) : null}
                 <Title>Actor</Title>
                 <Box>
                   {credit.cast && credit.cast.length > 0
@@ -282,7 +307,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                   {credit.crew && credit.crew.length > 0
                     ? credit.crew.map((crew, index) =>
                         index < 15 ? (
-                          <BoxList key={crew.id}>
+                          <BoxList key={crew.credit_id}>
                             <Photo
                               bgImage={
                                 crew.profile_path

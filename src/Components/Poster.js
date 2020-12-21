@@ -139,6 +139,7 @@ Poster.propTypes = {
   rating: PropTypes.number,
   year: PropTypes.string,
   isMovie: PropTypes.bool,
+  isFilm: PropTypes.bool,
 };
 
 export default Poster;
