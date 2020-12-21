@@ -61,6 +61,8 @@ const SearchPresenter = ({
                       movie.release_date && movie.release_date.substring(0, 4)
                     }
                     isMovie={true}
+                    isClick={true}
+                    isSubInfo={true}
                   />
                 ))}
               </Section>
@@ -77,6 +79,8 @@ const SearchPresenter = ({
                     year={
                       show.first_air_date && show.first_air_date.substring(0, 4)
                     }
+                    isClick={true}
+                    isSubInfo={true}
                   />
                 ))}
               </Section>

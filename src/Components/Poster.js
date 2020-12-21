@@ -22,12 +22,20 @@ const PLink = styled(Link)`
   }
   &.recommandation__poster {
     width: calc((100vw - 140px) / 8);
+    opacity: 1;
+    pointer-events: none;
   }
 `;
 
 const Container = styled.div`
   padding: 5px;
   font-size: 12px;
+  &:nth-child(8n + 1) {
+    padding: 5px 5px 5px 0;
+  }
+  &:nth-child(8n) {
+    padding: 5px 0 5px 5px;
+  }
 `;
 
 const Image = styled.div`
@@ -103,9 +111,11 @@ const Poster = ({
   year,
   isMovie = false,
   isFilm = false,
+  isClick = false,
+  isSubInfo = false,
 }) => (
   <PLink
-    to={isMovie ? `/movie/${id}` : `/show/${id}`}
+    to={isClick ? (isMovie ? `/movie/${id}` : `/show/${id}`) : ""}
     className={isFilm ? "recommandation__poster" : "slide-in"}
   >
     <Container>
@@ -117,23 +127,27 @@ const Poster = ({
               : "/noPosterSmall.png"
           }
         />
-        <Rating className={isFilm ? "recommandation__rating" : null}>
-          <span role="img" aria-label="rating">
-            ⭐
-          </span>
-          {rating}/10
-        </Rating>
+        {isClick ? (
+          <Rating className={isFilm ? "recommandation__rating" : null}>
+            <span role="img" aria-label="rating">
+              ⭐
+            </span>
+            {rating}/10
+          </Rating>
+        ) : null}
       </ImageContainer>
       <Title>
         {title.length > 20 ? `${title.substring(0, 20)}...` : title}
       </Title>
-      <Year className={isFilm ? "recommandation__year" : null}>{year}</Year>
+      {isSubInfo ? (
+        <Year className={isFilm ? "recommandation__year" : null}>{year}</Year>
+      ) : null}
     </Container>
   </PLink>
 );
 
 Poster.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   imageUrl: PropTypes.string,
   title: PropTypes.string,
   rating: PropTypes.number,

@@ -153,23 +153,23 @@ const Title = styled.h3`
   }
 `;
 
-const Box = styled.ul`
+const Box = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: calc(100vw - 140px);
 `;
 
 const BoxList = styled.li`
-  padding: 5px;
+  /* padding: 5px;
   &:nth-child(8n + 1) {
     padding: 5px 5px 5px 0;
   }
   &:nth-child(8n) {
     padding: 5px 0 5px 5px;
-  }
+  } */
 `;
 
-const LastList = styled.li`
+const LastList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,48 +249,49 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
             <Button>Film</Button>
             <DropDown className="dropdown">
               <Wrapper className="film__content">
-                {isMovie ? null : <Title>Seasons</Title>}
                 {!isMovie ? (
-                  <Box>
-                    {result && result.seasons.length > 0
-                      ? // show Detail Tab에서만 보이는 Poster Component
-                        result.seasons.map((season, index) =>
-                          index < 7 ? (
-                            <Season
-                              key={season.id || index}
-                              imageUrl={season.poster_path}
-                              title={season.name}
-                            />
-                          ) : null
-                        )
-                      : "No more Seasons"}
-                    {result.seasons.length > 7 ? (
-                      <LastList>
-                        <LastListTitle>
-                          + {result.seasons.length - 7} Seasons
-                        </LastListTitle>
-                      </LastList>
-                    ) : null}
-                  </Box>
+                  // show Detail Tab에서만 보이는 Poster Component
+                  <>
+                    <Title>Seasons</Title>
+                    <Box>
+                      {result && result.seasons.length > 0
+                        ? result.seasons.map((season, index) =>
+                            index < 7 ? (
+                              <Poster
+                                key={season.id || index}
+                                id={season.id || index}
+                                imageUrl={season.poster_path}
+                                title={season.name}
+                                isFilm={true}
+                              />
+                            ) : null
+                          )
+                        : "No more Seasons"}
+                      {result.seasons.length > 7 ? (
+                        <LastList>
+                          <LastListTitle>
+                            + {result.seasons.length - 7} Seasons
+                          </LastListTitle>
+                        </LastList>
+                      ) : null}
+                    </Box>
+                  </>
                 ) : null}
+
                 <Title>Actor</Title>
                 <Box>
                   {credit.cast && credit.cast.length > 0
                     ? credit.cast.map((actor, index) =>
                         index < 15 ? (
-                          <BoxList key={actor.id}>
-                            <Photo
-                              bgImage={
-                                actor.profile_path
-                                  ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                                  : "/noPosterSmall.png"
-                              }
-                            ></Photo>
-                            <Info className="actor__name">{`${actor.original_name}`}</Info>
-                            <Info>
-                              Star as <HighLight>{actor.character}</HighLight>
-                            </Info>
-                          </BoxList>
+                          <Poster
+                            key={actor.credit_id || index}
+                            id={actor.id || index}
+                            imageUrl={actor.profile_path}
+                            title={actor.original_name}
+                            year={`Star as ${actor.character}`}
+                            isFilm={true}
+                            isSubInfo={true}
+                          />
                         ) : null
                       )
                     : "Not found information"}
@@ -302,24 +303,21 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                     </LastList>
                   ) : null}
                 </Box>
+
                 <Title>Crew</Title>
                 <Box>
                   {credit.crew && credit.crew.length > 0
                     ? credit.crew.map((crew, index) =>
                         index < 15 ? (
-                          <BoxList key={crew.credit_id}>
-                            <Photo
-                              bgImage={
-                                crew.profile_path
-                                  ? `https://image.tmdb.org/t/p/original${crew.profile_path}`
-                                  : "/noPosterSmall.png"
-                              }
-                            ></Photo>
-                            <Info className="actor__name">{`${crew.original_name}`}</Info>
-                            <Info>
-                              Role as <HighLight>{crew.job}</HighLight>
-                            </Info>
-                          </BoxList>
+                          <Poster
+                            key={crew.credit_id || index}
+                            id={crew.id || index}
+                            imageUrl={crew.profile_path}
+                            title={crew.original_name}
+                            year={`Role as ${crew.job}`}
+                            isFilm={true}
+                            isSubInfo={true}
+                          />
                         ) : null
                       )
                     : "Not found information"}
@@ -331,6 +329,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                     </LastList>
                   ) : null}
                 </Box>
+
                 <Title>
                   {isMovie ? "Recommand Movies" : "Recommand TV shows"}
                 </Title>
@@ -348,6 +347,8 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                             year={movie.release_date.substring(0, 4)}
                             isMovie={true}
                             isFilm={true}
+                            isClick={true}
+                            isSubInfo={true}
                           />
                         ))
                       : "Not found information"
@@ -362,10 +363,13 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                           rating={show.vote_average}
                           year={show.first_air_date.substring(0, 4)}
                           isFilm={true}
+                          isClick={true}
+                          isSubInfo={true}
                         />
                       ))
                     : "Not found information"}
                 </Box>
+
                 <Title>{isMovie ? "Similar Movies" : "Similar TV shows"}</Title>
                 <Box>
                   {isMovie
@@ -381,6 +385,8 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                             year={movie.release_date.substring(0, 4)}
                             isMovie={true}
                             isFilm={true}
+                            isClick={true}
+                            isSubInfo={true}
                           />
                         ))
                       : "Not found information"
@@ -395,6 +401,8 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                           rating={show.vote_average}
                           year={show.first_air_date.substring(0, 4)}
                           isFilm={true}
+                          isClick={true}
+                          isSubInfo={true}
                         />
                       ))
                     : "Not found information"}

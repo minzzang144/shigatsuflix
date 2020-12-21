@@ -31,6 +31,8 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 rating={movie.vote_average}
                 year={movie.release_date.substring(0, 4)}
                 isMovie={true}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>
@@ -46,6 +48,8 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 rating={movie.vote_average}
                 year={movie.release_date.substring(0, 4)}
                 isMovie={true}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>
@@ -61,6 +65,8 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 rating={movie.vote_average}
                 year={movie.release_date.substring(0, 4)}
                 isMovie={true}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>

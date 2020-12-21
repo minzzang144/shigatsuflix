@@ -30,6 +30,8 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }) => (
                 imageUrl={show.poster_path}
                 rating={show.vote_average}
                 year={show.first_air_date.substring(0, 4)}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>
@@ -44,6 +46,8 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }) => (
                 imageUrl={show.poster_path}
                 rating={show.vote_average}
                 year={show.first_air_date.substring(0, 4)}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>
@@ -58,6 +62,8 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }) => (
                 imageUrl={show.poster_path}
                 rating={show.vote_average}
                 year={show.first_air_date.substring(0, 4)}
+                isClick={true}
+                isSubInfo={true}
               />
             ))}
           </Section>
