@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import theme from "Styles/Theme";
 
 const Title = styled.h3`
   font-size: 1.8rem;
@@ -45,7 +46,8 @@ const CardLink = styled(Link)`
 const Item = styled.div`
   min-width: calc(100% / 20);
   height: 100vh;
-  padding: 100px;
+  padding: 14vh 7vw;
+  /* padding: 100px; */
   background-image: url(${(props) => props.bgImage});
   background-position: center center;
   background-size: cover;
@@ -66,6 +68,9 @@ const Item = styled.div`
     ${Overview} {
       width: 50%;
     }
+  }
+  @media ${(props) => props.theme.desktop} {
+    padding: 20vh 5vw;
   }
 `;
 
@@ -88,7 +93,12 @@ const Card = ({ id, index, bgImage, title, overview, isMovie = false }) => {
   return (
     <Item
       ref={(el) => (item.current[index] = el)}
-      bgImage={`https://image.tmdb.org/t/p/original/${bgImage}`}
+      bgImage={
+        bgImage
+          ? `https://image.tmdb.org/t/p/original/${bgImage}`
+          : "/noPosterSmall.png"
+      }
+      theme={theme}
     >
       <Title>{title}</Title>
       <Overview>
