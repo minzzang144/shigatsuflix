@@ -56,6 +56,9 @@ export default class extends React.Component {
         ({
           data: { results: recommandation },
         } = await tvApi.recommandation(parsedId));
+        ({
+          data: { results: similarity },
+        } = await tvApi.similarShows(parsedId));
       }
       console.log(result, credit, recommandation, similarity);
     } catch {
@@ -155,6 +158,9 @@ export default class extends React.Component {
           ({
             data: { results: recommandation },
           } = await tvApi.recommandation(parsedId));
+          ({
+            data: { results: similarity },
+          } = await tvApi.similarShows(parsedId));
         }
         console.log(result, credit, recommandation, similarity);
       } catch {

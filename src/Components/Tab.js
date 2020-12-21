@@ -253,7 +253,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                   {credit.cast && credit.cast.length > 0
                     ? credit.cast.map((actor, index) =>
                         index < 15 ? (
-                          <BoxList key={actor.cast_id}>
+                          <BoxList key={actor.id}>
                             <Photo
                               bgImage={
                                 actor.profile_path
@@ -282,7 +282,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                   {credit.crew && credit.crew.length > 0
                     ? credit.crew.map((crew, index) =>
                         index < 15 ? (
-                          <BoxList key={crew.credit_id}>
+                          <BoxList key={crew.id}>
                             <Photo
                               bgImage={
                                 crew.profile_path
@@ -343,17 +343,32 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                 </Box>
                 <Title>{isMovie ? "Similar Movies" : "Similar TV shows"}</Title>
                 <Box>
-                  {similarity && similarity.length > 0
-                    ? // Movie Detail Tab에서만 보이는 Poster Component
-                      similarity.map((movie) => (
+                  {isMovie
+                    ? similarity && similarity.length > 0
+                      ? // Movie Detail Tab에서만 보이는 Poster Component
+                        similarity.map((movie) => (
+                          <Poster
+                            key={movie.id}
+                            id={movie.id}
+                            title={movie.original_title}
+                            imageUrl={movie.poster_path}
+                            rating={movie.vote_average}
+                            year={movie.release_date.substring(0, 4)}
+                            isMovie={true}
+                            isFilm={true}
+                          />
+                        ))
+                      : "Not found information"
+                    : similarity && similarity.length > 0
+                    ? // show Detail Tab에서만 보이는 Poster Component
+                      similarity.map((show) => (
                         <Poster
-                          key={movie.id}
-                          id={movie.id}
-                          title={movie.original_title}
-                          imageUrl={movie.poster_path}
-                          rating={movie.vote_average}
-                          year={movie.release_date.substring(0, 4)}
-                          isMovie={true}
+                          key={show.id}
+                          id={show.id}
+                          title={show.original_name}
+                          imageUrl={show.poster_path}
+                          rating={show.vote_average}
+                          year={show.first_air_date.substring(0, 4)}
                           isFilm={true}
                         />
                       ))
