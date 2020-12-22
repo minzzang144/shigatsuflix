@@ -1,7 +1,6 @@
 import React from "react";
 import MoviePresenter from "./MoviePresenter";
 import { moviesApi } from "api";
-import checkSlide from "../../Utils/CheckSlide";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
@@ -12,6 +11,34 @@ export default class extends React.Component {
     loading: true,
     error: null,
   };
+
+  checkSlide() {
+    const slideObj = document.querySelectorAll(".slide-in");
+    slideObj.forEach((obj) => {
+      const slideInAt =
+        window.scrollY + window.innerHeight - obj.clientHeight / 2;
+      const objBottom = obj.offsetTop + obj.clientHeight;
+
+      const isHalfShown = slideInAt > obj.offsetTop;
+      const isNotScrolledPast = window.scrollY < objBottom;
+      // console.log(slideInAt, obj.offsetTop, window.scrollY, objBottom);
+      if (!isHalfShown) {
+        obj.classList.add("top-position");
+      } else {
+        obj.classList.remove("top-position");
+      }
+      if (isHalfShown && isNotScrolledPast) {
+        obj.classList.add("active");
+      } else {
+        obj.classList.remove("active");
+      }
+      if (!isNotScrolledPast) {
+        obj.classList.add("bottom-position");
+      } else {
+        obj.classList.remove("bottom-position");
+      }
+    });
+  }
 
   async componentDidMount() {
     try {
@@ -38,12 +65,12 @@ export default class extends React.Component {
         loading: false,
       });
     }
-    checkSlide();
-    window.addEventListener("scroll", checkSlide);
+    this.checkSlide();
+    window.addEventListener("scroll", this.checkSlide);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", checkSlide);
+    window.removeEventListener("scroll", this.checkSlide);
   }
 
   render() {
