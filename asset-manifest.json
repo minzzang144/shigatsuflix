@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/shigatsuflix/static/js/main.2a3d09de.chunk.js",
+    "main.js.map": "/shigatsuflix/static/js/main.2a3d09de.chunk.js.map",
+    "runtime-main.js": "/shigatsuflix/static/js/runtime-main.381b01f5.js",
+    "runtime-main.js.map": "/shigatsuflix/static/js/runtime-main.381b01f5.js.map",
+    "static/js/2.5904ec69.chunk.js": "/shigatsuflix/static/js/2.5904ec69.chunk.js",
+    "static/js/2.5904ec69.chunk.js.map": "/shigatsuflix/static/js/2.5904ec69.chunk.js.map",
+    "index.html": "/shigatsuflix/index.html",
+    "static/js/2.5904ec69.chunk.js.LICENSE.txt": "/shigatsuflix/static/js/2.5904ec69.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.381b01f5.js",
+    "static/js/2.5904ec69.chunk.js",
+    "static/js/main.2a3d09de.chunk.js"
+  ]
+}
