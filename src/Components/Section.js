@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import theme from "Styles/Theme";
 
 const Container = styled.div`
   :not(:last-child) {
@@ -28,12 +29,21 @@ const Grid = styled.div`
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fill, calc(100% / 8));
+  @media ${(props) => props.theme.tablet} {
+    grid-template-columns: repeat(auto-fill, calc(100% / 6));
+  }
+  @media ${(props) => props.theme.mobile} {
+    grid-template-columns: repeat(auto-fill, calc(100% / 3));
+  }
+  @media ${(props) => props.theme.deviceMobile} {
+    grid-template-columns: repeat(auto-fill, calc(100% / 2));
+  }
 `;
 
 const Section = ({ title, children }) => (
   <Container>
     <Title className="left-position slide-in">{title}</Title>
-    <Grid>{children}</Grid>
+    <Grid theme={theme}>{children}</Grid>
   </Container>
 );
 
