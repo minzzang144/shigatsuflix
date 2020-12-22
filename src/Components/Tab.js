@@ -301,6 +301,33 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
                   ) : null}
                 </Box>
 
+                <Title>Production</Title>
+                <Box>
+                  {result.production_companies &&
+                  result.production_companies.length > 0
+                    ? result.production_companies.map((company, index) =>
+                        index < 7 ? (
+                          <Poster
+                            key={company.id || index}
+                            id={company.id || index}
+                            imageUrl={company.logo_path}
+                            info={company.name}
+                            subInfo={`From ${company.origin_country}`}
+                            isFilm={true}
+                            isSubInfo={true}
+                          />
+                        ) : null
+                      )
+                    : "Not found information"}
+                  {result.production_companies > 7 ? (
+                    <LastList>
+                      <LastListTitle>
+                        + {result.production_companies - 7} Companies
+                      </LastListTitle>
+                    </LastList>
+                  ) : null}
+                </Box>
+
                 <Title>
                   {isMovie ? "Recommand Movies" : "Recommand TV shows"}
                 </Title>

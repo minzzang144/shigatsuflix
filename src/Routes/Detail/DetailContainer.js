@@ -241,7 +241,6 @@ export default class extends React.Component {
     const tab = document.querySelector(".tabContainer");
     try {
       // the Player object is created uniquely based on the "player" id
-      console.log(matchMobile);
       this.setState({
         trailer: await new window.YT.Player("player", {
           // 모바일(720px이하)이면 (100% / 270px), 데스크탑이면(1600px이상)이면 (1280px / 720px), 그 사이의 값은 640px x 360px이다.
