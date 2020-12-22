@@ -9,7 +9,7 @@ import Card from "Components/Card";
 
 const Container = styled.div``;
 
-const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
+const HomePresenter = ({ nowPlaying, topRated, match, loading, error }) => (
   <>
     <Helmet>
       <title>Home | ShigatsuFlix</title>
@@ -26,7 +26,7 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
                 key={movie.id}
                 id={movie.id}
                 index={index}
-                bgImage={movie.backdrop_path}
+                bgImage={match ? movie.poster_path : movie.backdrop_path}
                 title={movie.original_title}
                 overview={movie.overview}
                 isMovie={true}
@@ -41,7 +41,7 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
                 key={show.id}
                 id={show.id}
                 index={index}
-                bgImage={show.backdrop_path}
+                bgImage={match ? show.poster_path : show.backdrop_path}
                 title={show.original_name}
                 overview={show.overview}
               />
@@ -56,6 +56,7 @@ const HomePresenter = ({ nowPlaying, topRated, loading, error }) => (
 HomePresenter.propTypes = {
   nowPlaying: PropTypes.array,
   topRated: PropTypes.array,
+  match: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };

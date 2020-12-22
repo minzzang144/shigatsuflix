@@ -8,10 +8,13 @@ export default class extends React.Component {
     nowPlaying: null,
     topRated: null,
     loading: true,
+    match: false,
     error: null,
   };
 
   async componentDidMount() {
+    console.log(this.state.match);
+    const mql = window.matchMedia("(max-width:720px)");
     try {
       const {
         data: { results: nowPlaying },
@@ -30,17 +33,19 @@ export default class extends React.Component {
     } finally {
       this.setState({
         loading: false,
+        match: mql.matches,
       });
     }
   }
 
   render() {
-    const { nowPlaying, topRated, error, loading } = this.state;
+    const { nowPlaying, topRated, match, error, loading } = this.state;
     console.log(this.state);
     return (
       <HomePresenter
         nowPlaying={nowPlaying}
         topRated={topRated}
+        match={match}
         loading={loading}
         error={error}
       />
