@@ -1,8 +1,8 @@
 import React from "react";
 import { moviesApi, tvApi } from "api";
 import DetailPresenter from "./DetailPresenter";
-import { handleEnter, handleLeave } from "Utils/HoverTab";
-import closeTrailer from "Utils/CloseTrailer";
+import { handleEnter, handleLeave } from "../../Utils/HoverTab";
+import closeTrailer from "../../Utils/CloseTrailer";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {

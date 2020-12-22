@@ -1,7 +1,7 @@
 import React from "react";
 import MoviePresenter from "./MoviePresenter";
 import { moviesApi } from "api";
-import checkSlide from "Utils/CheckSlide";
+import checkSlide from "../../Utils/CheckSlide";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
