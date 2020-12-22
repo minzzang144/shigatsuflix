@@ -14,7 +14,7 @@ import Detail from "../Routes/Detail";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <>
       <Header />
       <Switch>
