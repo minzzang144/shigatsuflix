@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Poster from "Components/Poster";
+import theme from "Styles/Theme";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
@@ -88,6 +89,9 @@ const Wrapper = styled.div`
     width: calc(100vw - 100px);
     height: calc(100vh - 150px);
     background-color: rgba(20, 20, 20, 0.7);
+    @media ${(props) => props.theme.mobile} {
+      width: 100vw;
+    }
   }
   &.film__content {
     color: black;
@@ -201,7 +205,7 @@ const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
         <Ul className="triggers">
           <Li className="trailerList">
             <Button>Trailer</Button>
-            <Wrapper className="trailer__content">
+            <Wrapper className="trailer__content" theme={theme}>
               <Close className="fas fa-times" />
               {result.videos.results[0] ? (
                 <>

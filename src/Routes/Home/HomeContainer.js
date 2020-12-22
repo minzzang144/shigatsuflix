@@ -13,7 +13,6 @@ export default class extends React.Component {
   };
 
   async componentDidMount() {
-    console.log(this.state.match);
     const mql = window.matchMedia("(max-width:720px)");
     try {
       const {

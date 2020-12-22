@@ -11,6 +11,8 @@ export default class extends React.Component {
     const {
       location: { pathname },
     } = props;
+    const mql = window.matchMedia("(max-width:720px)");
+    const mqlTwo = window.matchMedia("(min-width:1600px)");
     this.state = {
       result: null,
       credit: null,
@@ -18,6 +20,8 @@ export default class extends React.Component {
       similarity: null,
       trailer: null,
       isMovie: pathname.includes("/movie/"),
+      matchMobile: mql.matches,
+      matchDesktop: mqlTwo.matches,
       loading: true,
       error: null,
     };
@@ -233,12 +237,16 @@ export default class extends React.Component {
   }
 
   loadVideo = async () => {
-    const { result } = this.state;
+    const { result, matchMobile, matchDesktop } = this.state;
     const tab = document.querySelector(".tabContainer");
     try {
       // the Player object is created uniquely based on the "player" id
+      console.log(matchMobile);
       this.setState({
         trailer: await new window.YT.Player("player", {
+          // 모바일(720px이하)이면 (100% / 270px), 데스크탑이면(1600px이상)이면 (1280px / 720px), 그 사이의 값은 640px x 360px이다.
+          width: `${matchMobile ? "100%" : matchDesktop ? "1280" : "640"}`,
+          height: `${matchMobile ? "270" : matchDesktop ? "720" : "360"}`,
           videoId: `${result.videos.results[0].key}`,
           playerVars: { origin: "http://localhost:3000" },
           events: {
