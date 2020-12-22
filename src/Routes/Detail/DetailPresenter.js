@@ -4,13 +4,7 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 import Loader from "Components/Loader";
 import Tab from "Components/Tab";
-
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  padding: 100px 50px 50px 50px;
-`;
+import theme from "Styles/Theme";
 
 const BackDrop = styled.div`
   position: absolute;
@@ -55,6 +49,7 @@ const Title = styled.h3`
 const ItemContainer = styled.div`
   margin: 20px 0px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 `;
 
@@ -84,6 +79,46 @@ const Overview = styled.p`
   line-height: 1.5;
 `;
 
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 100px 50px 50px 50px;
+  @media ${(props) => props.theme.tablet} {
+    height: 100vh;
+    ${Cover} {
+      width: 40%;
+    }
+    ${Data} {
+      width: 60%;
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    height: unset;
+    ${Content} {
+      flex-direction: column;
+    }
+    ${Cover} {
+      width: 100%;
+      height: calc(100vh - 150px);
+    }
+    ${Data} {
+      width: 100%;
+    }
+    ${Title} {
+      margin-top: 50px;
+      font-size: 1.4rem;
+    }
+    ${ItemContainer} {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+    ${Overview} {
+      width: 100%;
+    }
+  }
+`;
+
 const DetailPresenter = ({
   result,
   credit,
@@ -101,7 +136,7 @@ const DetailPresenter = ({
       <Loader />
     </>
   ) : (
-    <Container>
+    <Container theme={theme}>
       <Helmet>
         <title>
           {result.original_title ? result.original_title : result.original_name}{" "}

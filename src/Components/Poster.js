@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import theme from "Styles/Theme";
 
 const Container = styled.div`
   padding: 5px;
@@ -49,36 +50,6 @@ const SubInfo = styled.span`
   }
 `;
 
-const PLink = styled(Link)`
-  &.slide-in {
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.5s;
-  }
-  &.top-position {
-    transform: translateY(-30%);
-  }
-  &.bottom-position {
-    transform: translateY(30%);
-  }
-  &.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0%);
-  }
-  &.film__poster {
-    width: calc((100vw - 160px) / 8);
-    opacity: 1;
-    pointer-events: none;
-  }
-  &.clickable__poster {
-    pointer-events: auto;
-    ${SubInfo} {
-      font-weight: unset;
-    }
-  }
-`;
-
 const ImageContainer = styled.div`
   @keyframes rotateImage {
     0% {
@@ -112,6 +83,51 @@ const ImageContainer = styled.div`
   }
 `;
 
+const PLink = styled(Link)`
+  &.slide-in {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  &.top-position {
+    transform: translateY(-30%);
+  }
+  &.bottom-position {
+    transform: translateY(30%);
+  }
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0%);
+  }
+  &.film__poster {
+    width: calc((100vw - 160px) / 8);
+    opacity: 1;
+    pointer-events: none;
+  }
+  &.clickable__poster {
+    pointer-events: auto;
+    ${SubInfo} {
+      font-weight: unset;
+    }
+  }
+  @media ${(props) => props.theme.tablet} {
+    &.film__poster {
+      width: calc((100vw - 160px) / 4);
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    &.film__poster {
+      width: calc((100vw - 160px) / 2);
+    }
+  }
+  @media ${(props) => props.theme.deviceMobile} {
+    &.film__poster {
+      width: calc(100vw - 160px);
+    }
+  }
+`;
+
 const Poster = ({
   id,
   imageUrl,
@@ -129,6 +145,7 @@ const Poster = ({
       (isFilm ? "film__poster" : "slide-in") +
       (isClick ? " clickable__poster" : "")
     }
+    theme={theme}
   >
     <Container className={isFilm ? "film__container" : ""}>
       <ImageContainer>

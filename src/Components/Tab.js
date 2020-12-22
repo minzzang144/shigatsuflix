@@ -4,22 +4,6 @@ import styled from "styled-components";
 import Poster from "Components/Poster";
 import theme from "Styles/Theme";
 
-// Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
-const Container = styled.div`
-  z-index: 1;
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  transform: translate(-50%);
-  &.tab__container {
-    visibility: visible;
-    opacity: 1;
-  }
-`;
-
 const Nav = styled.nav``;
 
 // DropDown Box(Content 크기에 맞게 Background가 설정될 예정) + Tab 컴포넌트의 Container를 기준으로 absolute위치를 가진다.
@@ -166,7 +150,7 @@ const LastList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc((100vw - 220px) / 8);
+  width: calc((100vw - 180px) / 8);
   height: 250px;
 `;
 
@@ -195,9 +179,40 @@ const Li = styled.li`
   }
 `;
 
+// Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
+const Container = styled.div`
+  z-index: 1;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  transform: translate(-50%);
+  &.tab__container {
+    visibility: visible;
+    opacity: 1;
+  }
+  @media ${(props) => props.theme.tablet} {
+    ${LastList} {
+      width: calc((100vw - 180px) / 4);
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    ${LastList} {
+      width: calc((100vw - 180px) / 2);
+    }
+  }
+  @media ${(props) => props.theme.deviceMobile} {
+    ${LastList} {
+      width: calc((100vw - 180px));
+    }
+  }
+`;
+
 const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
   return (
-    <Container className="tabContainer">
+    <Container className="tabContainer" theme={theme}>
       <Nav className="nav">
         <DropDownBox className="dropDownBg">
           <Arrow></Arrow>
