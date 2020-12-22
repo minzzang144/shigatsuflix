@@ -128,7 +128,7 @@ export default class extends React.Component {
           data: { results: similarity },
         } = await tvApi.similarShows(parsedId));
       }
-      console.log(result, credit, recommandation, similarity);
+      // console.log(result, credit, recommandation, similarity);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
@@ -230,7 +230,7 @@ export default class extends React.Component {
             data: { results: similarity },
           } = await tvApi.similarShows(parsedId));
         }
-        console.log(result, credit, recommandation, similarity);
+        // console.log(result, credit, recommandation, similarity);
       } catch {
         this.setState({ error: "Can't find anything." });
       } finally {
@@ -311,7 +311,7 @@ export default class extends React.Component {
           width: `${matchMobile ? "100%" : matchDesktop ? "1280" : "640"}`,
           height: `${matchMobile ? "270" : matchDesktop ? "720" : "360"}`,
           videoId: `${result.videos.results[0].key}`,
-          playerVars: { origin: "http://localhost:3000" },
+          playerVars: { origin: "https://shigatsuflix.netlify.app" },
           events: {
             onReady: () => tab.classList.add("tab__container"),
           },
@@ -332,7 +332,7 @@ export default class extends React.Component {
       loading,
       error,
     } = this.state;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <DetailPresenter
         result={result}
