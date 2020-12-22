@@ -47,7 +47,6 @@ const Item = styled.div`
   min-width: calc(100% / 20);
   height: 100vh;
   padding: 14vh 7vw;
-  /* padding: 100px; */
   background-image: url(${(props) => props.bgImage});
   background-position: center center;
   background-size: cover;
@@ -71,6 +70,63 @@ const Item = styled.div`
   }
   @media ${(props) => props.theme.desktop} {
     padding: 20vh 5vw;
+    &:nth-child(odd) {
+      ${Overview} {
+        margin-left: 70%;
+      }
+    }
+    &:nth-child(even) {
+      ${Overview} {
+        width: 30%;
+      }
+    }
+  }
+  @media ${(props) => props.theme.tablet} {
+    padding: 14vh 6vw;
+    &:nth-child(odd) {
+      transform: rotateY(-20deg);
+      ${Overview} {
+        line-height: 1.5;
+        font-size: 0.9rem;
+      }
+    }
+    &:nth-child(even) {
+      transform: rotateY(20deg);
+      text-align: left;
+      ${Overview} {
+        line-height: 1.5;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    padding: 6vh 5vw;
+    &:nth-child(odd) {
+      transform: rotateY(-20deg);
+      ${Overview} {
+        line-height: 1.4;
+        font-size: 0.8rem;
+      }
+    }
+    &:nth-child(even) {
+      transform: rotateY(20deg);
+      text-align: left;
+      ${Overview} {
+        line-height: 1.4;
+        font-size: 0.8rem;
+      }
+    }
+  }
+  @media ${(props) => props.theme.galaxy} {
+    padding: 10vh 5vw;
+  }
+  @media ${(props) => props.theme.iphone} {
+    padding: 6vh 5vw;
+    &:nth-child(n) {
+      ${Overview} {
+        line-height: 1.2;
+      }
+    }
   }
 `;
 

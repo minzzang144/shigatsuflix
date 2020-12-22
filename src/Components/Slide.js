@@ -1,12 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import theme from "Styles/Theme";
 
 const Container = styled.div`
   height: 100vh;
   overflow: hidden;
   perspective: 55vw;
   backface-visibility: visible;
+  @media ${(props) => props.theme.tablet} {
+    perspective: 43vw;
+  }
+  @media ${(props) => props.theme.mobile} {
+    perspective: 41vw;
+  }
 `;
 
 const ItemList = styled.div`
@@ -269,7 +276,7 @@ const ItemList = styled.div`
 `;
 
 const Slide = ({ children, bottom }) => (
-  <Container>
+  <Container theme={theme}>
     <ItemList
       className={bottom ? "bottom__slider slider" : "top__slider slider"}
     >
