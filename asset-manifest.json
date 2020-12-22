@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "https://ShigatsuEl.github.io/shigatsuflix/static/js/main.501afa5c.chunk.js",
-    "main.js.map": "https://ShigatsuEl.github.io/shigatsuflix/static/js/main.501afa5c.chunk.js.map",
-    "runtime-main.js": "https://ShigatsuEl.github.io/shigatsuflix/static/js/runtime-main.c5ea6e62.js",
-    "runtime-main.js.map": "https://ShigatsuEl.github.io/shigatsuflix/static/js/runtime-main.c5ea6e62.js.map",
-    "static/js/2.8473a06c.chunk.js": "https://ShigatsuEl.github.io/shigatsuflix/static/js/2.8473a06c.chunk.js",
-    "static/js/2.8473a06c.chunk.js.map": "https://ShigatsuEl.github.io/shigatsuflix/static/js/2.8473a06c.chunk.js.map",
-    "index.html": "https://ShigatsuEl.github.io/shigatsuflix/index.html",
-    "static/js/2.8473a06c.chunk.js.LICENSE.txt": "https://ShigatsuEl.github.io/shigatsuflix/static/js/2.8473a06c.chunk.js.LICENSE.txt"
+    "main.js": "/shigatsuflix/static/js/main.93b01324.chunk.js",
+    "main.js.map": "/shigatsuflix/static/js/main.93b01324.chunk.js.map",
+    "runtime-main.js": "/shigatsuflix/static/js/runtime-main.381b01f5.js",
+    "runtime-main.js.map": "/shigatsuflix/static/js/runtime-main.381b01f5.js.map",
+    "static/js/2.5904ec69.chunk.js": "/shigatsuflix/static/js/2.5904ec69.chunk.js",
+    "static/js/2.5904ec69.chunk.js.map": "/shigatsuflix/static/js/2.5904ec69.chunk.js.map",
+    "index.html": "/shigatsuflix/index.html",
+    "static/js/2.5904ec69.chunk.js.LICENSE.txt": "/shigatsuflix/static/js/2.5904ec69.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c5ea6e62.js",
-    "static/js/2.8473a06c.chunk.js",
-    "static/js/main.501afa5c.chunk.js"
+    "static/js/runtime-main.381b01f5.js",
+    "static/js/2.5904ec69.chunk.js",
+    "static/js/main.93b01324.chunk.js"
   ]
 }
