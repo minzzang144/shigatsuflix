@@ -45,7 +45,7 @@ const SearchPresenter = ({
           ></Input>
         </Form>
         {loading ? (
-          <Loader />
+          <Loader isSearch={true} />
         ) : (
           <>
             {movieResults && movieResults.length > 0 && (

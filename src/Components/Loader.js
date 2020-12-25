@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -10,6 +9,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  &.search__loader {
+    position: absolute;
+    top: 0;
+  }
 `;
 
 const Image = styled.div`
@@ -20,14 +23,14 @@ const Image = styled.div`
   height: calc(100vh - 120px);
 `;
 
-const SLink = styled(Link)`
+const SLink = styled.a`
   margin-top: 10px;
   font-size: 0.8rem;
 `;
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default () => (
-  <Container>
+export default ({ isSearch = false }) => (
+  <Container className={isSearch ? "search__loader" : ""}>
     <Image bgUrl="/loading.gif"></Image>
     <SLink href="https://acegif.com/gifs-loading/" target="_blank">
       Acegif ©
