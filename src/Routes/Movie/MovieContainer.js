@@ -1,6 +1,6 @@
 import React from "react";
 import MoviePresenter from "./MoviePresenter";
-import { moviesApi } from "api";
+import { moviesApi } from "api/api";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
-import Loader from "Components/Loader";
-import Message from "Components/Message";
-import Slide from "Components/Slide";
-import Card from "Components/Card";
+import Loader from "components/Loader";
+import Message from "components/Message";
+import Slide from "components/Slide";
+import Card from "components/Card";
 
 const Container = styled.div``;
 

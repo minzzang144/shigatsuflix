@@ -1,5 +1,5 @@
 import React from "react";
-import { moviesApi, tvApi } from "api";
+import { moviesApi, tvApi } from "api/api";
 import DetailPresenter from "./DetailPresenter";
 
 // eslint-disable-next-line import/no-anonymous-default-export

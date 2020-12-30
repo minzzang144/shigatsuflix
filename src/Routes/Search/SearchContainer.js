@@ -1,5 +1,5 @@
 import React from "react";
-import { moviesApi, tvApi } from "api";
+import { moviesApi, tvApi } from "api/api";
 import SearchPresenter from "./SearchPresenter";
 
 // eslint-disable-next-line import/no-anonymous-default-export
