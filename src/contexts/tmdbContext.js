@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { tmdbReducer } from "reducers/tmdbReducer";
 import { tmdbState } from "stores/tmdbStore";
 
@@ -11,4 +11,14 @@ export const TmdbProvider = ({ children }) => {
       {children}
     </TmdbContext.Provider>
   );
+};
+
+export const useState = () => {
+  const { state } = useContext(TmdbContext);
+  return state;
+};
+
+export const useDispatch = () => {
+  const { dispatch } = useContext(TmdbContext);
+  return dispatch;
 };

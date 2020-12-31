@@ -1,53 +1,50 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
+import { useDispatch, useState } from "contexts/tmdbContext";
+import {
+  ERROR,
+  LOADING,
+  MATCH,
+  NOWPLAYING,
+  TOPRATED,
+} from "actions/tmdbAction";
 import { moviesApi, tvApi } from "api/api";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default class extends React.Component {
-  state = {
-    nowPlaying: null,
-    topRated: null,
-    loading: true,
-    match: false,
-    error: null,
-  };
+const HomeContainer = () => {
+  const { nowPlaying, topRated, match, error, loading } = useState();
+  const dispatch = useDispatch();
 
-  async componentDidMount() {
-    const mql = window.matchMedia("(max-width:720px)");
+  const fetchData = useCallback(async () => {
     try {
       const {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
+      dispatch({ type: NOWPLAYING, payload: nowPlaying });
       const {
         data: { results: topRated },
       } = await tvApi.topRated();
-      this.setState({
-        nowPlaying,
-        topRated,
-      });
+      dispatch({ type: TOPRATED, payload: topRated });
     } catch {
-      this.setState({
-        error: "Can't find movie information.",
-      });
+      dispatch({ type: ERROR });
     } finally {
-      this.setState({
-        loading: false,
-        match: mql.matches,
-      });
+      dispatch({ type: MATCH });
+      dispatch({ type: LOADING });
     }
-  }
+  }, [dispatch]);
 
-  render() {
-    const { nowPlaying, topRated, match, error, loading } = this.state;
-    // console.log(this.state);
-    return (
-      <HomePresenter
-        nowPlaying={nowPlaying}
-        topRated={topRated}
-        match={match}
-        loading={loading}
-        error={error}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return (
+    <HomePresenter
+      nowPlaying={nowPlaying}
+      topRated={topRated}
+      match={match}
+      loading={loading}
+      error={error}
+    />
+  );
+};
+
+export default HomeContainer;
