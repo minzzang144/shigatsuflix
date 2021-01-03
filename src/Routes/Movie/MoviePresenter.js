@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
-import Section from "components/Section";
+import PostSectionData from "system/PostSectionData";
 import Loader from "components/Loader";
 import Message from "components/Message";
 import Poster from "components/Poster";
@@ -21,7 +21,7 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
     ) : (
       <Container>
         {nowPlaying && nowPlaying.length > 0 && (
-          <Section title="Now Playing">
+          <PostSectionData title="Now Playing">
             {nowPlaying.map((movie) => (
               <Poster
                 key={movie.id}
@@ -35,10 +35,10 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 isSubInfo={true}
               />
             ))}
-          </Section>
+          </PostSectionData>
         )}
         {popular && popular.length > 0 && (
-          <Section title="Popular">
+          <PostSectionData title="Popular">
             {popular.map((movie) => (
               <Poster
                 key={movie.id}
@@ -52,10 +52,10 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 isSubInfo={true}
               />
             ))}
-          </Section>
+          </PostSectionData>
         )}
         {upComing && upComing.length > 0 && (
-          <Section title="Up Coming">
+          <PostSectionData title="Up Coming">
             {upComing.map((movie) => (
               <Poster
                 key={movie.id}
@@ -69,7 +69,7 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 isSubInfo={true}
               />
             ))}
-          </Section>
+          </PostSectionData>
         )}
         {error && <Message text={error} color="#e74c3c" />}
       </Container>
