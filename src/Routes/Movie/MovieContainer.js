@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import MoviePresenter from "./MoviePresenter";
 import { moviesApi } from "api/api";
+import { useDispatch, useState } from "contexts/tmdbContext";
+import {
+  NOWPLAYING,
+  UPCOMING,
+  POPULAR,
+  ERROR,
+  LOADING,
+  LOADING_FINISH,
+} from "actions/tmdbAction";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default class extends React.Component {
-  state = {
-    nowPlaying: null,
-    upComing: null,
-    popular: null,
-    loading: true,
-    error: null,
-  };
+const MovieContainer = () => {
+  const { nowPlaying, upComing, popular, error, loading } = useState();
+  const dispatch = useDispatch();
 
-  checkSlide() {
+  const checkSlide = useCallback(() => {
     const slideObj = document.querySelectorAll(".slide-in");
     slideObj.forEach((obj) => {
       const slideInAt =
@@ -38,52 +41,49 @@ export default class extends React.Component {
         obj.classList.remove("bottom-position");
       }
     });
-  }
+  }, []);
 
-  async componentDidMount() {
+  const fetchData = useCallback(async () => {
     try {
+      dispatch({ type: LOADING });
       const {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
+      dispatch({ type: NOWPLAYING, payload: nowPlaying });
       const {
         data: { results: upComing },
       } = await moviesApi.upComing();
+      dispatch({ type: UPCOMING, payload: upComing });
       const {
         data: { results: popular },
-      } = await moviesApi.popular();
-      this.setState({
-        nowPlaying,
-        upComing,
-        popular,
-      });
+      } = await moviesApi.upComing();
+      dispatch({ type: POPULAR, payload: popular });
     } catch {
-      this.setState({
-        error: "Can't find movie information.",
-      });
+      dispatch({ type: ERROR });
     } finally {
-      this.setState({
-        loading: false,
-      });
+      dispatch({ type: LOADING_FINISH });
+      checkSlide();
     }
-    this.checkSlide();
-    window.addEventListener("scroll", this.checkSlide);
-  }
+  }, [dispatch, checkSlide]);
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.checkSlide);
-  }
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-  render() {
-    const { nowPlaying, upComing, popular, error, loading } = this.state;
-    // console.log(this.state);
-    return (
-      <MoviePresenter
-        nowPlaying={nowPlaying}
-        upComing={upComing}
-        popular={popular}
-        loading={loading}
-        error={error}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    window.addEventListener("scroll", checkSlide);
+    return () => window.removeEventListener("scroll", checkSlide);
+  }, [checkSlide]);
+
+  return (
+    <MoviePresenter
+      nowPlaying={nowPlaying}
+      upComing={upComing}
+      popular={popular}
+      loading={loading}
+      error={error}
+    />
+  );
+};
+
+export default MovieContainer;

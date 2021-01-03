@@ -2,11 +2,12 @@ import React, { useCallback, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { useDispatch, useState } from "contexts/tmdbContext";
 import {
-  ERROR,
-  LOADING,
-  MATCH,
   NOWPLAYING,
   TOPRATED,
+  MATCH,
+  ERROR,
+  LOADING,
+  LOADING_FINISH,
 } from "actions/tmdbAction";
 import { moviesApi, tvApi } from "api/api";
 
@@ -16,6 +17,7 @@ const HomeContainer = () => {
 
   const fetchData = useCallback(async () => {
     try {
+      dispatch({ type: LOADING });
       const {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
@@ -28,7 +30,7 @@ const HomeContainer = () => {
       dispatch({ type: ERROR });
     } finally {
       dispatch({ type: MATCH });
-      dispatch({ type: LOADING });
+      dispatch({ type: LOADING_FINISH });
     }
   }, [dispatch]);
 

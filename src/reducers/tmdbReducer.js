@@ -1,9 +1,12 @@
 import {
   NOWPLAYING,
+  UPCOMING,
+  POPULAR,
   TOPRATED,
   MATCH,
   LOADING,
   ERROR,
+  LOADING_FINISH,
 } from "actions/tmdbAction";
 
 export const tmdbReducer = (state, action) => {
@@ -12,6 +15,16 @@ export const tmdbReducer = (state, action) => {
       return {
         ...state,
         nowPlaying: [...action.payload],
+      };
+    case UPCOMING:
+      return {
+        ...state,
+        upComing: [...action.payload],
+      };
+    case POPULAR:
+      return {
+        ...state,
+        popular: [...action.payload],
       };
     case TOPRATED:
       return {
@@ -25,6 +38,11 @@ export const tmdbReducer = (state, action) => {
         match: match.matches,
       };
     case LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOADING_FINISH:
       return {
         ...state,
         loading: false,
