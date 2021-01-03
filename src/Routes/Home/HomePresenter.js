@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Helmet from "react-helmet";
 import Loader from "components/Loader";
 import Message from "components/Message";
+import PostData from "system/PostData";
 import Slide from "components/Slide";
-import Card from "components/Card";
 import { useState } from "contexts/tmdbContext";
 
 const Container = styled.div``;
@@ -20,11 +20,11 @@ const HomePresenter = () => {
         <Loader />
       ) : (
         <Container>
-          <Slide>
+          <PostData>
             {nowPlaying &&
               nowPlaying.length > 0 &&
               nowPlaying.map((movie, index) => (
-                <Card
+                <Slide
                   key={movie.id}
                   id={movie.id}
                   index={index}
@@ -34,12 +34,12 @@ const HomePresenter = () => {
                   isMovie={true}
                 />
               ))}
-          </Slide>
-          <Slide bottom={true}>
+          </PostData>
+          <PostData bottom={true}>
             {topRated &&
               topRated.length > 0 &&
               topRated.map((show, index) => (
-                <Card
+                <Slide
                   key={show.id}
                   id={show.id}
                   index={index}
@@ -48,7 +48,7 @@ const HomePresenter = () => {
                   overview={show.overview}
                 />
               ))}
-          </Slide>
+          </PostData>
           {error && <Message text={error} color="#e74c3c" />}
         </Container>
       )}

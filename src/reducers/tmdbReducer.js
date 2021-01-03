@@ -5,7 +5,6 @@ import {
   LOADING,
   ERROR,
 } from "actions/tmdbAction";
-import { moviesApi, tvApi } from "api/api";
 
 export const tmdbReducer = (state, action) => {
   switch (action.type) {
