@@ -5,6 +5,7 @@ import { useDispatch, useState } from "contexts/tmdbContext";
 import {
   NOWPLAYING,
   UPCOMING,
+  POPULAR_RESET,
   POPULAR,
   ERROR,
   LOADING,
@@ -62,6 +63,7 @@ const MovieContainer = () => {
       dispatch({ type: ERROR });
     } finally {
       dispatch({ type: LOADING_FINISH });
+      dispatch({ type: POPULAR_RESET });
       checkSlide();
     }
   }, [dispatch, checkSlide]);

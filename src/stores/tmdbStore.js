@@ -3,6 +3,7 @@ export const tmdbState = {
   upComing: [],
   popular: [],
   topRated: [],
+  airingToday: [],
   match: false,
   loading: true,
   error: null,

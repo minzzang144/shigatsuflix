@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { tvApi } from "api/api";
 import TVPresenter from "./TVPresenter";
+import { useDispatch, useState } from "contexts/tmdbContext";
+import {
+  TOPRATED,
+  POPULAR_RESET,
+  POPULAR,
+  AIRING_TODAY,
+  ERROR,
+  LOADING_FINISH,
+  LOADING,
+} from "actions/tmdbAction";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default class extends React.Component {
-  state = {
-    topRated: null,
-    popular: null,
-    airingToday: null,
-    loading: true,
-    error: null,
-  };
+const TVContainer = () => {
+  const { topRated, popular, airingToday, error, loading } = useState();
+  const dispatch = useDispatch();
 
-  checkSlide() {
+  const checkSlide = useCallback(() => {
     const slideObj = document.querySelectorAll(".slide-in");
     slideObj.forEach((obj) => {
       const slideInAt =
@@ -38,52 +42,50 @@ export default class extends React.Component {
         obj.classList.remove("bottom-position");
       }
     });
-  }
+  }, []);
 
-  async componentDidMount() {
+  const fetchData = useCallback(async () => {
     try {
+      dispatch({ type: LOADING });
       const {
         data: { results: topRated },
       } = await tvApi.topRated();
+      dispatch({ type: TOPRATED, payload: topRated });
       const {
         data: { results: popular },
       } = await tvApi.popular();
+      dispatch({ type: POPULAR, payload: popular });
       const {
         data: { results: airingToday },
       } = await tvApi.airingToday();
-      this.setState({
-        topRated,
-        popular,
-        airingToday,
-      });
+      dispatch({ type: AIRING_TODAY, payload: airingToday });
     } catch {
-      this.setState({
-        error: "Can't find TV information.",
-      });
+      dispatch({ type: ERROR });
     } finally {
-      this.setState({
-        loading: false,
-      });
+      dispatch({ type: LOADING_FINISH });
+      dispatch({ type: POPULAR_RESET });
+      checkSlide();
     }
-    this.checkSlide();
-    window.addEventListener("scroll", this.checkSlide);
-  }
+  }, [dispatch, checkSlide]);
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.checkSlide);
-  }
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-  render() {
-    const { topRated, popular, airingToday, loading, error } = this.state;
-    // console.log(this.state);
-    return (
-      <TVPresenter
-        topRated={topRated}
-        popular={popular}
-        airingToday={airingToday}
-        loading={loading}
-        error={error}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    window.addEventListener("scroll", checkSlide);
+    return () => window.removeEventListener("scroll", checkSlide);
+  }, [checkSlide]);
+
+  return (
+    <TVPresenter
+      topRated={topRated}
+      popular={popular}
+      airingToday={airingToday}
+      loading={loading}
+      error={error}
+    />
+  );
+};
+
+export default TVContainer;

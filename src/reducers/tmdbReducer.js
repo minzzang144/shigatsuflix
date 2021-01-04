@@ -1,11 +1,13 @@
 import {
   NOWPLAYING,
   UPCOMING,
+  POPULAR_RESET,
   POPULAR,
   TOPRATED,
+  AIRING_TODAY,
   MATCH,
-  LOADING,
   ERROR,
+  LOADING,
   LOADING_FINISH,
 } from "actions/tmdbAction";
 
@@ -21,6 +23,11 @@ export const tmdbReducer = (state, action) => {
         ...state,
         upComing: [...action.payload],
       };
+    case POPULAR_RESET:
+      return {
+        ...state,
+        popular: [],
+      };
     case POPULAR:
       return {
         ...state,
@@ -30,6 +37,11 @@ export const tmdbReducer = (state, action) => {
       return {
         ...state,
         topRated: [...action.payload],
+      };
+    case AIRING_TODAY:
+      return {
+        ...state,
+        airingToday: [...action.payload],
       };
     case MATCH:
       const match = window.matchMedia("(max-width:720px)");
