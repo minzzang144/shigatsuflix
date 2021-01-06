@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
-import Section from "system/PostSectionData";
+import PostSectionData from "system/PostSectionData";
 import Loader from "components/Loader";
 import Message from "components/Message";
 import Poster from "components/Poster";
@@ -49,7 +49,7 @@ const SearchPresenter = ({
         ) : (
           <>
             {movieResults && movieResults.length > 0 && (
-              <Section title="Movie Results">
+              <PostSectionData title="Movie Results">
                 {movieResults.map((movie) => (
                   <Poster
                     key={movie.id}
@@ -65,10 +65,10 @@ const SearchPresenter = ({
                     isSubInfo={true}
                   />
                 ))}
-              </Section>
+              </PostSectionData>
             )}
             {tvResults && tvResults.length > 0 && (
-              <Section title="Show Results">
+              <PostSectionData title="Show Results">
                 {tvResults.map((show) => (
                   <Poster
                     key={show.id}
@@ -83,7 +83,7 @@ const SearchPresenter = ({
                     isSubInfo={true}
                   />
                 ))}
-              </Section>
+              </PostSectionData>
             )}
             {error && <Message text={error} color="#e74c3c" />}
             {movieResults &&
