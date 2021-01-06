@@ -1,61 +1,15 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { moviesApi, tvApi } from "api/api";
 import SearchPresenter from "./SearchPresenter";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default class extends React.Component {
-  state = {
-    movieResults: null,
-    tvResults: null,
-    searchTerm: "",
-    loading: false,
-    error: null,
-  };
+const SearchContainer = () => {
+  const [movieResults, setMovieResults] = useState(null);
+  const [tvResults, setTvResults] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { searchTerm } = this.state;
-    if (searchTerm !== "") {
-      this.searchByTerm();
-    }
-  };
-
-  updateInput = (event) => {
-    const {
-      target: { value },
-    } = event;
-    this.setState({
-      searchTerm: value,
-    });
-  };
-
-  searchByTerm = async () => {
-    const { searchTerm } = this.state;
-    this.setState({ loading: true });
-    try {
-      const {
-        data: { results: movieResults },
-      } = await moviesApi.search(searchTerm);
-      const {
-        data: { results: tvResults },
-      } = await tvApi.search(searchTerm);
-      this.setState({
-        movieResults,
-        tvResults,
-      });
-    } catch {
-      this.setState({
-        error: "Can't find results.",
-      });
-    } finally {
-      this.setState({
-        loading: false,
-      });
-      this.checkSlide();
-    }
-  };
-
-  checkSlide() {
+  const checkSlide = useCallback(() => {
     const slideObj = document.querySelectorAll(".slide-in");
     slideObj.forEach((obj) => {
       const slideInAt =
@@ -81,29 +35,60 @@ export default class extends React.Component {
         obj.classList.remove("bottom-position");
       }
     });
-  }
+  }, []);
 
-  componentDidMount() {
-    window.addEventListener("scroll", this.checkSlide);
-  }
+  const searchByTerm = useCallback(async () => {
+    setLoading(true);
+    try {
+      const {
+        data: { results: movieResults },
+      } = await moviesApi.search(searchTerm);
+      const {
+        data: { results: tvResults },
+      } = await tvApi.search(searchTerm);
+      setMovieResults(movieResults);
+      setTvResults(tvResults);
+    } catch {
+      setError("Can't find results.");
+    } finally {
+      setLoading(false);
+      checkSlide();
+    }
+  }, [searchTerm, checkSlide]);
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.checkSlide);
-  }
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (searchTerm !== "") {
+        searchByTerm();
+      }
+    },
+    [searchTerm, searchByTerm]
+  );
 
-  render() {
-    const { movieResults, tvResults, searchTerm, loading, error } = this.state;
-    // console.log(this.state);
-    return (
-      <SearchPresenter
-        movieResults={movieResults}
-        tvResults={tvResults}
-        searchTerm={searchTerm}
-        loading={loading}
-        error={error}
-        handleSubmit={this.handleSubmit}
-        updateInput={this.updateInput}
-      />
-    );
-  }
-}
+  const updateInput = useCallback((event) => {
+    const {
+      target: { value },
+    } = event;
+    setSearchTerm(value);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", checkSlide);
+    return () => window.removeEventListener("scroll", checkSlide);
+  }, [checkSlide]);
+
+  return (
+    <SearchPresenter
+      movieResults={movieResults}
+      tvResults={tvResults}
+      searchTerm={searchTerm}
+      loading={loading}
+      error={error}
+      handleSubmit={handleSubmit}
+      updateInput={updateInput}
+    />
+  );
+};
+
+export default SearchContainer;
