@@ -13,7 +13,7 @@ export const TmdbProvider = ({ children }) => {
   );
 };
 
-export const useState = () => {
+export const useGlobalState = () => {
   const { state } = useContext(TmdbContext);
   return state;
 };

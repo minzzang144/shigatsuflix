@@ -1,19 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { tvApi } from "api/api";
 import TVPresenter from "./TVPresenter";
-import { useDispatch, useState } from "contexts/tmdbContext";
-import {
-  TOPRATED,
-  POPULAR_RESET,
-  POPULAR,
-  AIRING_TODAY,
-  ERROR,
-  LOADING_FINISH,
-  LOADING,
-} from "actions/tmdbAction";
+import { useDispatch } from "contexts/tmdbContext";
+import { TOPRATED, POPULAR, AIRING_TODAY } from "actions/tmdbAction";
 
 const TVContainer = () => {
-  const { topRated, popular, airingToday, error, loading } = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const checkSlide = useCallback(() => {
@@ -46,7 +39,6 @@ const TVContainer = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      dispatch({ type: LOADING });
       const {
         data: { results: topRated },
       } = await tvApi.topRated();
@@ -60,10 +52,9 @@ const TVContainer = () => {
       } = await tvApi.airingToday();
       dispatch({ type: AIRING_TODAY, payload: airingToday });
     } catch {
-      dispatch({ type: ERROR });
+      setError("Can't find movie information.");
     } finally {
-      dispatch({ type: LOADING_FINISH });
-      dispatch({ type: POPULAR_RESET });
+      setLoading(false);
       checkSlide();
     }
   }, [dispatch, checkSlide]);
@@ -77,15 +68,7 @@ const TVContainer = () => {
     return () => window.removeEventListener("scroll", checkSlide);
   }, [checkSlide]);
 
-  return (
-    <TVPresenter
-      topRated={topRated}
-      popular={popular}
-      airingToday={airingToday}
-      loading={loading}
-      error={error}
-    />
-  );
+  return <TVPresenter loading={loading} error={error} />;
 };
 
 export default TVContainer;

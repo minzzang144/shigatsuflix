@@ -5,12 +5,12 @@ import Loader from "components/Loader";
 import Message from "components/Message";
 import PostSlideData from "system/PostSlideData";
 import Slide from "components/Slide";
-import { useState } from "contexts/tmdbContext";
+import { useGlobalState } from "contexts/tmdbContext";
 
 const Container = styled.div``;
 
-const HomePresenter = () => {
-  const { nowPlaying, topRated, match, error, loading } = useState();
+const HomePresenter = ({ loading, error }) => {
+  const { nowPlaying, topRated, match } = useGlobalState();
   return (
     <>
       <Helmet>

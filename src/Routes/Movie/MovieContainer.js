@@ -1,19 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MoviePresenter from "./MoviePresenter";
 import { moviesApi } from "api/api";
-import { useDispatch, useState } from "contexts/tmdbContext";
-import {
-  NOWPLAYING,
-  UPCOMING,
-  POPULAR_RESET,
-  POPULAR,
-  ERROR,
-  LOADING,
-  LOADING_FINISH,
-} from "actions/tmdbAction";
+import { useDispatch } from "contexts/tmdbContext";
+import { NOWPLAYING, UPCOMING, POPULAR } from "actions/tmdbAction";
 
 const MovieContainer = () => {
-  const { nowPlaying, upComing, popular, error, loading } = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const checkSlide = useCallback(() => {
@@ -46,24 +39,22 @@ const MovieContainer = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      dispatch({ type: LOADING });
       const {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
       dispatch({ type: NOWPLAYING, payload: nowPlaying });
       const {
+        data: { results: popular },
+      } = await moviesApi.popular();
+      dispatch({ type: POPULAR, payload: popular });
+      const {
         data: { results: upComing },
       } = await moviesApi.upComing();
       dispatch({ type: UPCOMING, payload: upComing });
-      const {
-        data: { results: popular },
-      } = await moviesApi.upComing();
-      dispatch({ type: POPULAR, payload: popular });
     } catch {
-      dispatch({ type: ERROR });
+      setError("Can't find movie information.");
     } finally {
-      dispatch({ type: LOADING_FINISH });
-      dispatch({ type: POPULAR_RESET });
+      setLoading(false);
       checkSlide();
     }
   }, [dispatch, checkSlide]);
@@ -77,15 +68,7 @@ const MovieContainer = () => {
     return () => window.removeEventListener("scroll", checkSlide);
   }, [checkSlide]);
 
-  return (
-    <MoviePresenter
-      nowPlaying={nowPlaying}
-      upComing={upComing}
-      popular={popular}
-      loading={loading}
-      error={error}
-    />
-  );
+  return <MoviePresenter loading={loading} error={error} />;
 };
 
 export default MovieContainer;

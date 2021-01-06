@@ -5,6 +5,4 @@ export const tmdbState = {
   topRated: [],
   airingToday: [],
   match: false,
-  loading: true,
-  error: null,
 };

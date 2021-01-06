@@ -1,23 +1,16 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HomePresenter from "./HomePresenter";
-import { useDispatch, useState } from "contexts/tmdbContext";
-import {
-  NOWPLAYING,
-  TOPRATED,
-  MATCH,
-  ERROR,
-  LOADING,
-  LOADING_FINISH,
-} from "actions/tmdbAction";
+import { useDispatch } from "contexts/tmdbContext";
+import { NOWPLAYING, TOPRATED, MATCH } from "actions/tmdbAction";
 import { moviesApi, tvApi } from "api/api";
 
 const HomeContainer = () => {
-  const { nowPlaying, topRated, match, error, loading } = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const fetchData = useCallback(async () => {
     try {
-      dispatch({ type: LOADING });
       const {
         data: { results: nowPlaying },
       } = await moviesApi.nowPlaying();
@@ -27,10 +20,10 @@ const HomeContainer = () => {
       } = await tvApi.topRated();
       dispatch({ type: TOPRATED, payload: topRated });
     } catch {
-      dispatch({ type: ERROR });
+      setError("Can't find movie information.");
     } finally {
       dispatch({ type: MATCH });
-      dispatch({ type: LOADING_FINISH });
+      setLoading(false);
     }
   }, [dispatch]);
 
@@ -38,15 +31,7 @@ const HomeContainer = () => {
     fetchData();
   }, [fetchData]);
 
-  return (
-    <HomePresenter
-      nowPlaying={nowPlaying}
-      topRated={topRated}
-      match={match}
-      loading={loading}
-      error={error}
-    />
-  );
+  return <HomePresenter loading={loading} error={error} />;
 };
 
 export default HomeContainer;

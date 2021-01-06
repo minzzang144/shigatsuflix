@@ -1,14 +1,10 @@
 import {
   NOWPLAYING,
   UPCOMING,
-  POPULAR_RESET,
   POPULAR,
   TOPRATED,
   AIRING_TODAY,
   MATCH,
-  ERROR,
-  LOADING,
-  LOADING_FINISH,
 } from "actions/tmdbAction";
 
 export const tmdbReducer = (state, action) => {
@@ -22,11 +18,6 @@ export const tmdbReducer = (state, action) => {
       return {
         ...state,
         upComing: [...action.payload],
-      };
-    case POPULAR_RESET:
-      return {
-        ...state,
-        popular: [],
       };
     case POPULAR:
       return {
@@ -48,21 +39,6 @@ export const tmdbReducer = (state, action) => {
       return {
         ...state,
         match: match.matches,
-      };
-    case LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case LOADING_FINISH:
-      return {
-        ...state,
-        loading: false,
-      };
-    case ERROR:
-      return {
-        ...state,
-        error: "Can't find movie information.",
       };
     default:
       return;
