@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
-import Section from "system/PostSectionData";
+import PostSectionData from "system/PostSectionData";
 import Loader from "components/Loader";
 import Message from "components/Message";
 import Poster from "components/Poster";
@@ -24,7 +24,7 @@ const TVPresenter = ({ loading, error }) => {
       ) : (
         <Container>
           {topRated && topRated.length > 0 && (
-            <Section title="Top Rated Shows">
+            <PostSectionData title="Top Rated Shows">
               {topRated.map((show) => (
                 <Poster
                   key={show.id}
@@ -37,10 +37,10 @@ const TVPresenter = ({ loading, error }) => {
                   isSubInfo={true}
                 />
               ))}
-            </Section>
+            </PostSectionData>
           )}
           {popular && popular.length > 0 && (
-            <Section title="Popular Shows">
+            <PostSectionData title="Popular Shows">
               {popular.map((show) => (
                 <Poster
                   key={show.id}
@@ -53,10 +53,10 @@ const TVPresenter = ({ loading, error }) => {
                   isSubInfo={true}
                 />
               ))}
-            </Section>
+            </PostSectionData>
           )}
           {airingToday && airingToday.length > 0 && (
-            <Section title="Airing Today">
+            <PostSectionData title="Airing Today">
               {airingToday.map((show) => (
                 <Poster
                   key={show.id}
@@ -69,7 +69,7 @@ const TVPresenter = ({ loading, error }) => {
                   isSubInfo={true}
                 />
               ))}
-            </Section>
+            </PostSectionData>
           )}
           {error && <Message text={error} color="#e74c3c" />}
         </Container>
