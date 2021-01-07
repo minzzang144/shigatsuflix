@@ -10,7 +10,7 @@ import { useGlobalState } from "contexts/tmdbContext";
 const Container = styled.div``;
 
 const HomePresenter = ({ loading, error }) => {
-  const { nowPlaying, topRated, match } = useGlobalState();
+  const { nowPlaying, topRated, matchMobile } = useGlobalState();
   return (
     <>
       <Helmet>
@@ -28,7 +28,9 @@ const HomePresenter = ({ loading, error }) => {
                   key={movie.id}
                   id={movie.id}
                   index={index}
-                  bgImage={match ? movie.poster_path : movie.backdrop_path}
+                  bgImage={
+                    matchMobile ? movie.poster_path : movie.backdrop_path
+                  }
                   title={movie.original_title}
                   overview={movie.overview}
                   isMovie={true}
@@ -43,7 +45,7 @@ const HomePresenter = ({ loading, error }) => {
                   key={show.id}
                   id={show.id}
                   index={index}
-                  bgImage={match ? show.poster_path : show.backdrop_path}
+                  bgImage={matchMobile ? show.poster_path : show.backdrop_path}
                   title={show.original_name}
                   overview={show.overview}
                 />

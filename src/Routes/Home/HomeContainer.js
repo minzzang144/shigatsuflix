@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import HomePresenter from "./HomePresenter";
 import { useDispatch } from "contexts/tmdbContext";
-import { NOWPLAYING, TOPRATED, MATCH } from "actions/tmdbAction";
+import { NOWPLAYING, TOPRATED, MATCH_MOBILE } from "actions/tmdbAction";
 import { moviesApi, tvApi } from "api/api";
 
 const HomeContainer = () => {
@@ -22,7 +22,7 @@ const HomeContainer = () => {
     } catch {
       setError("Can't find movie information.");
     } finally {
-      dispatch({ type: MATCH });
+      dispatch({ type: MATCH_MOBILE });
       setLoading(false);
     }
   }, [dispatch]);

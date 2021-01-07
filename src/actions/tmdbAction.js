@@ -3,4 +3,4 @@ export const UPCOMING = "upComing";
 export const POPULAR = "popular";
 export const TOPRATED = "topRated";
 export const AIRING_TODAY = "airingToday";
-export const MATCH = "match";
+export const MATCH_MOBILE = "matchMobile";

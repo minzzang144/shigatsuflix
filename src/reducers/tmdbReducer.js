@@ -4,7 +4,7 @@ import {
   POPULAR,
   TOPRATED,
   AIRING_TODAY,
-  MATCH,
+  MATCH_MOBILE,
 } from "actions/tmdbAction";
 
 export const tmdbReducer = (state, action) => {
@@ -34,11 +34,11 @@ export const tmdbReducer = (state, action) => {
         ...state,
         airingToday: [...action.payload],
       };
-    case MATCH:
-      const match = window.matchMedia("(max-width:720px)");
+    case MATCH_MOBILE:
+      const matchMobile = window.matchMedia("(max-width:720px)");
       return {
         ...state,
-        match: match.matches,
+        matchMobile: matchMobile.matches,
       };
     default:
       return;

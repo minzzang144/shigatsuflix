@@ -41,7 +41,7 @@ const MoviePresenter = ({ loading, error }) => {
             </PostSectionData>
           )}
           {popular && popular.length > 0 && (
-            <PostSectionData title="Popular">
+            <PostSectionData title="Popular Movies">
               {popular.map((movie) => (
                 <Poster
                   key={movie.id}

@@ -4,5 +4,5 @@ export const tmdbState = {
   popular: [],
   topRated: [],
   airingToday: [],
-  match: false,
+  matchMobile: false,
 };
