@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { moviesApi, tvApi } from "api/api";
 import DetailPresenter from "./DetailPresenter";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -15,9 +15,9 @@ function usePrevious(value) {
 }
 
 function DetailContainer(props) {
-  let { push } = useHistory();
-  let location = useLocation();
-  let { id } = useParams();
+  const { push } = useHistory();
+  const location = useLocation();
+  const { id } = useParams();
 
   const parsedId = parseInt(id);
   const [result, setResult] = useState(null);
@@ -63,6 +63,7 @@ function DetailContainer(props) {
     let recommandation = null;
     let similarity = null;
     let trailer = null;
+    setLoading(true);
     try {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
@@ -136,18 +137,13 @@ function DetailContainer(props) {
       return push("/");
     }
     fetchData();
-    /* if (prevProps.match.params.id !== props.match.params.id) {
-      if (isNaN(parsedId)) {
-        return push("/");
-      }
-      fetchData();
-    } */
+
     return () => {
       const triggers = document.querySelectorAll(".triggers > li");
       const closeButton = document.querySelector(".fa-times");
       const iframeScriptJS = document.getElementsByTagName("script")[0];
       const iframeScriptAPI = document.getElementsByTagName("script")[1];
-      console.log(closeButton, triggers, iframeScriptJS, iframeScriptAPI);
+      // console.log(closeButton, triggers, iframeScriptJS, iframeScriptAPI);
       // 컴포넌트가 Unmount될 시 자동적으로 스크립트를 삭제하고 YT 전역변수도 null값으로 설정한다.
       iframeScriptJS.remove();
       iframeScriptAPI.remove();
@@ -165,6 +161,23 @@ function DetailContainer(props) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (prevProps !== undefined) {
+      if (prevProps.match.params.id !== props.match.params.id) {
+        const iframeScriptJS = document.getElementsByTagName("script")[0];
+        const iframeScriptAPI = document.getElementsByTagName("script")[1];
+        iframeScriptJS.remove();
+        iframeScriptAPI.remove();
+        window.YT = null;
+        if (isNaN(parsedId)) {
+          return push("/");
+        }
+        fetchData();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
 
   return (
     <DetailPresenter
