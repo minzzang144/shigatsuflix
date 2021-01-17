@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Loader from "components/Loader";
 import Tab from "components/Tab";
 import theme from "Styles/Theme";
+import { useGlobalState } from "contexts/tmdbContext";
 
 const BackDrop = styled.div`
   position: absolute;
@@ -127,8 +128,8 @@ const DetailPresenter = ({
   isMovie,
   loading,
   error,
-}) =>
-  loading ? (
+}) => {
+  return loading ? (
     <>
       <Helmet>
         <title>Loading | ShigatsuFlix</title>
@@ -200,6 +201,7 @@ const DetailPresenter = ({
       </Content>
     </Container>
   );
+};
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
@@ -207,8 +209,6 @@ DetailPresenter.propTypes = {
   recommandation: PropTypes.array,
   similarity: PropTypes.array,
   isMovie: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
 };
 
 export default DetailPresenter;
