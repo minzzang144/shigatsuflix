@@ -17,8 +17,11 @@ const Container = styled.div`
   }
 `;
 
-const Image = styled.div`
-  background-image: url(${(props) => props.bgUrl});
+const Image = styled.div.attrs((props) => ({
+  style: {
+    backgroundImage: `url(${props.bgUrl})`,
+  },
+}))`
   background-size: cover;
   background-position: center center;
   border-radius: 4px;

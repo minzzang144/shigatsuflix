@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
@@ -120,88 +120,90 @@ const Container = styled.div`
   }
 `;
 
-const DetailPresenter = ({
-  result,
-  credit,
-  recommandation,
-  similarity,
-  isMovie,
-  loading,
-  error,
-}) => {
-  return loading ? (
-    <>
-      <Helmet>
-        <title>Loading | ShigatsuFlix</title>
-      </Helmet>
-      <Loader />
-    </>
-  ) : (
-    <Container theme={theme}>
-      <Helmet>
-        <title>
-          {result.original_title ? result.original_title : result.original_name}{" "}
-          | ShigatsuFlix
-        </title>
-      </Helmet>
-      <BackDrop
-        bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
-      />
-      <Tab
-        result={result}
-        credit={credit}
-        recommandation={recommandation}
-        similarity={similarity}
-        isMovie={isMovie}
-      />
-      <Content>
-        <Cover
-          bgImage={
-            result.poster_path
-              ? `https://image.tmdb.org/t/p/original/${result.poster_path}`
-              : "/noPosterSmall.png"
-          }
-        />
-        <Data>
-          <Title>
+const DetailPresenter = forwardRef(
+  (
+    { result, credit, recommandation, similarity, isMovie, loading },
+    { trailerRef }
+  ) => {
+    // console.log(ref);
+    return loading ? (
+      <>
+        <Helmet>
+          <title>Loading | ShigatsuFlix</title>
+        </Helmet>
+        <Loader />
+      </>
+    ) : (
+      <Container theme={theme}>
+        <Helmet>
+          <title>
             {result.original_title
               ? result.original_title
-              : result.original_name}
-          </Title>
-          <ItemContainer>
-            <Item>
-              {result.release_date
-                ? result.release_date.substring(0, 4)
-                : result.first_air_date.substring(0, 4)}
-            </Item>
-            <Divider>•</Divider>
-            <Item>
-              {result.runtime ? result.runtime : result.episode_run_time[0]} min
-            </Item>
-            <Divider>•</Divider>
-            <Item>
-              {result.genres &&
-                result.genres.map((genre, index) =>
-                  index === result.genres.length - 1
-                    ? genre.name
-                    : `${genre.name} / `
-                )}
-            </Item>
-            {result.imdb_id ? (
-              <IMDB
-                href={`https://www.imdb.com/title/${result.imdb_id}`}
-                target="_blank"
-              >
-                <IMDBImg src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"></IMDBImg>
-              </IMDB>
-            ) : null}
-          </ItemContainer>
-          <Overview>{result.overview}</Overview>
-        </Data>
-      </Content>
-    </Container>
-  );
-};
+              : result.original_name}{" "}
+            | ShigatsuFlix
+          </title>
+        </Helmet>
+        <BackDrop
+          bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
+        />
+        <Tab
+          result={result}
+          credit={credit}
+          recommandation={recommandation}
+          similarity={similarity}
+          isMovie={isMovie}
+          ref={{ trailerRef }}
+        />
+        <Content>
+          <Cover
+            bgImage={
+              result.poster_path
+                ? `https://image.tmdb.org/t/p/original/${result.poster_path}`
+                : "/noPosterSmall.png"
+            }
+          />
+          <Data>
+            <Title>
+              {result.original_title
+                ? result.original_title
+                : result.original_name}
+            </Title>
+            <ItemContainer>
+              <Item>
+                {result.release_date
+                  ? result.release_date.substring(0, 4)
+                  : result.first_air_date.substring(0, 4)}
+              </Item>
+              <Divider>•</Divider>
+              <Item>
+                {result.runtime ? result.runtime : result.episode_run_time[0]}{" "}
+                min
+              </Item>
+              <Divider>•</Divider>
+              <Item>
+                {result.genres &&
+                  result.genres.map((genre, index) =>
+                    index === result.genres.length - 1
+                      ? genre.name
+                      : `${genre.name} / `
+                  )}
+              </Item>
+              {result.imdb_id ? (
+                <IMDB
+                  href={`https://www.imdb.com/title/${result.imdb_id}`}
+                  target="_blank"
+                >
+                  <IMDBImg src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"></IMDBImg>
+                </IMDB>
+              ) : null}
+            </ItemContainer>
+            <Overview>{result.overview}</Overview>
+          </Data>
+        </Content>
+      </Container>
+    );
+  }
+);
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,

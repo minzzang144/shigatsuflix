@@ -1,8 +1,11 @@
-import React from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Poster from "components/Poster";
 import theme from "Styles/Theme";
+import { handleEnter } from "utils/tabEnter";
+import { handleLeave } from "utils/tabLeave";
+import { closeTrailer } from "utils/closeTrailer";
 
 const Nav = styled.nav``;
 
@@ -210,224 +213,266 @@ const Container = styled.div`
   }
 `;
 
-const Tab = ({ result, credit, recommandation, similarity, isMovie }) => {
-  return (
-    <Container className="tabContainer" theme={theme}>
-      <Nav className="nav">
-        <DropDownBox className="dropDownBg">
-          <Arrow></Arrow>
-        </DropDownBox>
-        <Ul className="triggers">
-          <Li className="trailerList">
-            <Button>Trailer</Button>
-            <Wrapper className="trailer__content" theme={theme}>
-              <Close className="fas fa-times" />
-              {result.videos.results[0] ? (
-                <>
-                  <Trailer id="player" />
-                </>
-              ) : (
-                "There are no trailers found."
-              )}
-            </Wrapper>
-          </Li>
-          <Li className="filmList">
-            <Button>Film</Button>
-            <DropDown className="dropdown">
-              <Wrapper className="film__content">
-                {!isMovie ? (
-                  // show Detail Tab에서만 보이는 Poster Component
+const Tab = forwardRef(
+  ({ result, credit, recommandation, similarity, isMovie }, { trailerRef }) => {
+    const tabRef = useRef();
+    const closeRef = useRef();
+
+    useEffect(() => {
+      const triggers = tabRef.current.querySelectorAll(".triggers > li");
+      // triggers 이벤트 핸들링 추가
+      triggers.forEach((trigger) => {
+        trigger.addEventListener("mouseenter", () =>
+          handleEnter.call(trigger, trailerRef)
+        );
+        trigger.addEventListener("mouseleave", () =>
+          handleLeave.call(trigger, trailerRef)
+        );
+      });
+
+      const tabInerval = setTimeout(() => {
+        if (!tabRef.current.classList.contains("tab__container")) {
+          tabRef.current.classList.add("tab__container");
+        }
+      }, 2000);
+
+      return () => {
+        triggers.forEach((trigger) => {
+          trigger.removeEventListener("mouseenter", () =>
+            handleEnter.call(trigger, trailerRef)
+          );
+          trigger.removeEventListener("mouseleave", () =>
+            handleLeave.call(trigger, trailerRef)
+          );
+        });
+        clearTimeout(tabInerval);
+      };
+    }, [trailerRef]);
+
+    return (
+      <Container ref={tabRef} className="tabContainer" theme={theme}>
+        <Nav className="nav">
+          <DropDownBox className="dropDownBg">
+            <Arrow></Arrow>
+          </DropDownBox>
+          <Ul className="triggers">
+            <Li className="trailerList">
+              <Button>Trailer</Button>
+              <Wrapper className="trailer__content" theme={theme}>
+                <Close
+                  ref={closeRef}
+                  onClick={closeTrailer}
+                  className="fas fa-times"
+                />
+                {result.videos.results[0] ? (
                   <>
-                    <Title>Seasons</Title>
-                    <Box>
-                      {result && result.seasons.length > 0
-                        ? result.seasons.map((season, index) =>
-                            index < 7 ? (
-                              <Poster
-                                key={season.id || index}
-                                id={season.id || index}
-                                imageUrl={season.poster_path}
-                                info={season.name}
-                                isFilm={true}
-                              />
-                            ) : null
-                          )
-                        : "No more Seasons"}
-                      {result.seasons.length > 7 ? (
-                        <LastList>
-                          <LastListTitle>
-                            + {result.seasons.length - 7} Seasons
-                          </LastListTitle>
-                        </LastList>
-                      ) : null}
-                    </Box>
+                    <Trailer id="player" />
                   </>
-                ) : null}
-
-                <Title>Actor</Title>
-                <Box>
-                  {credit.cast && credit.cast.length > 0
-                    ? credit.cast.map((actor, index) =>
-                        index < 15 ? (
-                          <Poster
-                            key={actor.credit_id || index}
-                            id={actor.id || index}
-                            imageUrl={actor.profile_path}
-                            info={actor.original_name}
-                            subInfo={`Star as ${actor.character}`}
-                            isFilm={true}
-                            isSubInfo={true}
-                          />
-                        ) : null
-                      )
-                    : "Not found information"}
-                  {credit.cast.length > 15 ? (
-                    <LastList>
-                      <LastListTitle>
-                        + {credit.cast.length - 15} Actors
-                      </LastListTitle>
-                    </LastList>
-                  ) : null}
-                </Box>
-
-                <Title>Crew</Title>
-                <Box>
-                  {credit.crew && credit.crew.length > 0
-                    ? credit.crew.map((crew, index) =>
-                        index < 15 ? (
-                          <Poster
-                            key={crew.credit_id || index}
-                            id={crew.id || index}
-                            imageUrl={crew.profile_path}
-                            info={crew.original_name}
-                            subInfo={`Role as ${crew.job}`}
-                            isFilm={true}
-                            isSubInfo={true}
-                          />
-                        ) : null
-                      )
-                    : "Not found information"}
-                  {credit.crew.length > 15 ? (
-                    <LastList>
-                      <LastListTitle>
-                        + {credit.crew.length - 15} Crew
-                      </LastListTitle>
-                    </LastList>
-                  ) : null}
-                </Box>
-
-                <Title>Production</Title>
-                <Box>
-                  {result.production_companies &&
-                  result.production_companies.length > 0
-                    ? result.production_companies.map((company, index) =>
-                        index < 7 ? (
-                          <Poster
-                            key={company.id || index}
-                            id={company.id || index}
-                            imageUrl={company.logo_path}
-                            info={company.name}
-                            subInfo={`From ${company.origin_country}`}
-                            isFilm={true}
-                            isSubInfo={true}
-                          />
-                        ) : null
-                      )
-                    : "Not found information"}
-                  {result.production_companies > 7 ? (
-                    <LastList>
-                      <LastListTitle>
-                        + {result.production_companies - 7} Companies
-                      </LastListTitle>
-                    </LastList>
-                  ) : null}
-                </Box>
-
-                <Title>
-                  {isMovie ? "Recommand Movies" : "Recommand TV shows"}
-                </Title>
-                <Box>
-                  {isMovie
-                    ? recommandation && recommandation.length > 0
-                      ? // Movie Detail Tab에서만 보이는 Poster Component
-                        recommandation.map((movie) => (
-                          <Poster
-                            key={movie.id}
-                            id={movie.id}
-                            info={movie.original_title}
-                            imageUrl={movie.poster_path}
-                            rating={movie.vote_average}
-                            subInfo={movie.release_date.substring(0, 4)}
-                            isMovie={true}
-                            isFilm={true}
-                            isClick={true}
-                            isSubInfo={true}
-                          />
-                        ))
-                      : "Not found information"
-                    : recommandation && recommandation.length > 0
-                    ? // show Detail Tab에서만 보이는 Poster Component
-                      recommandation.map((show) => (
-                        <Poster
-                          key={show.id}
-                          id={show.id}
-                          info={show.original_name}
-                          imageUrl={show.poster_path}
-                          rating={show.vote_average}
-                          subInfo={show.first_air_date.substring(0, 4)}
-                          isFilm={true}
-                          isClick={true}
-                          isSubInfo={true}
-                        />
-                      ))
-                    : "Not found information"}
-                </Box>
-
-                <Title>{isMovie ? "Similar Movies" : "Similar TV shows"}</Title>
-                <Box>
-                  {isMovie
-                    ? similarity && similarity.length > 0
-                      ? // Movie Detail Tab에서만 보이는 Poster Component
-                        similarity.map((movie) => (
-                          <Poster
-                            key={movie.id}
-                            id={movie.id}
-                            info={movie.original_title}
-                            imageUrl={movie.poster_path}
-                            rating={movie.vote_average}
-                            subInfo={movie.release_date.substring(0, 4)}
-                            isMovie={true}
-                            isFilm={true}
-                            isClick={true}
-                            isSubInfo={true}
-                          />
-                        ))
-                      : "Not found information"
-                    : similarity && similarity.length > 0
-                    ? // show Detail Tab에서만 보이는 Poster Component
-                      similarity.map((show) => (
-                        <Poster
-                          key={show.id}
-                          id={show.id}
-                          info={show.original_name}
-                          imageUrl={show.poster_path}
-                          rating={show.vote_average}
-                          subInfo={show.first_air_date.substring(0, 4)}
-                          isFilm={true}
-                          isClick={true}
-                          isSubInfo={true}
-                        />
-                      ))
-                    : "Not found information"}
-                </Box>
+                ) : (
+                  "There are no trailers found."
+                )}
               </Wrapper>
-            </DropDown>
-          </Li>
-        </Ul>
-      </Nav>
-    </Container>
-  );
-};
+            </Li>
+            <Li className="filmList">
+              <Button>Film</Button>
+              <DropDown className="dropdown">
+                <Wrapper className="film__content">
+                  {!isMovie ? (
+                    // show Detail Tab에서만 보이는 Poster Component
+                    <>
+                      <Title>Seasons</Title>
+                      <Box>
+                        {result && result.seasons.length > 0
+                          ? result.seasons.map((season, index) =>
+                              index < 7 ? (
+                                <Poster
+                                  key={season.id || index}
+                                  id={season.id || index}
+                                  imageUrl={season.poster_path}
+                                  info={season.name}
+                                  isFilm={true}
+                                />
+                              ) : null
+                            )
+                          : "No more Seasons"}
+                        {result.seasons.length > 7 ? (
+                          <LastList>
+                            <LastListTitle>
+                              + {result.seasons.length - 7} Seasons
+                            </LastListTitle>
+                          </LastList>
+                        ) : null}
+                      </Box>
+                    </>
+                  ) : null}
+
+                  <Title>Actor</Title>
+                  <Box>
+                    {credit.cast && credit.cast.length > 0
+                      ? credit.cast.map((actor, index) =>
+                          index < 15 ? (
+                            <Poster
+                              key={actor.credit_id || index}
+                              id={actor.id || index}
+                              imageUrl={actor.profile_path}
+                              info={actor.original_name}
+                              subInfo={`Star as ${actor.character}`}
+                              isFilm={true}
+                              isSubInfo={true}
+                            />
+                          ) : null
+                        )
+                      : "Not found information"}
+                    {credit.cast.length > 15 ? (
+                      <LastList>
+                        <LastListTitle>
+                          + {credit.cast.length - 15} Actors
+                        </LastListTitle>
+                      </LastList>
+                    ) : null}
+                  </Box>
+
+                  <Title>Crew</Title>
+                  <Box>
+                    {credit.crew && credit.crew.length > 0
+                      ? credit.crew.map((crew, index) =>
+                          index < 15 ? (
+                            <Poster
+                              key={crew.credit_id || index}
+                              id={crew.id || index}
+                              imageUrl={crew.profile_path}
+                              info={crew.original_name}
+                              subInfo={`Role as ${crew.job}`}
+                              isFilm={true}
+                              isSubInfo={true}
+                            />
+                          ) : null
+                        )
+                      : "Not found information"}
+                    {credit.crew.length > 15 ? (
+                      <LastList>
+                        <LastListTitle>
+                          + {credit.crew.length - 15} Crew
+                        </LastListTitle>
+                      </LastList>
+                    ) : null}
+                  </Box>
+
+                  <Title>Production</Title>
+                  <Box>
+                    {result.production_companies &&
+                    result.production_companies.length > 0
+                      ? result.production_companies.map((company, index) =>
+                          index < 7 ? (
+                            <Poster
+                              key={company.id || index}
+                              id={company.id || index}
+                              imageUrl={company.logo_path}
+                              info={company.name}
+                              subInfo={`From ${company.origin_country}`}
+                              isFilm={true}
+                              isSubInfo={true}
+                            />
+                          ) : null
+                        )
+                      : "Not found information"}
+                    {result.production_companies > 7 ? (
+                      <LastList>
+                        <LastListTitle>
+                          + {result.production_companies - 7} Companies
+                        </LastListTitle>
+                      </LastList>
+                    ) : null}
+                  </Box>
+
+                  <Title>
+                    {isMovie ? "Recommand Movies" : "Recommand TV shows"}
+                  </Title>
+                  <Box>
+                    {isMovie
+                      ? recommandation && recommandation.length > 0
+                        ? // Movie Detail Tab에서만 보이는 Poster Component
+                          recommandation.map((movie) => (
+                            <Poster
+                              key={movie.id}
+                              id={movie.id}
+                              info={movie.original_title}
+                              imageUrl={movie.poster_path}
+                              rating={movie.vote_average}
+                              subInfo={movie.release_date.substring(0, 4)}
+                              isMovie={true}
+                              isFilm={true}
+                              isClick={true}
+                              isSubInfo={true}
+                            />
+                          ))
+                        : "Not found information"
+                      : recommandation && recommandation.length > 0
+                      ? // show Detail Tab에서만 보이는 Poster Component
+                        recommandation.map((show) => (
+                          <Poster
+                            key={show.id}
+                            id={show.id}
+                            info={show.original_name}
+                            imageUrl={show.poster_path}
+                            rating={show.vote_average}
+                            subInfo={show.first_air_date.substring(0, 4)}
+                            isFilm={true}
+                            isClick={true}
+                            isSubInfo={true}
+                          />
+                        ))
+                      : "Not found information"}
+                  </Box>
+
+                  <Title>
+                    {isMovie ? "Similar Movies" : "Similar TV shows"}
+                  </Title>
+                  <Box>
+                    {isMovie
+                      ? similarity && similarity.length > 0
+                        ? // Movie Detail Tab에서만 보이는 Poster Component
+                          similarity.map((movie) => (
+                            <Poster
+                              key={movie.id}
+                              id={movie.id}
+                              info={movie.original_title}
+                              imageUrl={movie.poster_path}
+                              rating={movie.vote_average}
+                              subInfo={movie.release_date.substring(0, 4)}
+                              isMovie={true}
+                              isFilm={true}
+                              isClick={true}
+                              isSubInfo={true}
+                            />
+                          ))
+                        : "Not found information"
+                      : similarity && similarity.length > 0
+                      ? // show Detail Tab에서만 보이는 Poster Component
+                        similarity.map((show) => (
+                          <Poster
+                            key={show.id}
+                            id={show.id}
+                            info={show.original_name}
+                            imageUrl={show.poster_path}
+                            rating={show.vote_average}
+                            subInfo={show.first_air_date.substring(0, 4)}
+                            isFilm={true}
+                            isClick={true}
+                            isSubInfo={true}
+                          />
+                        ))
+                      : "Not found information"}
+                  </Box>
+                </Wrapper>
+              </DropDown>
+            </Li>
+          </Ul>
+        </Nav>
+      </Container>
+    );
+  }
+);
 
 Tab.propTypes = {
   result: PropTypes.object,

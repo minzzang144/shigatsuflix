@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { moviesApi, tvApi } from "api/api";
 import DetailPresenter from "./DetailPresenter";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { handleEnter } from "utils/tabEnter";
-import { handleLeave } from "utils/tabLeave";
-import { closeTrailer } from "utils/closeTrailer";
 
 function usePrevious(value) {
   const ref = useRef();
@@ -13,7 +10,6 @@ function usePrevious(value) {
   });
   return ref.current;
 }
-
 function DetailContainer(props) {
   const { push } = useHistory();
   const location = useLocation();
@@ -35,6 +31,8 @@ function DetailContainer(props) {
     window.matchMedia("(min-width:1600px)").matches
   )[0];
   const prevProps = usePrevious(props);
+  let trailerRef = useRef();
+  trailerRef = trailer;
 
   const loadVideo = async (result) => {
     const tab = document.querySelector(".tabContainer");
@@ -62,9 +60,8 @@ function DetailContainer(props) {
     let credit = null;
     let recommandation = null;
     let similarity = null;
-    let trailer = null;
-    setLoading(true);
     try {
+      setLoading(true);
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
         ({ data: credit } = await moviesApi.creditDetail(parsedId));
@@ -99,37 +96,17 @@ function DetailContainer(props) {
 
         // onYouTubeIframeAPIReady will load the video after the script is loaded
         window.onYouTubeIframeAPIReady = async function onYouTubeIframeAPIReady() {
-          trailer = await loadVideo(result);
+          await loadVideo(result);
         };
 
         const firstScriptTag = document.getElementsByTagName("script")[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       } else {
         // If script is already there, load the video directly
-        trailer = await loadVideo(result);
+        await loadVideo(result);
       }
       setLoading(false);
     }
-    const tab = document.querySelector(".tabContainer");
-    const triggers = document.querySelectorAll(".triggers > li");
-    const closeButton = document.querySelector(".fa-times");
-
-    // triggers 이벤트 핸들링 추가
-    triggers.forEach((trigger) => {
-      trigger.addEventListener("mouseenter", () =>
-        handleEnter.call(trigger, trailer)
-      );
-      trigger.addEventListener("mouseleave", () =>
-        handleLeave.call(trigger, trailer)
-      );
-    });
-    closeButton.addEventListener("click", closeTrailer);
-
-    setTimeout(() => {
-      if (!tab.classList.contains("tab__container")) {
-        tab.classList.add("tab__container");
-      }
-    }, 2000);
   };
 
   useEffect(() => {
@@ -137,27 +114,13 @@ function DetailContainer(props) {
       return push("/");
     }
     fetchData();
-
     return () => {
-      const triggers = document.querySelectorAll(".triggers > li");
-      const closeButton = document.querySelector(".fa-times");
       const iframeScriptJS = document.getElementsByTagName("script")[0];
       const iframeScriptAPI = document.getElementsByTagName("script")[1];
-      // console.log(closeButton, triggers, iframeScriptJS, iframeScriptAPI);
       // 컴포넌트가 Unmount될 시 자동적으로 스크립트를 삭제하고 YT 전역변수도 null값으로 설정한다.
       iframeScriptJS.remove();
       iframeScriptAPI.remove();
       window.YT = null;
-      // triggers의 이벤트 제거
-      triggers.forEach((trigger) => {
-        trigger.removeEventListener("mouseenter", () =>
-          handleEnter.call(trigger, trailer)
-        );
-        trigger.removeEventListener("mouseleave", () =>
-          handleLeave.call(trigger, trailer)
-        );
-      });
-      closeButton.removeEventListener("click", closeTrailer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -186,6 +149,7 @@ function DetailContainer(props) {
       recommandation={recommandation}
       similarity={similarity}
       isMovie={isMovie}
+      ref={{ trailerRef }}
       loading={loading}
       error={error}
     />
