@@ -10,6 +10,7 @@ function usePrevious(value) {
   });
   return ref.current;
 }
+
 function DetailContainer(props) {
   const { push } = useHistory();
   const location = useLocation();

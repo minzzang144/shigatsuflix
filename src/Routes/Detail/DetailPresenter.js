@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import Loader from "components/Loader";
-import Tab from "components/Tab";
+import DropDown from "components/DropDown";
 import theme from "Styles/Theme";
-import { useGlobalState } from "contexts/tmdbContext";
 
 const BackDrop = styled.div`
   position: absolute;
@@ -125,7 +124,6 @@ const DetailPresenter = forwardRef(
     { result, credit, recommandation, similarity, isMovie, loading },
     { trailerRef }
   ) => {
-    // console.log(ref);
     return loading ? (
       <>
         <Helmet>
@@ -146,7 +144,7 @@ const DetailPresenter = forwardRef(
         <BackDrop
           bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
         />
-        <Tab
+        <DropDown
           result={result}
           credit={credit}
           recommandation={recommandation}
