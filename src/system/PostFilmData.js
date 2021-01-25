@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Poster from "./Poster";
+import Poster from "../components/Poster";
 
 const Button = styled.button`
   color: #e74c3c;
@@ -113,7 +113,13 @@ const Li = styled.li`
   }
 `;
 
-const FilmTab = ({ result, credit, recommandation, similarity, isMovie }) => {
+const PostFilmData = ({
+  result,
+  credit,
+  recommandation,
+  similarity,
+  isMovie,
+}) => {
   return (
     <Li className="filmList">
       <Button>Film</Button>
@@ -306,4 +312,4 @@ const FilmTab = ({ result, credit, recommandation, similarity, isMovie }) => {
   );
 };
 
-export default FilmTab;
+export default PostFilmData;

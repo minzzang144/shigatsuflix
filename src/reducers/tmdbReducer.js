@@ -5,10 +5,6 @@ import {
   TOPRATED,
   AIRING_TODAY,
   MATCH_MOBILE,
-  MATCH_DESKTOP,
-  LOADING,
-  LOADING_FINISH,
-  ERROR,
 } from "actions/tmdbAction";
 
 export const tmdbReducer = (state, action) => {

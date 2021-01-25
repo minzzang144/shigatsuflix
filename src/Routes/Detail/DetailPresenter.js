@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import Loader from "components/Loader";
-import DropDown from "components/DropDown";
+import PostTabData from "system/PostTabData";
 import theme from "Styles/Theme";
 
 const BackDrop = styled.div`
@@ -144,7 +144,7 @@ const DetailPresenter = forwardRef(
         <BackDrop
           bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}
         />
-        <DropDown
+        <PostTabData
           result={result}
           credit={credit}
           recommandation={recommandation}

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import theme from "Styles/Theme";
 import { handleEnter } from "utils/tabEnter";
 import { handleLeave } from "utils/tabLeave";
-import TrailerTab from "./TrailerTab";
-import FilmTab from "./FilmTab";
+import PostTrailerData from "./PostTrailerData";
+import PostFilmData from "./PostFilmData";
 
 // Tab Container(Detail Screen 상단에 위치) + 부모 relative는 DetailPresenter의 Content가 가지고 있음
 const Container = styled.div`
@@ -59,7 +59,7 @@ const Ul = styled.ul`
   justify-content: center;
 `;
 
-const Tab = forwardRef(
+const PostTabData = forwardRef(
   ({ result, credit, recommandation, similarity, isMovie }, { trailerRef }) => {
     const tabRef = useRef();
 
@@ -101,8 +101,8 @@ const Tab = forwardRef(
             <Arrow></Arrow>
           </DropDownBox>
           <Ul className="triggers">
-            <TrailerTab result={result} />
-            <FilmTab
+            <PostTrailerData result={result} />
+            <PostFilmData
               result={result}
               credit={credit}
               recommandation={recommandation}
@@ -116,7 +116,7 @@ const Tab = forwardRef(
   }
 );
 
-Tab.propTypes = {
+PostTabData.propTypes = {
   result: PropTypes.object,
   cast: PropTypes.object,
   recommandation: PropTypes.array,
@@ -124,4 +124,4 @@ Tab.propTypes = {
   isMovie: PropTypes.bool.isRequired,
 };
 
-export default Tab;
+export default PostTabData;

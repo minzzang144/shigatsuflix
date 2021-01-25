@@ -73,7 +73,7 @@ const Li = styled.li`
   }
 `;
 
-const TrailerTab = ({ result }) => {
+const PostTrailerData = ({ result }) => {
   const closeRef = useRef();
   return (
     <Li className="trailerList">
@@ -92,4 +92,4 @@ const TrailerTab = ({ result }) => {
   );
 };
 
-export default TrailerTab;
+export default PostTrailerData;

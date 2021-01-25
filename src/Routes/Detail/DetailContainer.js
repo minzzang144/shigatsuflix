@@ -44,7 +44,7 @@ function DetailContainer(props) {
         width: `${matchMobile ? "100%" : matchDesktop ? "1280" : "640"}`,
         height: `${matchMobile ? "270" : matchDesktop ? "720" : "360"}`,
         videoId: `${result.videos.results[0].key}`,
-        playerVars: { origin: "http://localhost:3000/" },
+        playerVars: { origin: "https://shigatsuflix.netlify.app/" },
         events: {
           onReady: () => tab.classList.add("tab__container"),
         },
