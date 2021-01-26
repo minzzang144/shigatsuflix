@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Poster from "./Poster";
 
 const Title = styled.h3`
@@ -55,6 +56,10 @@ const Crew = ({ credit }) => {
       </Box>
     </>
   );
+};
+
+Crew.propTypes = {
+  credit: PropTypes.object,
 };
 
 export default Crew;

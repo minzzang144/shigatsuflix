@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Poster from "./Poster";
 
 const Title = styled.h3`
@@ -57,6 +58,10 @@ const Production = ({ result }) => {
       </Box>
     </>
   );
+};
+
+Production.propTypes = {
+  result: PropTypes.object,
 };
 
 export default Production;

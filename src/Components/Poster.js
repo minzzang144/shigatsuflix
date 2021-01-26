@@ -184,6 +184,8 @@ Poster.propTypes = {
   subInfo: PropTypes.string,
   isMovie: PropTypes.bool,
   isFilm: PropTypes.bool,
+  isClick: PropTypes.bool,
+  isSubInfo: PropTypes.bool,
 };
 
 export default Poster;

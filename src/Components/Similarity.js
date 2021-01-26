@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Poster from "./Poster";
 
 const Title = styled.h3`
@@ -59,6 +60,11 @@ const Similarity = ({ isMovie, similarity }) => {
       </Box>
     </>
   );
+};
+
+Similarity.propTypes = {
+  similarity: PropTypes.array,
+  isMovie: PropTypes.bool.isRequired,
 };
 
 export default Similarity;

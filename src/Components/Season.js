@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Poster from "./Poster";
 
 const Title = styled.h3`
@@ -53,6 +54,10 @@ const Season = ({ result }) => {
       </Box>
     </>
   );
+};
+
+Season.propTypes = {
+  result: PropTypes.object,
 };
 
 export default Season;

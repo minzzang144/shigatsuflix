@@ -290,6 +290,7 @@ Slide.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  bottom: PropTypes.bool,
 };
 
 export default Slide;

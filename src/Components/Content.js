@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import theme from "Styles/Theme";
 
 const Cover = styled.div`
@@ -137,6 +138,10 @@ const Content = ({ result }) => {
       </Data>
     </Container>
   );
+};
+
+Content.propTypes = {
+  result: PropTypes.object,
 };
 
 export default Content;

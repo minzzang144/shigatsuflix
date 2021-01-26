@@ -1,11 +1,12 @@
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 import Actor from "components/Actor";
 import Crew from "components/Crew";
 import Production from "components/Production";
 import Recommandation from "components/Recommandation";
 import Season from "components/Season";
 import Similarity from "components/Similarity";
-import React from "react";
-import styled from "styled-components";
 
 const Button = styled.button`
   color: #e74c3c;
@@ -118,6 +119,14 @@ const PostFilmData = ({
       </DropDown>
     </Li>
   );
+};
+
+PostFilmData.propTypes = {
+  result: PropTypes.object,
+  credit: PropTypes.object,
+  recommandation: PropTypes.array,
+  similarity: PropTypes.array,
+  isMovie: PropTypes.bool.isRequired,
 };
 
 export default PostFilmData;

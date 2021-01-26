@@ -82,9 +82,6 @@ const MoviePresenter = ({ loading, error }) => {
 };
 
 MoviePresenter.propTypes = {
-  nowPlaying: PropTypes.array,
-  upComing: PropTypes.array,
-  popular: PropTypes.array,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };

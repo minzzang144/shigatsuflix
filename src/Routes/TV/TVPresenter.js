@@ -78,9 +78,6 @@ const TVPresenter = ({ loading, error }) => {
   );
 };
 TVPresenter.propTypes = {
-  topRated: PropTypes.array,
-  popular: PropTypes.array,
-  airingToday: PropTypes.array,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };

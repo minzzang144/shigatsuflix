@@ -118,7 +118,7 @@ const PostTabData = forwardRef(
 
 PostTabData.propTypes = {
   result: PropTypes.object,
-  cast: PropTypes.object,
+  credit: PropTypes.object,
   recommandation: PropTypes.array,
   similarity: PropTypes.array,
   isMovie: PropTypes.bool.isRequired,

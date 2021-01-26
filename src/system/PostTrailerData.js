@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import theme from "Styles/Theme";
 import { closeTrailer } from "utils/closeTrailer";
 
@@ -90,6 +91,10 @@ const PostTrailerData = ({ result }) => {
       </Wrapper>
     </Li>
   );
+};
+
+PostTrailerData.propTypes = {
+  result: PropTypes.object,
 };
 
 export default PostTrailerData;

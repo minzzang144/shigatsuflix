@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import Loader from "components/Loader";
 import Message from "components/Message";
@@ -56,6 +57,11 @@ const HomePresenter = ({ loading, error }) => {
       )}
     </>
   );
+};
+
+HomePresenter.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default HomePresenter;
