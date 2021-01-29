@@ -2,6 +2,10 @@
 
 Learning React and ES6 by building a Movie Discovery App.
 
+\+ Refactorying ShigatsuFlix(React) Branch with React Hook.
+
+If you want to see before refactoring, go to the link next to it. -> [ShigatsuFlix(React)](<https://github.com/ShigatsuEl/shigatsuflix/tree/ShigatsuFlix(React)>)
+
 ## Demo
 
 [ShigatsuFlix with React](https://shigatsuflix.netlify.app/)
@@ -20,13 +24,14 @@ Learning React and ES6 by building a Movie Discovery App.
 
 ## Tech Stack
 
-| Frontend |      Technology       |   Description    |
-| :------: | :-------------------: | :--------------: |
-|    01    |         React         |       CRA        |
-|    02    |   Styled Components   |   Replace CSS    |
-|    03    |     React Router      | react-router-dom |
-|    04    | Container & Presenter |     Pattern      |
-|    05    |         Axios         |     TMDB API     |
+| Frontend |      Technology       |      Description       |
+| :------: | :-------------------: | :--------------------: |
+|    01    |         React         |          CRA           |
+|    02    |      React Hook       | Functional Programming |
+|    02    |   Styled Components   |      Replace CSS       |
+|    03    |     React Router      |    react-router-dom    |
+|    04    | Container & Presenter |        Pattern         |
+|    05    |         Axios         |        TMDB API        |
 
 <br>
 No Backend
@@ -38,19 +43,29 @@ public
 |-- loading.gif
 |-- noPosterSmall.png
 src
-|-- Components
-|   |-- App.js
-|   |-- Card.js
+|-- actions
+|   |-- tmdbAction.js
+|-- api
+|   |-- api.js
+|-- components
+|   |-- Actor.js
+|   |-- Content.js
+|   |-- Crew.js
 |   |-- GlobalStyles.js
 |   |-- Header.js
 |   |-- Loader.js
 |   |-- Message.js
 |   |-- Poster.js
-|   |-- Router.js
-|   |-- Section.js
+|   |-- Production.js
+|   |-- Recommandation.js
+|   |-- Season.js
+|   |-- Similarity.js
 |   |-- Slide.js
-|   |-- Tab.js
-|-- Routes
+|-- contexts
+|   |-- tmdbContext.js
+|-- reducers
+|   |-- tmdbReducer.js
+|-- routes
 |   |-- Detail
 |   |   |-- DetailContainer.js
 |   |   |-- DetailPresenter.js
@@ -71,10 +86,23 @@ src
 |   |   |-- index.js
 |   |   |-- TVContainer.js
 |   |   |-- TVPresenter.js
-|-- Styles
+|-- stores
+|   |-- tmdbStore.js
+|-- styles
 |   |-- Theme.js
-|-- app.js
+|-- system
+|   |-- PostFilmData.js
+|   |-- PostSectionData.js
+|   |-- PostSlideData.js
+|   |-- PostTabData.js
+|   |-- PostTrailerData.js
+|-- utils
+|   |-- closeTrailer.js
+|   |-- tabEnter.js
+|   |-- tabLeave.js
+|-- App.js
 |-- index.js
+|-- Router.js
 ```
 
 ## Screens
@@ -109,271 +137,37 @@ src
   >   5. Recommandation
   >   6. Similaraty
 
-## API List
-
-- [Movie](#Movie)
-
-  - [✅Now Playing](#Now-Playing)
-
-  - [✅Up Coming](#Up-Coming)
-
-  - [✅Popular](#Popular-Movie)
-
-  - [✅Movie Detail](#Movie-Detail)
-
-  - [✅Credit Detail](#Movie-Credit-Detail)
-
-  - [✅Recommandation](#Movie-Recommandation)
-
-  - [✅Similarity](#Similarity-Movie)
-
-  - [✅Search](#Search-Movie)
-
-- [TV](#TV)
-
-  - [✅Top Rated](#Top-Rated)
-
-  - [✅Popular](#Popular-TV)
-
-  - [✅Airing Today](#Airing-Today)
-
-  - [✅Show Detail](#Show-Detail)
-
-  - [✅Credit Detail](#TV-Credit-Detail)
-
-  - [✅Recommandation](#Recommandation-TV)
-
-  - [✅Similarity](#Similarity-TV)
-
-  - [✅Search](#Search-TV)
-
-- [Youtube](#Youtube)
-
-  - [✅Iframe](#Iframe)
-
 ## API
 
-- Axios(API_URL)
+[API List](./API.md)
 
-  - BaseUrl: `https://api.themoviedb.org/3`
+## Indicators
 
-  - Params
+ShigatsuFlix(React-Hook) 브랜치는 두가지의 지표를 가지고 있습니다.
 
-    - api_key: YOUR_SECRET_KEY
+1. Hook Refactorying
+2. Automic Design
 
-    - language: en-US
+위의 두가지 지표를 최우선으로 하며 ShigatsuFlix(React)와 완전히 동일하게 동작하는 것이 이 브랜치의 목적입니다.<br>
+그 외에 이전 프로젝트에서 부족한 부분과 수정해야할 부분들은 이번 브랜치에서 리팩토링하지 않습니다.<br>
 
-[⬆Back to API List](#API-List)
+### Hook Refactorying
 
-### Movie
+지금까지 만들어왔던 ShigatsuFlix를 전부 React Hook으로 Refactorying 하는 것이 목적이다.<br>
+React Hook을 사용해 기존 React앱으로 구현한 프로젝트에서 Class Component를 Function Conpoennt로 교체하고 Hook이 아니면 어려운 Functional Programming Paradigm을 주로 사용해 좀더 가독성있고 코드를 간결하게 하였다.<br>
+그리고 단지 Hook으로 Refactorying하는 것이 아닌 `Reducer Hook`과 `Context Hook`을 사용해 state를 전역으로 관리하는 `Redux` 대체제로 사용해보았다.<br>
+Hook을 사용한 함수형 컴포넌트와 사용하지 않은 클래스 컴포넌트의 차이점을 느껴보고 서로의 장단점을 비교해보려 한다.<br>
 
-#### Now Playing
+### Automic Design
 
-```
-GET {{API_URL}}/movie/now_playing
-```
-
--> Get Now Playing Movies in Array
-
-[⬆Back to API List](#API-List)
-
-#### Up Coming
-
-```
-GET {{API_URL}}/movie/upcoming
-```
-
--> Get UpComing Movies in Array
-
-[⬆Back to API List](#API-List)
-
-#### Popular Movie
-
-```
-GET {{API_URL}}/movie/popular
-```
-
--> Get Popular Movies in Array
-
-[⬆Back to API List](#API-List)
-
-#### Movie Detail
-
-```
-GET {{API_URL}}/movie/{id}?append_to_response=videos
-```
-
--> Get Movie Detail with Youtube Videos
-
-[⬆Back to API List](#API-List)
-
-#### Movie Credit Detail
-
-```
-GET {{API_URL}}/movie/{id}/credits
-```
-
--> Get Movie Credit Detail in two array(Actor & Crew)
-
-[⬆Back to API List](#API-List)
-
-#### Movie Recommandation
-
-```
-GET {{API_URL}}/movie/${id}/recommendations
-```
-
--> Get Recommand Movies
-
-[⬆Back to API List](#API-List)
-
-#### Similarity Movie
-
-```
-GET {{API_URL}}/movie/${id}/similar
-```
-
--> Get Similar Movies
-
-[⬆Back to API List](#API-List)
-
-#### Search Movie
-
-```
-GET {{API_URL}}/movie/${id}/similar?encodeURIComponent(term)
-```
-
--> Get Search Movie
-
-[⬆Back to API List](#API-List)
-
-### TV
-
-#### Top Rated
-
-```
-GET {{API_URL}}/tv/top_rated
-```
-
--> Get Top Rated TV Shows in Array
-
-[⬆Back to API List](#API-List)
-
-#### Popular TV
-
-```
-GET {{API_URL}}/tv/popular
-```
-
--> Get Popular TV shows in Array
-
-[⬆Back to API List](#API-List)
-
-#### Airing Today
-
-```
-GET {{API_URL}}/tv/airing_today
-```
-
--> Get TV Shows on Airing Today in Array
-
-[⬆Back to API List](#API-List)
-
-#### Show Detail
-
-```
-GET {{API_URL}}/movie/{id}?append_to_response=videos
-```
-
--> Get TV Show Detail with Youtube Videos
-
-[⬆Back to API List](#API-List)
-
-#### TV Credit Detail
-
-```
-GET {{API_URL}}/tv/{id}/credits
-```
-
--> Get TV Credit Detail in two array(Actor & Crew)
-
-[⬆Back to API List](#API-List)
-
-#### Recommandation TV
-
-```
-GET {{API_URL}}/tv/${id}/recommendations
-```
-
--> Get Recommand TV Shows
-
-[⬆Back to API List](#API-List)
-
-#### Similarity TV
-
-```
-GET {{API_URL}}/tv/${id}/similar
-```
-
--> Get Similar TV Shows
-
-[⬆Back to API List](#API-List)
-
-#### Search TV
-
-```
-GET {{API_URL}}/tv/${id}/similar?encodeURIComponent(term)
-```
-
--> Get Search TV Show
-
-[⬆Back to API List](#API-List)
-
-### Youtube
-
-#### Iframe
-
-아래는 Youtube Iframe API를 가져오는 스크립트이다. 나의 상황에 맞게 커스터마이즈하여 비디오를 제어하였다.
-
-```
-<script>
-     if (!window.YT) {
-        // If not, load the script asynchronously
-        const tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-
-        // onYouTubeIframeAPIReady will load the video after the script is loaded
-        window.onYouTubeIframeAPIReady = this.loadVideo;
-
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      } else {
-        // If script is already there, load the video directly
-        await this.loadVideo();
-      }
-
-    const loadVideo = async () => {
-      let player;
-      try {
-        // the Player object is created uniquely based on the "player" id
-        player = await new window.YT.Player("player", {
-          // 기본적으로 너비와 높이를 설정하지 않아도 640 x 360으로 준다.
-          videoId: Your Watch Video ID,
-          playerVars: { origin: "https://shigatsuflix.netlify.app" },
-          events: {
-            onReady: Something do it!
-          },
-        }),
-      } catch (error) {
-        console.log(error);
-      }
-  };
-    </script>
-```
-
-- [Youtube Iframe API](https://developers.google.com/youtube/iframe_api_reference?hl=ko)
-
-[⬆Back to API List](#API-List)
+Hook으로 Refactorying 작업을 하며 동시에 디렉토리 구조가 광범위해짐에 따라 디렉토리 구조를 눈에 보기 쉽게 Refactorying 하는 것이 두번째 지표이다.<br>
+목적을 달성하기 위해 사용한 것은 하나의 패턴인데 바로 `Automic Design`을 적용하였다.<br>
+![Automic Design](./AD.png)<br>
+마치 원소의 개념 하나하나를 프로젝트에 적용한 것인데 위에 보이는 Atoms에 해당하는 것은 내 프로젝트에서 하나의 JSX 엘리먼트로 바라보았고 Atoms가 모여 하나의 Molecule을 만드는데 이것은 하나의 Component로 바라보았습니다.<br>
+그리고 Component는 재사용될 수 있기 때문에 최대한 시스템과 독립적으로 행동할 수 있도록, Action과 Store와 관계없이 독립적으로 사용되어져야 한다는 원칙을 세웠습니다. 그렇기 때문에 Component에 해당하는 것은 언제든지 재활용하여 사용할 수 있는 부분에만 Component로 지정하였습니다. 현재 프로젝트에는 Component를 `components`디렉토리에 모아두었습니다.<br>
+그리고 이와 반대로 시스템에 의존적이며 중요한 정보를 담게되는 것들을 `system`디렉토리에 담았고 이들이 하는 역할은 ajax를 사용해 서버에서 json을 받아오는 정보들과 전역 state를 뿌려주는 담당을 합니다. Automic Design에 의하면 `Organism`에 해당하는 부분입니다.<br>
+현재 프로젝트에는 처음부터 레이아웃을 제대로 잡지 않아 page of page에 해당하는 부분 `Template`는 가지고 있지 않지만 Template가 모여 Page를 담당하는 부분은 `routes`디렉토리 안에 Page별로 디렉토리를 구성했습니다.<br>
+따라서 현재 프로젝트는 index -> App -> routes(Pages) -> system(Organisms) -> components(Molecules)의 구조를 가지고 있습니다.<br>
 
 ## Reflection
 
@@ -381,160 +175,89 @@ GET {{API_URL}}/tv/${id}/similar?encodeURIComponent(term)
 
 ---
 
-### Main
+### React vs React Hook
 
-프론트의 꽃, 리액트를 접하기까지 아주 오랜 시간이 걸린 것 같다.<br>
-그 이유는 ShigatsuFlix 클론 코딩 및 챌린지를 하면서 VanillaJS의 원초적인 이론에 대해 모르는 점들이 너무 많았기 때문에 리액트로 바로 넘어가지 않고 JS의 기본적인 개념을 공부하는데 오랜 시간을 투자했기 때문이다.<br>
-공부했던 내용은 다음과 같다.<br>
+이전 브랜치에서 React만 사용해 state와 prop을 관리하기 위해서는 Class Component밖에 사용할 수 없었다. 객체 지향 프로그래밍을 한다는 점에서 배울점은 많았지만 state와 로직등을 모두 하나의 클래스 안에서 처리한다는 점에 있어서 코드가 매우 길어지고 가독성도 떨어진다는 단점이 존재했다.<br>
+그러나 이번 브랜치에서 React Hook을 사용하게 된 결과 Class Component -> Function Component라는 새로운 방식으로 접근할 수 있었고 그 결과 함수를 분리해서 분할 정복이 가능해졌다는 점과 그로인해 코드길이가 눈에 현저히 띌 정도로 차이를 보여줬다는 것이다. 실제로 이번 프로젝트에서 가장 많은 로직을 담고 있던 DeatailContainer에서 Hook을 사용했을 때와 안했을 때는 코드길이가 절반이상 차이가 났다.<br>
+게다가 React Hook은 기존 Class Component가 가지고 있는 Life Cycle 또한 useEffect훅으로 얼마든지 대체가 가능했다. Hook으로 만든 Function Component가 Class Component의 할 수 있는 것을 모두 가능케 한다는 점에서 Hook을 사용하지 않을 이유는 없었다.<br>
+결론적으로 React Hook을 사용해 Functional Programming을 하는 것이 나에게 맞았고 앞으로 React로 작업하게 된다면 Hook을 자주 택할 것 같다.<br>
 
-1. 자바스크립트 기초 강의(드림코딩 By 엘리)
-2. 33 Concepts Every JavaScript Developer Should Know
-3. JavaScript30 Challenge(Wesbos)
+### Managing State Globally by Using useReducer and useContext Hook instead of Redux
 
-자바스크립트의 기초 부분을 배우면서 실력향상에 관계없는 노력을 쏟아붓는 것이 아닌가하는 의문점과 그 때문에 한시라도 빨리 끝내려는 촉박함이 없지 않아 있었다.<br>
-하지만 모든 이론을 정리하고 리액트를 처음 입문하게 되면서 느낀 것은 내가 전에 배운 JS개념들은 전혀 쓸모없지 않았다는 것을 깨달았다.<br>
-전에는 뭣도 모르고 썼었다면 지금은 왜 쓰는지 알고 사용한다는 차이점이 생겼기 때문이다.<br>
-또한 JavaScript의 기본이 되는 VanillaJS의 개념을 공부할수록 코드 이해가 쉬워지고 오류와 디버깅을 찾는데도 시간이 절감되는 효과를 얻을 수 있었다.<br>
-덕분에 가장 어렵다던 리액트 챌린지도 나에겐 쉽게 다가왔던 기억이 난다.<br><br>
+React를 사용하면서 가장 불편했던 점은 Component구조가 점점 더 deep diving할수록 전달해줘야하는 props와 state가 많아진다는 것이었다.<br>
+Component 단계가 내려갈때마다 props와 state를 하나하나 전달해줘야 한다는 것은 그만큼 성가로운 짓이었고 잦은 실수를 유발하게 만들었다. 그래서 기왕 Hook으로 Refactorying할 것이라면 state를 전역적으로 관리해보는 것도 한 번 추가해보기로 마음먹었다.<br>
+state를 전역으로 관리하기 위해 내가 선택한 방법은 React팀에서 새로나온 `useContext Hook`과 `useReducer Hook`을 이용하기로 했다.<br>
+처음에는 모든 state를 전역으로 관리하려던 목적이었으나 다시 잘 생각해보니 전역으로 관리한다는 것은 그만큼 효율이 좋지 않다는 이야기가 되기 때문에 전역으로 관리할 state는 반드시 두개의 Route 이상에서 사용되어지는 것들로 지정하기로 했다.<br>
+가장 좋았던 점은 이제 더 이상 Component에서 props를 하나하나 내려주지 않아도 언제든지 useReducer Hook으로부터 가져온 state와 dispatch를 import해서 사용할 수 있다는 것과 서버로부터 받아올 API 데이터들을 페이지가 이동할 때마다 요청하는 것이 아니라 React가 처음 로딩될 때 단 한번만 요청하면 된다는 장점이 있었다.<br>
+프로젝트를 마무리하고 들었던 생각은 생각보다 전역으로 state를 관리하기 위해서 꽤 많은양의 코드를 요구한다는 것이었다. 프로젝트를 시작할 때 전역으로 관리할 state가 어느정도 되는지 생각해보고 굳이 전역으로 관리할 state가 많지 않다면 Component에서 state를 가지고 있는 것도 나쁘지 않은 것 같다.<br>
+반대로 관리해야할 전역 state가 많다면 `useContext Hook + useReducer Hook`이나 `Redux`, 둘 중 하나를 골라서 사용하면 될 것 같다. 둘 다 사용해봤지만 Redux가 할 수 있는 것들은 Hook으로도 충분히 가능하기 때문에 이제 어느쪽이 확실히 좋다고 말할수는 없을 것 같다. 단지 Redux는 Redux Toolkit이라는 강력한 개발도구를 제공하기 때문에 아직은 Redux를 좀 더 선호하지 않을까 싶다.<br>
 
-### Clone
+### Asynchronous State
 
-CRA를 만들면서 가장 어려웠던 부분과 해결방법에 대해서 이야기하고자 한다.<br>
+영화 React 앱을 만들면서 API서버에서 데이터를 받아오는 작업을 비동기로 처리해줘야 하는 상황이 많았다. 때문에 비동기 작업이 다 끝나고 나서야 state를 업데이트 할 수 있었다.<br>
+문제는 내가 전에 작업했던 ShigatsuFlix(React)브랜치에서 React를 VanillaJS처럼 사용해보자라는 지표를 가지고 있었기 때문에 모든 이벤트 처리를 마치 VanillaJS에서 하듯이 사용하였고, 그 결과 Hook으로 Refactorying을 하면서 비동기 작업이 끝나지 않았는데 DOM 엘리먼트를 제어하려는 에러를 여러개 만들게 되었다.<br>
+그리고 VanillaJS처럼 사용하자는 지표 때문에 모든 로직을 Container안에서 해결하려 하였고 하위 비동기 작업에서 DOM 엘리먼트를 사용하려는 삽질을 하게 되었다.<br>
+이렇게 받아온 DOM 엘리먼트를 비동기(async await)처리에 남용하면 undefined를 가져오는 현상을 많이 겪게 될 것이다.<br>
+결론적으로 비동기적으로 작업해야하는 것은 서버에서 데이터를 받아오거나 무언가를 요청하는 것과 같은 시간이 걸리는 작업에 사용해야 하며 그 외에 DOM 엘리먼트를 비동기 처리에서 제어할 시 사용할 수 없을 수도 있으며 어떤 함수에서는 쓰지 못하게 되는 경우가 발생한다.<br>
+그렇기 때문에 `React에서 VanillaJS처럼 사용하면 안된다는 것`이다. 그렇지 않으면 로딩이 끝나기 전(비동기)에 DOM 엘리먼트를 제어하려는 실수를 남발할 것이다. React에서는 React가 제공하는 이벤트 처리와 Ref를 활용하는 것이 좋다.<br>
+결국에 내가 이 문제를 해결한 방법은 VanillaJS코드를 전부 React구문으로 Refactorying하고 이벤트와 JS구문은 해당 컴포넌트에서 직접 해결하는 방법으로 해결할 수 있었다.<br>
 
-1. Youtube Iframe API 연동하기<br>
-   Detail 스크린에서 유튜브 동영상을 가져오는 작업을 해보고 싶었다.<br>
-   마침 TMDB 사이트에서 받아온 API를 통해 Youtube Video Key를 가져올 수 있었기 때문에 동영상을 넣어보고자 마음을 먹었다.<br>
-   사실 유튜브 동영상은 API를 사용하지 않고도 그저 Iframe 태그를 사용해 비디오 주소만 넣어준다면 어렵지 않게 유튜브 동영상을 끌어와 사용할 수 있다.<br>
-   하지만 나는 Iframe API와 TMDB에서 받아온 Key가 있는데 하나만 사용하기에는 아쉬움이 느껴졌다.<br>
-   따라서 두개의 API를 서로 연동하기로 했다.<br>
-   먼저, 코드샌드박스에서 API문서를 읽고 그대로 코드를 적용시켜서 작동하는 것을 확인했다.<br>
-   확인을 마친 후 바로 내 앱에 Copy & paste를 하며 내 상황에 맞게 API 코드를 작성했다.<br>
-   코드를 그냥 무턱대고 가져오게 되면 클래스 내부에 스크립트로부터 읽어온 YT(Youtube Player)변수가 없기 때문에 정상적으로 작동하지 않는다. 그렇기 때문에 나는 window 전역변수를 사용해 YT를 선언했다.<br>
-   또한 클래스 컴포넌트를 사용하고 있었기 때문에 `setState`를 사용해 클래스 내부에 있는 state에 유튜브 플레이어를 가져와 선언했다.<br>
-   이것을 몰라 스택오버플로우에서 Youtube Iframe에 관한 질문들을 거의 다 읽었던 기억이 난다.<br>
-   여기까지 YT를 불러오는 것을 성공했다.<br><br>
-   가장 힘든 구간은 여기서부터였다.<br>
-   YT가 처음에 불러오는 것은 성공하지만 어째서인지 두번째 이상부터는 YT를 불러오는데 시간이 최소 몇초이상 걸리거나 아예 아예 없다고 하는 경우가 발생했다.<br>
-   나는 처음에 이것을 YT가 정상적으로 불러올때까지 기다리지 못한다는 것을 의심하고 async await 부분을 수십번 돌려서 재차 확인했다.<br>
-   코드를 여러 방법으로 바꿔서 진행한 결과 async await는 문제가 없다는 것이었다.<br>
-   굉장히 허탈했다. async await를 통해 비동기로 작동이 되는데 왜 로드되는 것을 기다리지 못하는 것일까? 그렇다면 이제 어떠한 방법으로 YT를 불러와야 한다는 것인가..<br>
-   Youtube Iframe을 가져오는 것을 3 ~ 4일 정도 포기하지 않고 노력한 결과, 나는 뭔가 이상한 점을 발견했다.<br>
-   YT가 서버를 키고 처음 Detail 페이지를 들어갈 때만 불러오는 것이 아무래도 이상했다. 안될거면 처음부터 안되던가 말이다..<br>
-   그래서 개발자도구를 열어 Network를 확인해보니 놀라운 점을 발견했다.<br>
-   정말 내 말대로 처음에만 API를 읽어오지만 두 번째부터는 API를 아예 읽는 것조차 하지 않았다. 오히려 새로고침을 해야 API 읽어오는 시도를 한다는 것이었다.<br>
-   때문에 이것은 YT가 로드되기 이전의 문제라고 판단하였다. 새로고침과 연관이 있는 부분을 예측하자니 script를 불러오는 부분밖에 없었다.<br>
-   그 순간, 혹시? 하는 생각이 들어 script를 불러오는 부분을 유심히 살펴보았다.<br>
-   `내가 지금하고 있는 것은 단순히 페이지를 새로 로드할 때마다 HTML을 새로 가져오는 방식이 아닌 JSX를 사용하여 Virtual Dom으로부터 페이지가 구성이 되는 React를 통해 앱을 구축 중이라는 사실을 간과했다는 것이다.`<br>
-   ComponentDidMount를 통해 script를 불러왔으면 Detail 페이지를 들어갈 때 처음 script가 로드될 것이다.<br>
-   하지만 다른 Detail 페이지로 들어갈 때 불려지는 script는 처음과 달라야 한다. 그 이유는 명확한데 바로 비디오가 다르기 때문이다.<br>
-   설마하고 Script를 ComponentDidUnMount할 때 YT와 함께 삭제하고 componentDidMount를 할 때 다시 로드하는 방식으로 코드를 바꾸었다.<br>
-   결과적으로 드디어 새로고침을 하지 않아도 유튜브 플레이어를 가져오는 것을 성공하였다.<br>
-   YT를 불러와 Trailer Tab에 Mouse가 들어갈 때 재생하고 나올 때 일시정지하는 함수를 따로 이벤트 함수에 정의하였다.<br>
-   페이지가 로드되자마자 마우스가 탭에 들어가면 에러가 발생하는데 이것을 비디오 로딩 중, 재생을 시키기 때문에 발생하는 것으로 추측하였다.<br>
-   따라서 로딩이 끝나면 Tab이 보여지는 방식으로 방법을 바꾸어서 이것을 해결하였다.<br>
+### Class Component vs Function Component
 
-2. CSS<br>
-   CSS가 어려웠던 부분은 아니었는데 flex가 wrap되지 않는 현상이라던가 position relative와 absolute에 대해 정확하게 이해하지 못하고 있다는 느낌이 들었다.<br>
-   내 생각에 이해하지 못했던 이유 중 하나는 HTML 구조를 정확히 파악하고 있지 않은 상태에서 CSS를 하려고 했기 때문이라고 생각한다.<br>
-   리액트로 오면서 HTML이 하나로 묶어져 있는 것이 아니라 가상 돔을 사용해 불러오기 때문에 컴포넌트를 많이 만들수록 그 구조가 깊어져 문제를 찾기 어려운 경우도 발생하는 것 같다.<br>
-   이러한 경우는 사실 처음부터 레이아웃을 미리 짜고 구조를 기억해두는 것이 좋지만 그렇지 않다면 다시 처음부터 싹 지우고 레이아웃을 잡는 것이 좋을 것 같다.<br>
-   전자처럼 하는게 훨씬 나을수도 있지만 시간 부족을 느껴 이번 프로젝트를 되는대로 CSS 박다가 오히려 스파게티 코드가 된 느낌이 있는 것 같다.<br>
-   따라서 CSS도 자주 다뤄줘야 감각이 죽지 않을 것이며 1분코딩 강의에서 FLEX와 GRID를 한번 더 들어볼 필요가 있을 것 같다.<br>
-
-3. Utils Folder<br>
-   ShigatsuFlix(React) 브랜치는 React-Hook을 사용하지 않고 만드는 것을 목표로 하고 있다.<br>
-   그러다보니 함수 하나를 여러 파일에서 적용시켜야 하는 경우에 각각 함수를 따로 만들어 적용시켜줘야 했다.<br>
-   이것이 보기 좋지 않아 나는 Utils라는 폴더에 함수를 보관시켰다.<br>
-   로컬에서는 이것이 잘 적용되었으나 문제는 Netlify에 배포를 하는 과정에서 Utils 폴더를 폴더라고 인식하지 않고 Module로 착각한다는 것을 알 수 있었다.<br>
-   왜 이런 문제가 나타나는지 알고 싶었지만 배포를 하루만에 해야하는 상황 때문에 시간이 없어서 Utils폴더를 결국 삭제하고 파일 각각에 함수를 따로 만들어주어 다시 배포했다.<br>
-   결론적으로 잘 작동했지만 너무 억지스러운 모습이 있는 것 같아 보였다.<br>
-   내 예상은 클래스 컴포넌트를 사용하면서 다른 폴더에 state를 가져가서 사용하려고 했기 때문에 생긴 문제가 아닐까 싶다.<br>
-   훅을 사용해 함수형 컴포넌트로 바꿔서 진행해볼 계획이다.<br>
-
-### Challenge
-
-모든 챌린지 중 가장 어렵다는 리액트 챌린지로 소문이 자자했다.<br>
-나의 경우에는 미리 VanillaJS의 코어를 흝어봤고 알게 모르게 ES6도 같이 공부를 하게 되면서 오히려 챌린지 중 가장 흥미롭고 재밌던 챌린지가 아니었나 싶다.<br>
-그리고 리액트 챌린지는 한가지의 주제로 하루하루 덧붙여 만들어나가는 방식의 챌린지는 처음이어서 정말 복습하는 기분으로 임할 수 있었다.<br>
-게다가 저번 유튜브 챌린지에서 무한 스크롤링을 만들어보기로 했었는데 리액트 챌린지에서 나오게 될 줄은 몰랐다.<br>
-유튜브 챌린지까지만 해도 구현하려면 어려울 것 같았던 느낌이 들었었는데 구글링을 하면서 무한 스크롤링을 구현해내는 것은 생각보다 어렵지 않게 구현할 수 있었다.<br>
+Hook으로 Refactorying하면서 Class Component를 Function Component로 교체할 때 가장 많은 차이점을 보였던 것 중에 하나가 바로 `this`라는 객체다.<br>
+Class Component는 this가 자체 바인딩 되어 있기 때문에 어느 변수를 사용하든 어느 메서드를 사용하든 this를 자주 활용하게 된다.<br>
+그러나 Hook으로 만든 Function Component는 this가 바인딩 되어 있지 않기 때문에 this를 자주 사용할 일은 없지만 만약 사용하게 된다면 누가 바인딩 되어있는지를 확인할 필요가 있다.<br>
+Class Componet -> Function Component로 교체하면서 Youtube Trailer API에 걸어주었던 바인딩을 풀어주는 것과 trailer를 직접 call, apply 메서드등을 활용해 바인딩해주는 과정이 조금 난해했던 것 같다.<br>
+단지 함수로 바꿔줄 뿐이었는데 생각보다 어려웠고 Class 객체에 대해서도 많은 공부가 된 것 같다.<br>
 
 [⬆Back to Top](#ShigatsuFlix)
 
 ## Improvement
 
 > 개선 해야할 부분들을 중점으로 다뤄본다.<br>
-> 이번 클론은 부족한 부분이 많다기보다 앞으로 해야할 것에 대한 목표가 명확해졌다.
 
 ---
 
-### Like VanillaJS
+### Life Cycle
 
-ShigatsuFlix(React)는 Hook을 사용하지 않고 만들기로 정했기 때문에 내가 택한 방법은 VanillaJS를 이용하는 것이었다.<br>
-사실 리액트를 하면서도 VanillaJS 감을 죽이고 싶지 않은 이유가 있기도 했고 React로 만들 줄 알면서 VanillaJS로 못만드는 상황은 피하고 싶었기 때문이기도 한다.<br>
-그 때문인지 클론 코딩을 마치고 코드를 전체적으로 돌아봤을 때, 이건 React라기보단 VanillaJS라는 느낌이 너무 강해보였다.<br>
-예전 졸업 기수분들은 JS를 어떻게 활용했는지 코드를 흝어보는 중에 뭔가 위화감이 들었다.<br>
-나같은 경우 슬라이드를 만들려고 하면 바닐라JS를 사용해 직접 구현했는데 다른 분들은 리액트 플러그인으로 이미 구현되어있는 것(pure-react-carousel)을 가져와서 리액트 컴포넌트로 사용하는 것을 보고 내가 리액트를 제대로 활용하지 못했다는 아쉬움이 들었던 것 같다.<br>
-물론, pure-react-carousel 플러그인을 나같은 경우에 사용할 순 없다. CSS perspective 속성을 사용했기 때문에 다른 플러그인을 알아보던가 내가 다시 JS코드를 알맞게 짜던가 둘 중 하나였을 뿐이다.<br>
+Hook Refactorying하면서 가장 어려웠던 것은 비동기 작업이 많아지면서 언제 state와 props가 업데이트 되는 것인지 그리고 render가 어떤 순서대로 실행되는지, 몇번 실행되는지 등을 알기가 어려웠다는 것이다.<br>
+전부 Life Cycle(생명주기)가 정확히 어떠한 순서대로 작동하는지 자세하게 알지 못했기 때문에 어려움이 있었다고 생각되는 바이다.<br>
+Life Cycle에 관련된 문서들은 굉장히 많았는데 다루는 범위가 생각보다 많아 좀 더 깊게 공부해야할 필요성을 느꼈다.<br>
 
-### Layout
+### Global State
 
-이번 클론을 하면서 생각보다 발목을 붙잡았던 것은 의외로 CSS였다.<br>
-position속성을 통해 레이아웃이 바뀌면 시작점이 어딘지 헷갈리는 경우가 많았고 개발자 도구를 열어 확인해도 왜 그곳에서부터 시작하는지 이해가지 않는 경우도 있었다.<br>
-그리고 처음부터 레이아웃 구조가 꼬여서 CSS코드가 굉장히 더러운 스파게티 코드로 전락해버렸다.<br>
-앞으로 이런 상황이 발생하면 귀찮더라도 새로 지우고 미리 구조를 잡아둔 다음에 코딩을 하는 것이 훨씬 시간을 절약하는 방법이라고 생각된다.<br>
-
-### Simplicity
-
-전에 졸업하신 기수분들의 깃헙 코드를 엿본 적이 있다.<br>
-나와 다르게 코드 작성이 간단명료하며 Divde & Conquer가 굉장히 잘 되어있었다.<br>
-이것이 훅과 타입스크립트를 사용하면서 파일을 나눌 수 있게된 건지는 앞으로 하게될 새 브런치에서 살펴봐야 할 것 같다.<br>
+이번 프로젝트를 하면서 전역 state를 관리하는 법을 조금이나마 다뤄볼 수 있었다. 다만 아쉬웠던 점은 내가 관리했던 state중에 loading과 error 역시 전역으로 사용되고 있기 때문에 dispatch를 사용해 업데이트 해보려고 많은 노력을 했었다.<br>
+전역으로 loading을 관리할 때 Component가 Mount할 때 loading을 true로 설정하고 Unmount될 때 false로 설정했지만 다른 페이지로 이동하게 될 시 Component가 Mount되기도 전에 loading이 false상태였기 때문에 컴포넌트 자체를 보여주지 못했다.<br>
+그때 당시에는 loading을 전역으로 관리하는 것은 좋지 않은 방법인 것 같아 Component별로 loading을 관리하도록 롤백시켰지만 지금와서 생각해보니 이것 역시 Life Cycle을 제대로 알지 못해 엉뚱한 곳에 dispatch를 한 것으로 추측이 된다.<br>
+정말 아쉬운 부분이지만 너무 오랜시간을 Hook Refactorying하는데 써버렸기 때문에 이 이상 지체하는 것은 나에게 좋지 않아 보였다. 다음 React 프로젝트를 하기 전에 Life Cycle을 제대로 알고 다시 도전해볼 계획이다.<br>
 
 [⬆Back to Top](#ShigatsuFlix)
 
 ## Move Forward
 
+### React Hook with TypeScript
+
+TS를 익숙하게 다룰 때쯤 다시 프로젝트로 돌아와 React Hook과 TS를 섞어서 Refactorying 해볼 계획이다.<br>
+최근에 TS를 배우고 있는데 JS에 비해 엄격해서 내가 실수하고 있는 부분을 좀 더 구체적으로 알려주기 때문에 이번 프로젝트에서 굉장히 많은 실수를 했던 비동기 작업에 TS를 같이 사용한다면 어떨까라는 생각이 들었다.<br>
+이렇게 TS와 React를 함께 작업했을 때와 그저 React만 사용해서 작업했을 때, 내가 TS를 사용해서 코드가 많아지는게 불편하게 느낄 것인지 아니면 TS를 사용함으로써 더욱 오류를 찾는 것이 쉬워질 것인지 경험할 계획이다.<br>
+아직은 TS 기본문법에 익숙치 않은데다 TS와 React를 같이 사용하려면 그에 관한 공부도 더 해줘야 하기 때문에 시간이 조금 걸릴 것이라 예상 중이다.<br>
+
+### React Official Documentation
+
+위해서 겪었던 문제들과 해결하지 못했던 문제들을 다시 해결하기 위해서 이번엔 모르는 채로 시작하지 않고 React 공식문서를 처음부터 끝까지 정독할 계획이다.<br>
+지금까지는 문제에 직면하면 그때그때 찾아서 해결하는 방식으로 해왔지만 아직 모르는 부분이 많다고 생각되어 공식문서를 정독한 후 내가 전에 왜 해결하지 못했는지 또는 너무 미련한 방법으로 해결해오지는 않았는지를 검토할 수 있을 것이다.<br>
+그리고 만약 검토한 내용들 중 수정할 부분이 생긴다면 추후 다시 업데이트 할 예정입니다.<br>
+
 ---
-
-### ShiatsuFlix(React-Hook & TypeScript)
-
-지금까지 내가 만들어 본 것을 React-Hook과 TypeScript로 다시 만들어볼 계획이다.<br>
-이것은 내게 리액트의 일부분이 아닌 훅을 사용해 함수형 프로그래밍을 하는 연습을 하게 할 것이며 훅과 타입스크립트를 사용하는 것과 안하는 거의 차이를 느낄 수 있는 기회가 될 것이다.<br>
-
-### Git
-
-깃을 수동으로 다루는 방법을 알고있지 못하니 불편한 경우가 많이 생겼다.<br>
-특히 브랜치를 왔다갔다하는 경우, 충돌이 일어날 확률이 많은데 그럴때마다 수정내역이 날라가거나 복구해야할 경우가 두려워 시간이 많이 소요되는 것 같다.<br>
-이번 기회에 깃을 제대로 배워 필요한 경우에 잘 대응할 수 있는 기회가 필요하다고 느끼는 바이다.<br>
-드림코딩과 노마드코더를 통해 깃을 익숙할 정도로 다뤄볼 예정이다.<br>
-
-### CSS
-
-CSS를 오랫만에 하니 Flex와 Grid가 바로바로 적용되지 않는 느낌이 자주 들었다.<br>
-특히 Grid는 살짝 핥아본 느낌으로 배웠기 때문에 Grid를 이번에 많이 사용하지 못했다.<br>
-1분코딩에서 다시 한 번 복습을 해야할 필요성을 느꼈다.<br>
-
-### VanillaJS
-
-VanillaJS의 이론을 배우고서 넘어와 리액트를 크게 거부감 없이 배울 수 있었지만 오히려 리액트를 배우면서 JS라이브러리라던가 다 의미없이 결국엔 리액트도 하나의 자바스크립트였다는 것이다.<br>
-VanillaJS가 탄탄할수록 어떤 프레임워크나 라이브러리가 생겨나도 쉽게 적응할 수 있다는 것을 느꼈다.<br>
-그렇기 때문에 VanillaJS의 기초를 단단히 하는 것이 너무나도 중요하다는 것을 느꼈고 더불어 한 번 VanillaJS를 공부한 것으로는 아직 부족하다는 생각이 강렬히 들었다.<br>
-때문에 내가 앞으로 해야할 것은 생활코딩과 드림코딩에서 VanillaJS를 다시 한 번 다듬어 보는 것이 필요하다고 생각하는 바이다.<br>
-
-### NodeJS
-
-리액트를 하면서 JS를 안다뤄본 것은 아니지만 Express를 사용해 서버를 만들고 데이터베이스를 연동하는 백엔드 작업을 너무 오랫동안 하지 않고 방치한 것 같다.<br>
-우선 리얼타임 게임만들기를 통해 소켓이 무엇인지 배워보고 생활코딩에서 서버를 만드는 무료 강의들을 통해 백엔드의 부족한 부분을 채울 생각이다.<br>
 
 [⬆Back to Top](#ShigatsuFlix)
 
 ## Finally
 
-개발 시작한지 4개월 차, 그동안 HTML & CSS & VanillaJS를 사용해 웹 구현을 해왔었다.<br>
-하지만 리액트를 사용하면서 왜 사람들이 리액트를 사용하는지 알게되었고 SPA의 멋진 점을 느낄 수 있었다.<br>
-동시에 리액트를 잘못 사용하면 컴포넌트가 컴포넌트를 물고 계속해서 깊게 들어가는 구조이기 때문에 가독성이 떨어지거나 유지보수하는 것에 어려움이 있을 가능성도 있다고 느꼈다.<br>
-때문에 단점을 보완할 수 있는 깨끗한 코드로 작성할 수 있게 유지하는 것이 가능하다면 충분히 매력적인 라이브러리로 사용할 수 있을 것이다.<br>
-앞으로 내가 해야할 것은 프런트로 미치지 않고 백엔드가 있는 앱에서도 리액트를 활용해보는 것이다.<br>
-그러기 위해서 지금 해야할 것은 JS의 중요한 이론들을 더 다지고 백엔드를 많이 다뤄보는 경험이 필요할 것이다.<br>
+React를 React Hook으로 Refactorying하는 것은 내 예상보다 훨씬 어려웠다. 단순히 Hook 개념 자체가 어려워서 그런 것이 아니라 주로 사용해보지 않은 Class Component를 Function Component로 교체했을 때 어려움에 직면했고 대부분의 어려운 문제들은 내가 ES6이후의 Class 문법에 대해 정확히 알고 있지 못한 경우에 느끼게 되었다.<br>
+Class Component -> Function Component로 교체하는 것인데 오히려 Class에 대해 더 자세히 알 수 있게 되었고 끝에 가서 Class와 Function 둘 다 다룰 줄 알게되니 Class가 어렵다던가 Function이 어렵다던가 그런 것이 아니라 결국 둘 다 똑같은 역할을 하고 있음을 알 수 있었다.<br>
+또한 Class Component -> Function Component로 되면서 동작하던 부분이 에러가 발생하는 경우는 React를 몰라서가 아니라 JS를 제대로 알지 못해서 그런 경우가 많았고 덕분에 자연스레 JS를 다시 공부하는 계기가 되었던 것 같다.<br>
+앞으로의 계획은 JS를 배우는 겸 TS도 같이 배울 계획이다. TS에서는 Class를 사용할 때 강력한 시너지를 발생한다고 알고 있는데 TS를 따로 배운 후 추후에 Class와 함께 새 React + TS 프로젝트를 만들지 아니면 지금 이 프로젝트를 TS로 Refactorying 할지 고민 중이다.<br>
+어쩌면 둘다 할지도 모르겠다. 어찌됐든 프론트 목표인 TS와 React를 주로 사용하기 위해서 얼마 남지 않은 것 같다. TS와 React를 내 마음대로 가지고 놀 정도가 된다면 그때 나만의 포트폴리오를 시도해보는 것도 괜찮을 것 같다.<br>
 
 [⬆Back to Top](#ShigatsuFlix)
