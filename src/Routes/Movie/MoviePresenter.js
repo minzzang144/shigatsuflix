@@ -14,6 +14,7 @@ const Container = styled.div`
 
 const MoviePresenter = ({ loading, error }) => {
   const { nowPlaying, popular, upComing } = useGlobalState();
+
   return (
     <>
       <Helmet>
@@ -32,7 +33,7 @@ const MoviePresenter = ({ loading, error }) => {
                   info={movie.original_title}
                   imageUrl={movie.poster_path}
                   rating={movie.vote_average}
-                  subInfo={movie.release_date.substring(0, 4)}
+                  subInfo={movie.release_date?.substring(0, 4)}
                   isMovie={true}
                   isClick={true}
                   isSubInfo={true}
@@ -49,7 +50,7 @@ const MoviePresenter = ({ loading, error }) => {
                   info={movie.original_title}
                   imageUrl={movie.poster_path}
                   rating={movie.vote_average}
-                  subInfo={movie.release_date.substring(0, 4)}
+                  subInfo={movie.release_date?.substring(0, 4)}
                   isMovie={true}
                   isClick={true}
                   isSubInfo={true}
@@ -66,7 +67,7 @@ const MoviePresenter = ({ loading, error }) => {
                   info={movie.original_title}
                   imageUrl={movie.poster_path}
                   rating={movie.vote_average}
-                  subInfo={movie.release_date.substring(0, 4)}
+                  subInfo={movie.release_date?.substring(0, 4)}
                   isMovie={true}
                   isClick={true}
                   isSubInfo={true}

@@ -136,7 +136,7 @@ const Poster = ({
   imageUrl,
   info,
   rating,
-  subInfo,
+  subInfo = "No data",
   isMovie = false,
   isFilm = false,
   isClick = false,
