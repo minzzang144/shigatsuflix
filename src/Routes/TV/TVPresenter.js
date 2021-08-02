@@ -32,7 +32,7 @@ const TVPresenter = ({ loading, error }) => {
                   info={show.original_name}
                   imageUrl={show.poster_path}
                   rating={show.vote_average}
-                  subInfo={show.first_air_date.substring(0, 4)}
+                  subInfo={show.first_air_date}
                   isClick={true}
                   isSubInfo={true}
                 />
@@ -48,7 +48,7 @@ const TVPresenter = ({ loading, error }) => {
                   info={show.original_name}
                   imageUrl={show.poster_path}
                   rating={show.vote_average}
-                  subInfo={show.first_air_date.substring(0, 4)}
+                  subInfo={show.first_air_date}
                   isClick={true}
                   isSubInfo={true}
                 />
@@ -64,7 +64,7 @@ const TVPresenter = ({ loading, error }) => {
                   info={show.original_name}
                   imageUrl={show.poster_path}
                   rating={show.vote_average}
-                  subInfo={show.first_air_date.substring(0, 4)}
+                  subInfo={show.first_air_date}
                   isClick={true}
                   isSubInfo={true}
                 />
