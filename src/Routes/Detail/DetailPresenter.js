@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
-import Loader from "components/Loader";
-import Tab from "components/Tab";
-import theme from "Styles/Theme";
+import Loader from "../../components/Loader";
+import Tab from "../../components/Tab";
+import theme from "../../Styles/Theme";
 
 const BackDrop = styled.div`
   position: absolute;

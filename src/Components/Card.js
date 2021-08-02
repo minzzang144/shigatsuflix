@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import theme from "Styles/Theme";
+import theme from "../Styles/Theme";
 
 const Title = styled.h3`
   font-size: 1.8rem;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import theme from "Styles/Theme";
+import theme from "../Styles/Theme";
 
 const Container = styled.div`
   padding: 5px;

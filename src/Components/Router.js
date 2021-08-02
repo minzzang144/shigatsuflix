@@ -5,7 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import Header from "components/Header";
+import Header from "../components/Header";
 import Home from "../routes/Home";
 import Movie from "../routes/Movie";
 import TV from "../routes/TV";

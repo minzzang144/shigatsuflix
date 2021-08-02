@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Poster from "components/Poster";
-import theme from "Styles/Theme";
+import Poster from "../components/Poster";
+import theme from "../Styles/Theme";
 
 const Nav = styled.nav``;
 
