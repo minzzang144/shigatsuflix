@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
-import Loader from "Components/Loader";
-import Tab from "Components/Tab";
+import Loader from "components/Loader";
+import Tab from "components/Tab";
 import theme from "Styles/Theme";
 
 const BackDrop = styled.div`
