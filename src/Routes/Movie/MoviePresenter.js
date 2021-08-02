@@ -29,7 +29,7 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                subInfo={movie}
+                subInfo={movie.release_date}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}
@@ -46,7 +46,7 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                subInfo={movie}
+                subInfo={movie.release_date}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}
@@ -63,7 +63,7 @@ const MoviePresenter = ({ nowPlaying, upComing, popular, loading, error }) => (
                 info={movie.original_title}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
-                subInfo={movie}
+                subInfo={movie.release_date}
                 isMovie={true}
                 isClick={true}
                 isSubInfo={true}

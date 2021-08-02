@@ -4,13 +4,16 @@ import { moviesApi } from "api";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
-  state = {
-    nowPlaying: null,
-    upComing: null,
-    popular: null,
-    loading: true,
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      nowPlaying: null,
+      upComing: null,
+      popular: null,
+      loading: true,
+      error: null,
+    };
+  }
 
   checkSlide() {
     const slideObj = document.querySelectorAll(".slide-in");

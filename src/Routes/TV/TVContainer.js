@@ -4,13 +4,16 @@ import TVPresenter from "./TVPresenter";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default class extends React.Component {
-  state = {
-    topRated: null,
-    popular: null,
-    airingToday: null,
-    loading: true,
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      topRated: null,
+      popular: null,
+      airingToday: null,
+      loading: true,
+      error: null,
+    };
+  }
 
   checkSlide() {
     const slideObj = document.querySelectorAll(".slide-in");
